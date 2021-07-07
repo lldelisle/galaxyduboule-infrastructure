@@ -1,0 +1,37 @@
+# Anouk commandline:
+cufflinks -p 10 -o ${pathResults}cufflinksWOMT --max-bundle-length 10000000 --multi-read-correct --library-type \"fr-firststrand\" -b ${pathForFasta}${genome}.fa  --no-effective-length-correction -M ${path}MTmouse.gtf -G $gtfFile ${pathResults}Aligned.sortedByCoord.out.bam
+# In fact only quantifying the gtf is sufficient so we will use -G instead of -g
+Cufflinks 2.2.1.3 to fit what Anouk was using: 
+
+Use Ref annotation: Use reference annotation
+Perform bias correction: yes
+Use multi-read correct: yes
+Apply length correction: Standard length correction
+Set advanced -> yes
+Library -> fr-firststrand
+Mask file -> MT
+Inner mean distance -> 200
+Inner distance standard deviation -> 80
+Maximum genomic length of a given bundle -> 10000000
+
+# STAR:
+STAR 2.7.7a to fit what we use (ENCODE):
+
+Length of the genomic sequence around annotated junctions -> 99
+Per gene/transcript output -> GeneCount
+Read alignment tags to include in the BAM output -> unclick ch
+MAPQ value for unique mappers -> 255
+Exclude the following records from the BAM output -> Unmapped reads
+Would you like to set additional output filters? -> YES
+Would you like to keep only reads that contain junctions that passed filtering? -> yes
+Maximum number of alignments to output a read's alignment results, plus 1 -> 20
+Maximum number of mismatches to output an alignment, plus 1 -> 999
+Maximum ratio of mismatches to read length -> 0.04
+Algorithmic settings:
+Extended
+Alignment parameters
+Minimum intron size -> 20
+Maximum intron size -> 1000000
+Maximum gap between two mates -> 1000000
+Minimum overhang for spliced alignments -> 8
+Minimum overhang for annotated spliced alignments -> 1

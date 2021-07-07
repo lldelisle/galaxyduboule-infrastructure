@@ -1,0 +1,215 @@
+---
+# Python 3 support
+pip_virtualenv_command: /usr/bin/python3 -m virtualenv # usegalaxy_eu.tiaas2, galaxyproject.galaxy
+pip_package: python3-pip                               # geerlingguy.pip
+
+# PostgreSQL
+postgresql_objects_users:
+  - name: galaxy
+  - name: telegraf
+    password: null
+
+# And this to grant telegraf privileges to
+# SELECT values from the Galaxy database
+postgresql_objects_privileges:
+  - database: galaxy
+    roles: telegraf
+    privs: SELECT
+    objs: ALL_IN_SCHEMA
+
+postgresql_objects_databases:
+  - name: galaxy
+    owner: galaxy
+
+# PostgreSQL Backups
+# Set this to a directory where your database will be backed up (this can be any format supported by rsync, e.g. user@host:/path).
+# The most recent backup will be in a subdirectory named current.
+postgresql_backup_dir: ldelisle@helvetios.epfl.ch:/work/updub/backups_galaxyDB
+# Boolean, defaults to true, which will cause the current directory to be renamed prior to creating a new backup.
+# If set to false, current will be deleted (this is useful if you are using snapshots or some other means to archive previous backups).
+postgresql_backup_rotate: false
+postgresql_backup_local_dir: "~postgres/backups"
+# Do not back up everyday but every week:
+postgresql_backup_weekday: 0
+# User or address that should receive mail from the backup scripts.
+postgresql_backup_mail_recipient: lucille.delisle@epfl.ch
+# slurm
+slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
+slurm_nodes:
+  - name: localhost    # Name of our host
+    CPUs: 28           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side
+    RealMemory: 380000 # htop gives 386942MB -> I put 385000 -> following the disaster of March 18th I put 380000 to be on the safe side
+    ThreadsPerCore: 1
+slurm_partitions:
+  - name: main
+    Nodes: localhost
+    Default: YES
+slurm_config:
+  SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
+  SelectType: select/cons_res
+  SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
+
+# Galaxy
+galaxy_create_user: true
+galaxy_separate_privileges: true
+galaxy_manage_paths: true
+galaxy_layout: root-dir
+galaxy_root: /data/galaxy/galaxy
+galaxy_user: {name: galaxy, shell: /bin/bash}
+galaxy_commit_id: release_21.01
+galaxy_force_checkout: true
+miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
+miniconda_version: "4.7.10"
+miniconda_manage_dependencies: false
+
+# systemd
+galaxy_systemd_mode: mule
+galaxy_zergpool_listen_addr: 127.0.0.1:8080
+galaxy_restart_handler_name: "Restart Galaxy"
+
+galaxy_config:
+  galaxy:
+    brand: "Galaxyduboule"
+    welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
+    admin_users: lucille.delisle@epfl.ch
+    database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
+    file_path: /data/galaxy/data
+    check_migrate_tools: false
+    tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
+    job_config_file: "{{ galaxy_config_dir }}/job_conf.xml"
+    tool_sheds_config_file: "{{ galaxy_config_dir }}/tool_sheds_conf.xml"
+    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml,{{ galaxy_shed_tool_conf_file }}" # Use both customized tool_conf and shed_tool_conf
+    statsd_host: localhost
+    statsd_influxdb: true
+    smtp_server: localhost # Use a local smtp server to be able to send email without specifying the password
+    smtp_ssl: false
+    error_email_to: lucille.delisle@epfl.ch
+    email_from: 'Lucille Delisle (galaxy) <lucille.delisle@epfl.ch>'
+    library_import_dir: /data/mount_s3
+    user_library_import_dir: /data/mount_s3/perso_storage
+    allow_library_path_paste: true
+    require_login: true # Only users can use galaxy
+    allow_user_creation: false # Only the admins can create users
+    allow_user_deletion: true
+    allow_user_impersonation: true
+    allow_user_dataset_purge: true
+    ftp_upload_dir: /data/galaxy/uploads
+    ftp_upload_site: galaxyduboule
+    expose_dataset_path: true # Users will see the path and the command lines
+    ftp_upload_purge: false # The ftp is not automatically purged on import.
+    builds_file_path: "{{ galaxy_config_dir }}/builds.txt" # in order to only use the installed genomes a minimal build file is provided
+    sanitize_all_html: false # Allow to see html pages in galaxy
+    nginx_x_accel_redirect_base: /_x_accel_redirect # nginx will serve the files at download
+  uwsgi:
+    socket: 127.0.0.1:8080
+    harakiri: 6000 # This increase the timeout to 6000 in case of large downloads
+    buffer-size: 16384
+    processes: 1
+    threads: 4
+    offload-threads: 2
+    static-map:
+      - /static={{ galaxy_server_dir }}/static
+      - /favicon.ico={{ galaxy_server_dir }}/static/favicon.ico
+    static-safe: client/galaxy/images
+    master: true
+    virtualenv: "{{ galaxy_venv_dir }}"
+    pythonpath: "{{ galaxy_server_dir }}/lib"
+    module: galaxy.webapps.galaxy.buildapp:uwsgi_app()
+    thunder-lock: true
+    die-on-term: true
+    hook-master-start:
+      - unix_signal:2 gracefully_kill_them_all
+      - unix_signal:15 gracefully_kill_them_all
+    py-call-osafterfork: true
+    enable-threads: true
+    mule:
+      - lib/galaxy/main.py
+      - lib/galaxy/main.py
+    farm: job-handlers:1,2
+
+# specifies config files to copy from the playbook
+galaxy_config_files:
+  - src: files/galaxy/config/builds.txt # in order to only use the installed genomes a minimal build file is provided
+    dest: "{{ galaxy_config.galaxy.builds_file_path }}"
+  - src: files/galaxy/config/tool_sheds_conf.xml # to be able to install tools from testtoolshed
+    dest: "{{ galaxy_config.galaxy.tool_sheds_config_file }}"
+
+galaxy_config_templates:
+  - src: templates/galaxy/config/job_conf.xml.j2
+    dest: "{{ galaxy_config.galaxy.job_config_file }}"
+  - src: templates/galaxy/config/tool_conf.xml.j2
+    dest: "{{ galaxy_config_dir }}/tool_conf.xml"
+
+galaxy_local_tools:
+  - splitbedGraphFromBed
+  - ScaleBedGraph
+
+
+# NGINX
+nginx_selinux_allow_local_connections: true
+nginx_servers:
+ - redirect-ssl
+nginx_ssl_servers:
+  - galaxy
+nginx_enable_default_server: false
+nginx_conf_http:
+  client_max_body_size: 1g # This increases the upload size
+nginx_conf_ssl_certificate: galaxyduboule.epfl.ch.pem # This file must be in files/ssl/
+nginx_conf_ssl_certificate_key: galaxyduboule.epfl.ch.key # This is the name of the destination
+sslkeys: "{{ vault_sslkeys }}"
+
+# Proftpd:
+galaxy_ftp_upload_dir: /data/galaxy/uploads
+
+proftpd_display_connect: |
+  example.org FTP server
+
+  Unauthorized access is prohibited
+proftpd_galaxy_auth: yes
+proftpd_options:
+  - User: galaxy
+  - Group: galaxy
+proftpd_sql_db: galaxy@/var/run/postgresql
+proftpd_sql_user: galaxy
+proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were created by nginx ansible role
+proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were created by nginx ansible role
+proftpd_global_options:
+  - PassivePorts: 30000 40000
+proftpd_use_mod_tls_shmcache: false # New option to not use this module
+proftpd_tls_options: NoSessionReuseRequired # Option to allow filezilla to work...
+
+# Drmaa
+galaxy_systemd_zergling_env: DRMAA_LIBRARY_PATH="/usr/lib/slurm-drmaa/lib/libdrmaa.so.1"
+
+# Telegraf for grafana
+telegraf_plugins_default:
+  - plugin: disk
+    tags:
+      - diskmetrics = "true"
+    tagpass:
+      - path = [ "/data" ] # Which are the path to explore
+  - plugin: cpu
+    config:
+      - percpu = true
+  - plugin: mem
+telegraf_plugins_extra:
+  listen_galaxy_routes:
+    plugin: "statsd"
+    config:
+      - service_address = ":8125"
+      - metric_separator = "."
+      - allowed_pending_messages = 10000
+  monitor_galaxy_queue:
+    plugin: "exec"
+    config:
+      - commands = ["/usr/bin/env PGDATABASE=galaxy /usr/local/bin/gxadmin iquery queue-overview --short-tool-id"]
+      - timeout = "10s"
+      - data_format = "influx"
+      - interval = "15s"
+  monitor_galaxy_user_disk_usage:
+    plugin: "exec"
+    config:
+      - commands = ["/usr/bin/env PGDATABASE=galaxy /usr/local/bin/gxadmin iquery user-disk-usage --use-precalc"]
+      - timeout = "10s"
+      - data_format = "influx"
+      - interval = "15s"

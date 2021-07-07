@@ -1,0 +1,36 @@
+grafana_security:
+    admin_user: "{{ admin_user_grafana }}"
+    admin_password: "{{ admin_passwd_grafana }}"
+    allow_embedding: true
+
+
+# If I want to make the dashboard public:
+grafana_auth:
+    anonymous:
+        enabled: "true"
+        org_name: "Main Org."
+        org_role: "Viewer"
+
+# These datasources will be automatically included into Grafana
+grafana_datasources:
+ - name: Galaxy
+   type: influxdb
+   access: proxy
+   url: http://127.0.0.1:8086
+   isDefault: true
+   version: 1
+   editable: false
+   database: telegraf
+
+grafana_address: 127.0.0.1
+grafana_instance: galaxyduboule.epfl.ch
+grafana_domain: galaxyduboule.epfl.ch
+
+grafana_server:
+  serve_from_sub_path: true
+#   cert_file: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem
+#   cert_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key 
+#   protocol: https
+#   enforce_domain: false
+
+grafana_url: "https://galaxyduboule.epfl.ch:3000/{{ grafana_hash }}/grafana/"

@@ -1,0 +1,45 @@
+ChIPseqOrChipMentationPairedEnd	ChIPseqOrChipMentationPairEnd_cutadaptBoth_withMAPQandCPfilter_newMacs2_v20190602	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/8a03dda907f228e17b1d7bcdfb7ba297e3190c3c/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
+ChIPseqOrChipMentationPairedEnd	updated tools on 20210311 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/bfdfd414b3bcbc16b331e463a7bcec54248d2d0d/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
+ChIPseqOrChipMentationPairedEnd	use collection of paired datasets + min length for cutadapt = 15	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
+ChIPseqOrChipMentationPairedEnd	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
+
+CUTandRUN	CUT_amp_RUNpipeline_v20200127	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/82e4a034e4803f751637f89d4c46e90bcb7ea681/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
+CUTandRUN	updated tools on 20210311 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/14656c5102739e437520c1894f22c3542bb3589c/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
+CUTandRUN	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
+CUTandRUN	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
+
+ATAC-seq	ATAC-Seq_MAPQfilter_useBAM_newMacs2_bugCorrectedTwice_v20191031	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/eebb633d12161cf66579bffc699448103cf292d8/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	updated tools on 20210311 + bigwig	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e660dfc78e3a1ca20f57f91cbeb4961c20400e5e/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	simplify the workflow: cutadapt + end-to-end mapping + coverage from macs2 = 5'+-100bp	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/58cd739c714dff8b8744340ff9a9f6877ea90994/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	remove unused input	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/7140463ac4d2d87f4e12f01019a2ce76e8631cb2/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	use multiQC, fix number of reads in peaks, compute chrM fraction	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/33748354db4e64e985e5d803fe24aa9c09a6be4d/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	fix chrM fraction	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/295b85af71744a02cbc6ab4dba37b8cbdcec1181/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+
+RNAseq_PE	RNAseq_PE_mapping_with_Newcutadapt_and_STAR_ENCODE_parameters_mm10_RevertRO_v20190417	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e50ba073a4afb18f886db13671cbbb5db6d23019/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
+RNAseq_PE	updated tools on 20210311 + min length for cutadapt = 15 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/6c6ea0d0136301302a1180d02e0026a76180d47f/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
+RNAseq_PE	put back the name of input in STAR output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/c850e4a79a980415fac383941adac5b820e2a414/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
+RNAseq_PE	added the cufflinks step with parameters like Anouk	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/6caf6ed9732e0d2c45d702347d8bf4236d98e5ee/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
+RNAseq_PE	update annotation and fix typo in renaming "of of" -> "of"	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/f4c3e2c651499db85bfbacb1c6b3af270f9dd96d/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
+RNAseq_PE	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/f95900b76e7c8ecaf81cbe5beaaa553efbee0796/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	add non-stranded coverage	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e67d902d3e2a06caee3865f86e5a5f8ff897bcc4/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	set adapter sequence at running time	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/404549fa423cdf62d85dd783d917fbf9cbf7e72e/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	rename both strand coverage output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/4d352fa2b517a442fdabd11248ab80e4758359d1/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+
+Hi-C_fromFastqToValidPairs_mm10_DpnII	fromFastqToValidPairs_mm10_DpnII_withNewCutadapt_basedOnv6.1_20181212	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/03746e136b3411d059ecefd5eb4d75620bab0f60/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
+Hi-C_fromFastqToValidPairs_mm10_DpnII	correct the bug in StatsOnCaptureRegions	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e54caf862e5fb34fec154986040b6abd1c622113/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
+Hi-C_fromFastqToValidPairs_mm10_DpnII	cutadapt up to date, both at the same time with more stringent filters + last version of awk on 20210311	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/f39c3cee6b89b4f098d3acde3d4186d9bd7443c8/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
+Hi-C_fromFastqToValidPairs_mm10_DpnII	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
+
+Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion	Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/72218176913da17fc23afe7ac961f58d34d1c9d6/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion.ga
+Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion	stop at balanced cool file	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/77dc401ed2854d3a91ecf19dff052c22933ed9dc/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion.ga
+Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion	use collection of datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromValidPairAndChrSizeTo10kbAnd40kbMatrixInHoxDRegion.ga
+
+Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices	Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/3e3719f2afd7a6a979ceabbb16924a30e7db4c9c/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices.ga
+Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices	stop at balanced cool file	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/7fc76fe41b9bb6c78d5ba8ea47647953bf46b41c/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices.ga
+Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices	use collection of datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromChromSizeAndTabixFileToAnyResolutionMatrices.ga
+
+ConvertEnsemblGtfToUCSCGtf	created on 20210311	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/6f48cac3c1d65910da5db769f6a5dffbf28dca3c/galaxy_workflows/others/Galaxy-Workflow-ConvertEnsemblGtfToUCSCGtf.ga
+
+averageReplicatesFromNormalizedCollection	created on 20210311	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/6f48cac3c1d65910da5db769f6a5dffbf28dca3c/galaxy_workflows/others/Galaxy-Workflow-averageReplicatesFromNormalizedCollection.ga

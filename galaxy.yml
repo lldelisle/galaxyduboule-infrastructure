@@ -1,0 +1,29 @@
+---
+- hosts: galaxyservers
+  become: true
+  vars_files:
+    - secret_group_vars/all.yml
+  pre_tasks:
+    - name: Install Dependencies
+      package:
+        name: ['acl', 'git', 'make', 'virtualenv', 'python3-psycopg2', 'tar', 'bzip2']
+  handlers:
+    - name: Restart Galaxy
+      systemd:
+        name: galaxy
+        state: restarted
+  roles:
+    - galaxyproject.postgresql
+    - role: natefoo.postgresql_objects
+      become: true
+      become_user: postgres
+    - geerlingguy.pip
+    - galaxyproject.galaxy
+    - role: uchida.miniconda
+      become: true
+      become_user: "{{ galaxy_user.name }}"
+    - usegalaxy_eu.galaxy_systemd
+    - galaxyproject.nginx
+    - galaxyproject.proftpd
+    - dj-wasabi.telegraf
+    - usegalaxy_eu.gxadmin

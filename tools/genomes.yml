@@ -1,0 +1,161 @@
+genomes:
+    - dbkey: mm9
+      description: mm9
+      id: mm9
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: hg19
+      description: hg19
+      id: hg19
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: hg38
+      description: hg38
+      id: hg38
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: galGal6
+      description: galGal6
+      id: galGal6
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: danRer11
+      description: danRer11
+      id: danRer11
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: tetNig2
+      description: tetNig2
+      id: tetNig2
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: mm10_UCSC
+      description: mm10_UCSC
+      id: mm10_UCSC
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_UCSC.fa
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: Tetraodon8
+      description: Tetraodon8
+      id: Tetraodon8
+      source: /data/mount_s3/perso_storage/custom_genomes/Tetraodon8_UCSC.fa
+      doi:
+      version:
+      checksum:
+      blob: "From http://ftp.ensembl.org/pub/release-103/fasta/tetraodon_nigroviridis/dna/Tetraodon_nigroviridis.TETRAODON8.dna.toplevel.fa.gz but UCSC format"
+      indexers:
+        - genome
+    - dbkey: mm10_InvCS65-SB7lacZ
+      description: mm10_InvCS65-SB7lacZ
+      id: mm10_InvCS65-SB7lacZ
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_InvCS65-SB7lacZ.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF
+      description: mm10_deli9-13insCTCF
+      id: mm10_deli9-13insCTCF
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB
+      description: mm10_deli9-13insCTCF_delB
+      id: mm10_deli9-13insCTCF_delB
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_II1TDOMlacZr4-CB542
+      description: mm10_II1TDOMlacZr4-CB542
+      id: mm10_II1TDOMlacZr4-CB542
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_II1TDOMlacZr4-CB542.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_delTT
+      description: mm10_delTT
+      id: mm10_delTT
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_delTT.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      description: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      id: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      description: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      id: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      description: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      id: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_43m7-1_TETRAODON8_chr8_6699347-6844622.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome

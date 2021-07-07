@@ -1,0 +1,120 @@
+install_tool_dependencies: True
+install_repository_dependencies: True
+install_resolver_dependencies: True
+
+tools:
+- name: bowtie2
+  owner: devteam
+  revisions:
+  - 3ba8d4563129
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bamtools_filter
+  owner: devteam
+  revisions:
+  - 82658c080fd0
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: picard
+  owner: devteam
+  revisions:
+  - ab1f60c26526
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: pe_histogram
+  owner: iuc
+  revisions:
+  - 9be99db0304a
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: gettn5extendedcoverage
+  owner: lldelisle
+  revisions:
+  - 8881cb907f12
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://galaxyduboule.unige.ch/toolshed/
+- name: macs2
+  owner: iuc
+  revisions:
+  - 01cded2297b7
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bedtools
+  owner: iuc
+  revisions:
+  - a33db97b220c
+  - c78cf6fe3018
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: samtool_filter2
+  owner: devteam
+  revisions:
+  - dc6ff68ea5e8
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bundle_collections
+  owner: nml
+  revisions:
+  - cd6da887a5f4
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: cutadapt
+  owner: lparsons
+  revisions:
+  - f5fdf41c08b8
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: hicup_digester
+  owner: bgruening
+  revisions:
+  - a2f3a4129052
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: hicup_hicup
+  owner: bgruening
+  revisions:
+  - bd1594d55a38
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: from_hicup_to_juicebox
+  owner: lldelisle
+  revisions:
+  - 28c0faa882a9
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://galaxyduboule.unige.ch/toolshed/
+- name: cooler
+  owner: lldelisle
+  revisions:
+  - 6b97ee5d8f51
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://testtoolshed.g2.bx.psu.edu/
+- name: cooler
+  owner: lldelisle
+  revisions:
+  - 6b97ee5d8f51
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://testtoolshed.g2.bx.psu.edu/
+- name: cutadapt
+  owner: lparsons
+  revisions:
+  - f5fdf41c08b8
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: rgrnastar
+  owner: iuc
+  revisions:
+  - d5659efd66aa
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: revertr2orientationinbam
+  owner: lldelisle
+  revisions:
+  - 5f5a22628c5e
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://galaxyduboule.unige.ch/toolshed/
+- name: text_processing
+  owner: bgruening
+  revisions:
+  - 4c752559b236
+  tool_panel_section_label: Tools from workflows
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/

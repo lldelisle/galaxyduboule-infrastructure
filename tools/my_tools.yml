@@ -1,0 +1,142 @@
+tools:
+- name: hicup_deduplicator
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup_digester
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup_filter
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup_mapper
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup_truncater
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup_hicup
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: sra_tools
+  owner: iuc
+  tool_panel_section_label: Get Data
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: text_processing
+  owner: bgruening
+  tool_panel_section_label: Text Manipulation
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: bamtools_filter
+  owner: devteam
+  tool_panel_section_label: Filter and Sort
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: fastqc
+  owner: devteam
+  tool_panel_section_label: 'NGS: QC and manipulation'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: bowtie2
+  owner: devteam
+  tool_panel_section_label: 'NGS: Mapping'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtools_view
+  owner: iuc
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtools_sort
+  owner: devteam
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtools_flagstat
+  owner: devteam
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtool_filter2
+  owner: devteam
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cutadapt
+  owner: lparsons
+  tool_panel_section_label: 'NGS: QC and manipulation'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: macs2
+  owner: iuc
+  tool_panel_section_label: 'NGS: Peak Calling'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: bedtools
+  owner: iuc
+  tool_panel_section_label: BEDtools
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: picard
+  owner: devteam
+  tool_panel_section_label: 'NGS: Picard'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: pe_histogram
+  owner: iuc
+  tool_panel_section_label: Statistics
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: split_file_to_collection
+  owner: bgruening
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: extract_element_from_collection
+  owner: erasmus-medical-center
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: split_paired_collection
+  owner: scottx611x
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: collapse_collections
+  owner: nml
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: bundle_collections
+  owner: nml
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: rgrnastar
+  owner: iuc
+  tool_panel_section_label: 'NGS: Mapping'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: seqtk
+  owner: iuc
+  tool_panel_section_label: 'NGS: QC and manipulation'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cufflinks
+  owner: devteam
+  tool_panel_section_label: 'NGS: RNA Analysis'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: pygenometracks
+  owner: iuc
+  tool_panel_section_label: Graph/Display Data
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: multiqc
+  owner: iuc
+  tool_panel_section_label: 'NGS: QC and manipulation'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtools_idxstats
+  owner: devteam
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: from_hicup_to_juicebox
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: cooler
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: fromgtftobed12
+  owner: lldelisle
+  tool_panel_section_label: Convert Formats
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: revertr2orientationinbam
+  owner: lldelisle
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+

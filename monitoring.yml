@@ -1,0 +1,10 @@
+---
+- hosts: monitoring
+  become: true
+  vars_files:
+    - secret_group_vars/all.yml
+  roles:
+    - usegalaxy_eu.influxdb
+    - cloudalchemy.grafana
+
+

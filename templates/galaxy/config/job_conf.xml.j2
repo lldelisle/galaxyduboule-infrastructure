@@ -1,0 +1,30 @@
+<job_conf>
+    <plugins workers="4">
+        <plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
+        <plugin id="slurm" type="runner" load="galaxy.jobs.runners.slurm:SlurmJobRunner"/>
+    </plugins>
+    <destinations default="slurm">
+        <destination id="local_destination" runner="local_plugin"/>
+        <destination id="slurm" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
+        </destination>
+        <destination id="slurm4c" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
+        </destination>
+        <destination id="slurm4cLM" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=50000</param>
+        </destination>
+        <destination id="slurm8c" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
+        </destination>
+    </destinations>
+
+     <tools>
+        <tool id="bowtie2" destination="slurm4c"/>
+        <tool id="cufflinks" destination="slurm4c"/>
+        <tool id="hicup_hicup" destination="slurm8c"/>
+        <tool id="hicup_mapper" destination="slurm8c"/>
+        <tool id="rna_star" destination="slurm4cLM"/>
+        <tool id="rna_star_index_builder_data_manager" destination="slurm4cLM"/>
+     </tools>
+</job_conf>

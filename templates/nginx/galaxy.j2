@@ -1,0 +1,98 @@
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ""      close;
+}
+
+server {
+    # Listen on port 443
+    listen        *:443 ssl default_server;
+    # listen          *:80 default_server;
+    # The virtualhost is our domain name
+    server_name   "{{ inventory_hostname }}";
+
+    # Our log files will go here.
+    access_log  /var/log/nginx/access.log;
+    error_log   /var/log/nginx/error.log;
+
+    # The most important location block, by default all requests are sent to uWSGI
+    location / {
+        # This is the backend to send the requests to.
+        uwsgi_pass 127.0.0.1:8080;
+        uwsgi_param UWSGI_SCHEME $scheme;
+        include uwsgi_params;
+    }
+
+    # nginx will serve the files:
+    location /_x_accel_redirect {
+        internal;
+        alias /;
+        add_header X-Frame-Options SAMEORIGIN;
+        add_header X-Content-Type-Options nosniff;
+    }
+
+    # Support click-to-run in the GTN-in-Galaxy Webhook
+    location /training-material/ {
+        proxy_pass https://training.galaxyproject.org/training-material/;
+    }
+
+    # When you download a dataset_collection, it needs first to
+    # create a zip.
+    # In this case you want to increase the size of temp files:
+    location ~ ^/api/dataset_collections/([^/]+)/download/?$ {
+        uwsgi_max_temp_file_size 0;
+        uwsgi_pass 127.0.0.1:8080;
+        uwsgi_param UWSGI_SCHEME $scheme;
+        include uwsgi_params;
+    }
+
+    # Static files can be more efficiently served by Nginx. Why send the
+    # request to uWSGI which should be spending its time doing more useful
+    # things like serving Galaxy!
+    location /static {
+        alias {{ galaxy_server_dir }}/static;
+        expires 24h;
+    }
+
+    # In Galaxy instances started with run.sh, many config files are
+    # automatically copied around. The welcome page is one of them. In
+    # production, this step is skipped, so we will manually alias that.
+    # location /static/{{ welcome_hash }}.html {
+    #     alias {{ galaxy_server_dir }}/static/welcome.html.sample;
+    #     expires 24h;
+
+    # }
+    # serve visualization and interactive environment plugin static content
+    location ~ ^/plugins/(?<plug_type>[^/]+?)/((?<vis_d>[^/_]*)_?)?(?<vis_name>[^/]*?)/static/(?<static_file>.*?)$ {
+        alias {{ galaxy_server_dir }}/config/plugins/$plug_type/;
+        try_files $vis_d/${vis_d}_${vis_name}/static/$static_file
+                  $vis_d/static/$static_file =404;
+    }
+
+    location /robots.txt {
+        alias {{ galaxy_server_dir }}/static/robots.txt;
+    }
+
+    location /favicon.ico {
+        alias {{ galaxy_server_dir }}/static/favicon.ico;
+    }
+    
+    location /{{ grafana_hash }}/grafana/ {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_read_timeout 2h;
+    }
+
+    rewrite ^/rstudio$ $scheme://$http_host/rstudio/ permanent;
+
+    location /rstudio/ {
+        rewrite ^/rstudio/(.*)$ /$1 break;
+        proxy_pass http://127.0.0.1:8787;
+        proxy_redirect http://127.0.0.1:8787/ $scheme://$http_host/rstudio/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_read_timeout 2h;
+    }
+}

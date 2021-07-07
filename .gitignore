@@ -1,0 +1,19 @@
+# Dependencies
+roles/galaxyproject.galaxy
+roles/galaxyproject.nginx
+roles/galaxyproject.postgresql
+roles/natefoo.postgresql_objects
+roles/geerlingguy.pip
+roles/uchida.miniconda
+roles/usegalaxy_eu.galaxy_systemd
+roles/galaxyproject.repos
+roles/galaxyproject.slurm
+roles/usegalaxy_eu.influxdb
+roles/cloudalchemy.grafana
+roles/dj-wasabi.telegraf
+roles/usegalaxy_eu.gxadmin
+roles/galaxyproject.proftpd
+
+# To keep secrets
+vault-password.txt
+hosts_decrypted

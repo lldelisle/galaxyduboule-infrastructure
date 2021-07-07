@@ -1,0 +1,30 @@
+<tool id="ScaleBedGraph" name="ScaleBedgraph" version="0.01">
+<description>Divide all values of a bedGraph by a given number</description>
+
+<command interpreter="bash">
+ ScaleBedGraph.sh $input_1 $number $output
+ 
+</command>
+<inputs>
+<param name="input_1" multiple="false"  type="data" label="Select a bedGraph from your history"/>
+
+<param name="number" type="float" size="4" value="1" label="Supply a number by which all values will be divided (for example the nb of million mapped reads" />
+
+<param name="job_name" type="text" size="60" label="Supply a name for the outputs to remind you what they contain" value="Scaled bedGraph of "/> 
+</inputs>
+<outputs>
+ <data format="bedgraph" name="output" label="${job_name}"/>
+</outputs>
+<help>
+The bedGraph with and without headers are compatible.
+
+uses awk
+
+**Script**
+
+  awk -v s=$2 'BEGIN {OFS="\t"}{if (substr($0,0,5)=="track"){print $0}else{$4=$4/s;print$0}}' $1 &gt; $3
+
+**Attribution**
+This Galaxy tool was created by lucille.delisle@epfl.ch at 12/05/2017
+</help>
+</tool>

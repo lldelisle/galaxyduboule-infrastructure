@@ -1,0 +1,125 @@
+install_tool_dependencies: True
+install_repository_dependencies: True
+install_resolver_dependencies: True
+
+tools:
+- name: bamtools_filter
+  owner: devteam
+  revisions:
+  # - 82658c080fd0
+  - cb20f99fd45b
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: picard
+  owner: devteam
+  revisions:
+  - ab1f60c26526
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: pe_histogram
+  owner: iuc
+  revisions:
+  # - 9be99db0304a
+  - bd1416eea1f0
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: gettn5extendedcoverage
+  owner: lldelisle
+  revisions:
+  # - 3078c8900ce8 # Problem of dependencies
+  - 4e0a72064635
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://testtoolshed.g2.bx.psu.edu/
+- name: macs2
+  owner: iuc
+  revisions:
+  - 01cded2297b7
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: cutadapt
+  owner: lparsons
+  revisions:
+  - f5fdf41c08b8
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bowtie2
+  owner: devteam
+  revisions:
+  - 3ba8d4563129
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bundle_collections
+  owner: nml
+  revisions:
+  - cd6da887a5f4
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: samtool_filter2
+  owner: devteam
+  revisions:
+  - dc6ff68ea5e8
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: hicup_digester
+  owner: bgruening
+  revisions:
+  - a2f3a4129052
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: hicup_hicup
+  owner: bgruening
+  revisions:
+  - bd1594d55a38
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: from_hicup_to_juicebox
+  owner: lldelisle
+  revisions:
+  # - 77f058ca2534 # It gave problems
+  - 552eb7782435
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://testtoolshed.g2.bx.psu.edu/
+- name: cooler
+  owner: lldelisle
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: rgrnastar
+  owner: iuc
+  revisions:
+  - d5659efd66aa
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: text_processing
+  owner: bgruening
+  revisions:
+  # - 4c752559b236
+  - e39fceb6ab85
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: cutadapt
+  owner: lparsons
+  revisions:
+  - f5fdf41c08b8
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: revertr2orientationinbam
+  owner: lldelisle
+  revisions:
+  - c7f0979a591e
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://testtoolshed.g2.bx.psu.edu/
+- name: bedtools
+  owner: iuc
+  revisions:
+  - a33db97b220c
+  - c78cf6fe3018
+  - b8348686a0b9
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: text_processing
+  owner: bgruening
+  revisions:
+  # - 4c752559b236
+  - e39fceb6ab85
+  tool_panel_section_label: Old tools for compatibility
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
