@@ -6,4 +6,6 @@ galaxyduboule.epfl.ch was reinstalled from scratch 20210309 following [fromScrat
 
 To maintain the server, everything is written there [maintain_galaxy.md](./maintain_galaxy.md).
 
-The workflows are now available at https://github.com/lldelisle/myNGSanalysis/.
+The workflows are now available at [https://github.com/lldelisle/myNGSanalysis/](https://github.com/lldelisle/myNGSanalysis/).
+
+Some tips mainly for me are at [tips.md](./tips.md).
