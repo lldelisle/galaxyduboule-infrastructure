@@ -22,3 +22,23 @@ To remove:
 
 `gpasswd -d <username> galaxyduboule`
 
+## Check influxdb:
+
+```bash
+influx
+show databases
+use telegraf
+show measurements
+```
+
+For example, get the last measurements of "user-disk-usage":
+
+```bash
+SELECT * FROM "user-disk-usage" ORDER BY time DESC LIMIT 2;
+```
+
+To get the time as human readable:
+
+```bash
+precision rfc3339
+```
