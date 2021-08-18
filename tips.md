@@ -22,7 +22,7 @@ To remove:
 
 `gpasswd -d <username> galaxyduboule`
 
-## Check influxdb:
+## Check influxdb
 
 ```bash
 influx

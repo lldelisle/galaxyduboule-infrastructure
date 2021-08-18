@@ -186,3 +186,17 @@ tools:
     #   tool_shed_url: toolshed.g2.bx.psu.edu
     #   tags:
     #     - genome
+
+    - name: data_manager_homer_preparse
+      owner: iuc
+      tool_panel_section_label: None
+      tool_shed_url: toolshed.g2.bx.psu.edu
+      # mask:
+      #   - false
+      size:
+        - 100
+        - 200
+        - 500
+        - 1000
+      tags:
+        - genome
