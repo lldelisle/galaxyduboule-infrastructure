@@ -123,6 +123,18 @@ tools:
   owner: devteam
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: homer_annotatepeaks
+  owner: iuc
+  tool_panel_section_label: Homer
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: homer_findmotifsgenome
+  owner: iuc
+  tool_panel_section_label: Homer
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: homer_gtf_to_annotations
+  owner: iuc
+  tool_panel_section_label: Homer
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
