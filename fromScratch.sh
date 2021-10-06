@@ -235,3 +235,18 @@ sudo apt-get install tree
 
 # To increase priority of a job:
 sudo scontrol update job=4191 Priority=4294967292
+
+# 202110 update:
+sudo apt-get update
+sudo apt-get upgrade
+
+# Install curl:
+sudo apt-get install curl
+
+# Clean:
+sudo apt autoremove
+
+# Install last version of aws:
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
