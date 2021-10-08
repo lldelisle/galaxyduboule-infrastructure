@@ -1,0 +1,27 @@
+preferences:
+    localization:
+        description: Localization
+        inputs:
+            - name: locale
+              label: Prefered language
+              type: select
+              required: False
+              options:
+                  - [Navigator default, auto]
+                  - [中文, zh]
+                  - [English, en]
+                  - [Español, es]
+                  - [Français, fr]
+                  - [日本語, ja]
+
+    omero_account:
+        description: Your OMERO instance connection details
+        inputs:
+            - name: username
+              label: Username
+              type: text
+              required: False
+            - name: password
+              label: Password
+              type:  password
+              required: False

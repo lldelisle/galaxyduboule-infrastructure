@@ -135,6 +135,10 @@ tools:
   owner: iuc
   tool_panel_section_label: Homer
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: idr_download_by_ids
+  owner: iuc
+  tool_panel_section_label: Imaging
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
