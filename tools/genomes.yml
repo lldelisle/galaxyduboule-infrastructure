@@ -159,3 +159,23 @@ genomes:
       blob: ""
       indexers:
         - genome
+    # - dbkey: SPRET_EiJ_v1_full
+    #   description: SPRET_EiJ_v1_full
+    #   id: SPRET_EiJ_v1_full
+    #   source: /data/mount_s3/perso_storage/custom_genomes/GCA_001624865.1_SPRET_EiJ_v1_genomic.fna.gz
+    #   doi:
+    #   version:
+    #   checksum:
+    #   blob: "Downloaded from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/624/865/GCA_001624865.1_SPRET_EiJ_v1/GCA_001624865.1_SPRET_EiJ_v1_genomic.fna.gz"
+    #   indexers:
+    #     - genome
+    - dbkey: mm10_dbSNP142_SPRET
+      description: mm10_dbSNP142_SPRET
+      id: mm10_dbSNP142_SPRET
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_dbSNP142_SPRET.fa
+      doi:
+      version:
+      checksum:
+      blob: "using vcf of SPRET cf 20211019_F1_Chase"
+      indexers:
+        - genome
