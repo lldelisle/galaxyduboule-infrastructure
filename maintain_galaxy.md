@@ -78,13 +78,17 @@ run-data-managers --config tools/fetch.yml -g https://galaxyduboule.epfl.ch -a $
 Then prepare the dm_genomes.yml:
 
 ```bash
-python tools/fromIDC_Simon/make_dm_genomes.py -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -g tools/genomes.yml -o tools/dm_genomes.yml
+python tools/make_dm_genomes_more_params.py -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -g tools/genomes.yml -o tools/dm_genomes.yml
+# Before homer I was doing:
+# python tools/fromIDC_Simon/make_dm_genomes.py -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -g tools/genomes.yml -o tools/dm_genomes.yml
 ```
 
 Build the new entries:
 
 ```bash
-run-data-managers --config tools/dm_genomes.yml -g https://galaxyduboule.epfl.ch -a $apikey
+python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g https://galaxyduboule.epfl.ch -a $apikey
+# Before homer I was doing:
+# run-data-managers --config tools/dm_genomes.yml -g https://galaxyduboule.epfl.ch -a $apikey
 ```
 
 Then update the history:
