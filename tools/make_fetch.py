@@ -67,25 +67,26 @@ def main():
             out['params'].append({'dbkey_source|dbkey_source_selector': 'new'})
             out['params'].append({'reference_source|reference_source_selector': 'ucsc'})
             out['params'].append({'reference_source|requested_dbkey': genome['id']})
+            out['params'].append({'sequence_id': genome['id']})
         elif re.match('/.*/custom_genomes/', genome['source']):
             out['params'].append({'dbkey_source|dbkey_source_selector': 'new'})
             out['params'].append({'reference_source|reference_source_selector': 'directory'})
             out['params'].append({'reference_source|fasta_filename': genome['source']})
             out['params'].append({'reference_source|create_symlink': 'true'})
             out['params'].append({'sequence_name': genome['description']})
-            out['params'].append({'sequence.id': genome['id']})
+            out['params'].append({'sequence_id': genome['id']})
         elif re.match('^[A-Z_]+[0-9.]+', genome['source']):
             out['params'].append({'dbkey_source|dbkey_source_selector': 'new'})
             out['params'].append({'reference_source|reference_source_selector': 'ncbi'})
             out['params'].append({'reference_source|requested_identifier': genome['source']})
             out['params'].append({'sequence_name': genome['description']})
-            out['params'].append({'sequence.id': genome['id']})
+            out['params'].append({'sequence_id': genome['id']})
         elif re.match('^http', genome['source']):
             out['params'].append({'dbkey_source|dbkey_source_selector': 'new'})
             out['params'].append({'reference_source|reference_source_selector': 'url'})
             out['params'].append({'reference_source|user_url': genome['source']})
             out['params'].append({'sequence_name': genome['description']})
-            out['params'].append({'sequence.id': genome['id']})
+            out['params'].append({'sequence_id': genome['id']})
         else:
             print(genome)
         out['data_table_reload'] = ['all_fasta','__dbkeys__']
