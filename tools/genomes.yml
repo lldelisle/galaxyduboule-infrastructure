@@ -179,3 +179,33 @@ genomes:
       blob: "using vcf of SPRET cf 20211019_F1_Chase"
       indexers:
         - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T16-2F
+      description: mm10_deli9-13insCTCF_delB_T16-2F
+      id: mm10_deli9-13insCTCF_delB_T16-2F
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-2F.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T16-5C
+      description: mm10_deli9-13insCTCF_delB_T16-5C
+      id: mm10_deli9-13insCTCF_delB_T16-5C
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-5C.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T19-3E
+      description: mm10_deli9-13insCTCF_delB_T19-3E
+      id: mm10_deli9-13insCTCF_delB_T19-3E
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T19-3E.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
