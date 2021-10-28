@@ -101,14 +101,6 @@ ansible-playbook galaxy.yml -K
 # # I can get a picture at http://galaxyduboule.epfl.ch:3000/render/d/c61Pj2yGz/main?orgId=1&width=1000&height=800&autofitpanels
 # # curl -H "Authorization: Bearer {{ api_grafana }}"  "http://localhost:3000/render/d/c61Pj2yGz/main?orgId=1&width=1000&height=800&autofitpanels" > test.png
 
-
-# Authorize member to galaxyduboule:
-# usermod -a -G galaxyduboule <username>
-# Then sudo su - <username>
-# To create a home directory
-# Remove
-# gpasswd -d <username> galaxyduboule 
-
 # I first need to clean the tools:
 # conda create -n bioblend bioblend ephemeris
 conda activate bioblend
@@ -224,29 +216,12 @@ cp /tmp/picard_wrapper.py /data/galaxy/galaxy/var/shed_tools/toolshed.g2.bx.psu.
 python tools/create_History_with_Fasta_Length.py $apikey
 python tools/create_History_with_UsefulFiles.py $apikey
 
-# Dependencies for RStudio:
-# For devtools:
-sudo apt-get install libcurl4-openssl-dev libssl-dev libxml2-dev
-# For hdf5r
-sudo apt-get install libhdf5-dev
-
 # Install tree
 sudo apt-get install tree
-
-# To increase priority of a job:
-sudo scontrol update job=4191 Priority=4294967292
 
 # 202110 update:
 sudo apt-get update
 sudo apt-get upgrade
 
-# Install curl:
-sudo apt-get install curl
-
 # Clean:
 sudo apt autoremove
-
-# Install last version of aws:
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
