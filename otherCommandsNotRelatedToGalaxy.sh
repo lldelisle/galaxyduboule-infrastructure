@@ -54,6 +54,7 @@ sudo R CMD javareconf
 # }
 # I load it to install the libraries:
 # library(romero.gateway)
+# I installed future
 
 # I need to create a conda env with omero.
 sudo su - galaxy
