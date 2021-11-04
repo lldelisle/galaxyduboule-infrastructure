@@ -7,15 +7,19 @@
         <destination id="local_destination" runner="local_plugin"/>
         <destination id="slurm" runner="slurm">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
+            <param id="tmp_dir">True</param>
         </destination>
         <destination id="slurm4c" runner="slurm">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
+            <param id="tmp_dir">True</param>
         </destination>
         <destination id="slurm4cLM" runner="slurm">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=50000</param>
+            <param id="tmp_dir">True</param>
         </destination>
         <destination id="slurm8c" runner="slurm">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
+            <param id="tmp_dir">True</param>
         </destination>
     </destinations>
 
