@@ -22,6 +22,17 @@ To remove:
 
 `gpasswd -d <username> galaxyduboule`
 
+## Grafana shows no more data
+
+It was because there was no space left on `/`.
+
+```bash
+sudo systemctl status grafana-server.service
+sudo systemctl status telegraf.service
+sudo systemctl status influxdb.service 
+sudo systemctl restart influxdb.service 
+```
+
 ## Check influxdb
 
 ```bash
