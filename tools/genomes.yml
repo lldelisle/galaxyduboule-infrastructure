@@ -209,3 +209,13 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm10_deli9-13_delB_T5-7C
+      description: mm10_deli9-13_delB_T5-7C
+      id: mm10_deli9-13_delB_T5-7C
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13_delB_T5-7C.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
