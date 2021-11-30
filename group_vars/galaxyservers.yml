@@ -147,6 +147,7 @@ galaxy_local_tools:
   - splitbedGraphFromBed
   - ScaleBedGraph
   - measureGastruloids
+  - uploadROIandMeasuresToOMERO
 
 
 # NGINX

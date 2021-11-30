@@ -1,0 +1,97 @@
+<tool id="uploadROIandMeasuresToOMERO" name="uploadROIandMeasuresToOMERO" version="0.0.1">
+    <description>Designed to work after measureGastruloids</description>
+    <requirements>
+        <requirement type="package" version="5.10.1">omero-py</requirement>
+        <requirement type="package" version="1.3.4">pandas</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        #import re
+        #if $omero_instance_type.omero_instance == "priv":
+            ## the user wants to use a non-public OMERO instance
+            ## check if credentials are set in the user-preferences, if not warn the user and exit
+            #set $username = $__user__.extra_preferences.get('omero_account|username', "")
+            #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+
+            #if $omero_instance_type.galaxy_test_param != 'true' and ($username == "" or $password ==""):
+                echo "OMERO connection credentials are empty. Set your credentials via: User -> Preferences -> Manage Information" 1>&2 &&
+                exit 1 &&
+            #end if
+        #end if
+        
+        mkdir rois &&
+        mkdir results &&
+        #for file in $rois
+            #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
+            ln -s '$file' rois/${identifier}.txt &&
+        #end for
+        #for file in $results
+            #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
+            ln -s '$file' results/${identifier}.csv &&
+        #end for
+        python '$__tool_directory__/upload_omero_roi_results.py'
+        #if $omero_instance_type.omero_instance =='priv':
+            -oh '$omero_instance_type.omero_host'
+            $omero_instance_type.omero_secured
+            -cf '$credentials'
+        #end if
+        --rois rois
+        --results results
+        --verbose
+        > output.log
+        ]]>
+    </command>
+    <configfiles>
+        <configfile name="credentials"><![CDATA[
+#if $omero_instance_type.omero_instance =='priv' and $omero_instance_type.galaxy_test_param == 'true':
+    ## as a test for a private instance we actually use a public instance, but with credentials
+    #set $username = 'public'
+    #set $password = 'public'
+#else:
+    #set $username = $__user__.extra_preferences.get('omero_account|username', "")
+    #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+#end if
+{
+    "username": "$username",
+    "password": "$password"
+}
+        ]]></configfile>
+    </configfiles>
+    <inputs>
+        <conditional name="omero_instance_type">
+            <param name="omero_instance" type="select" label="Which OMERO instance to connect?"
+                   help="By default, the tool will download a tarball containing individual images from IDR into your Galaxy history. If you 
+                   need to connect to your own instance, set your connection username and password from User->Preference->Manage Information" >
+                <option value="idr">IDR</option>
+                <option value="priv">other OMERO instance</option>
+            </param>
+            <when value="priv">
+                <param name="omero_host" type="text" label="OMERO host URL">
+                    <validator type="regex" message="Enter a valid host location, for example, your.omero.server">^[a-zA-Z0-9._-]*$</validator>
+                    <validator type="expression" message="No two dots (..) allowed">'..' not in value</validator>
+                </param>
+                <param name="omero_secured" type="boolean" label="Secured connection?" checked="true" truevalue="--omero-secured" falsevalue=""
+                        help="Select Yes if your OMERO instance is running with SSL, otherwise select No">
+                </param>
+                <param name="galaxy_test_param" type="hidden" value="false" />
+            </when>
+            <when value="idr" />
+        </conditional>
+        <param name="rois" type="data_collection" format="tabular" label="Select ROIs." collection_type="list"/>
+        <param name="results" type="data_collection" format="csv" label="Select Results." collection_type="list"/>
+    </inputs>
+
+    <outputs>
+        <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ${on_string}: logfile">
+        </data>
+    </outputs>
+    <help>
+    <![CDATA[
+**Overview**
+
+This tool will upload to OMERO the ROIs and the Results as table.
+
+The expected workflow is: idr_download_by_ids > measureGastruloids > uploadROIandMeasuresToOMERO
+]]>
+    </help>
+</tool>
+
