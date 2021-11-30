@@ -3,6 +3,8 @@ ChIPseqOrChipMentationPairedEnd	updated tools on 20210311 + bigwig instead of be
 ChIPseqOrChipMentationPairedEnd	use collection of paired datasets + min length for cutadapt = 15	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
 ChIPseqOrChipMentationPairedEnd	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
 
+ChIPseqOrChipMentationPairedEnd	derived from PE	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/9b47ab1228df3f15c49ecf3985d693095c021548/galaxy_workflows/ChIPseqOrChIPMentationSingleRead/Galaxy-Workflow-ChIPseqOrChipMentationSingleRead_fromCollection.ga
+
 CUTandRUN	CUT_amp_RUNpipeline_v20200127	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/82e4a034e4803f751637f89d4c46e90bcb7ea681/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
 CUTandRUN	updated tools on 20210311 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/14656c5102739e437520c1894f22c3542bb3589c/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
 CUTandRUN	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
