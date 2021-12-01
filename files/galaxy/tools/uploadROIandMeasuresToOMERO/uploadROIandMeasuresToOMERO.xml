@@ -1,4 +1,4 @@
-<tool id="uploadROIandMeasuresToOMERO" name="uploadROIandMeasuresToOMERO" version="0.0.1">
+<tool id="uploadROIandMeasuresToOMERO" name="uploadROIandMeasuresToOMERO" version="0.0.2">
     <description>Designed to work after measureGastruloids</description>
     <requirements>
         <requirement type="package" version="5.10.1">omero-py</requirement>
@@ -19,14 +19,9 @@
         #end if
         
         mkdir rois &&
-        mkdir results &&
         #for file in $rois
             #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
             ln -s '$file' rois/${identifier}.txt &&
-        #end for
-        #for file in $results
-            #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
-            ln -s '$file' results/${identifier}.csv &&
         #end for
         python '$__tool_directory__/upload_omero_roi_results.py'
         #if $omero_instance_type.omero_instance =='priv':
@@ -35,7 +30,7 @@
             -cf '$credentials'
         #end if
         --rois rois
-        --results results
+        --summaryResults $summary_results
         --verbose
         > output.log
         ]]>
@@ -77,7 +72,7 @@
             <when value="idr" />
         </conditional>
         <param name="rois" type="data_collection" format="tabular" label="Select ROIs." collection_type="list"/>
-        <param name="results" type="data_collection" format="csv" label="Select Results." collection_type="list"/>
+        <param name="summary_results" type="data" format="csv" label="Select the all results csv."/>
     </inputs>
 
     <outputs>

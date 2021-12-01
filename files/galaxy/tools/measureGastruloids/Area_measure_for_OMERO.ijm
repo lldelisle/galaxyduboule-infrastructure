@@ -6,6 +6,8 @@
 
 // Specify global variables
 
+tool_version = "20211201";
+
 parameter_string = getArgument();
 print(parameter_string);
 arglist = split(parameter_string, ",");
@@ -73,6 +75,25 @@ function processImage(imageFile)
     // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
     run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
     print("nRes:" + nResults);
+
+    // Get date:
+    getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
+    TimeString = ""+year+"-";
+    if (month<10) {TimeString = TimeString+"0";}
+    TimeString = TimeString+month+"-";
+    if (dayOfMonth<10) {TimeString = TimeString+"0";}
+    TimeString = TimeString+dayOfMonth+"_";
+    if (hour<10) {TimeString = TimeString+"0";}
+    TimeString = TimeString+hour+"-";
+    if (minute<10) {TimeString = TimeString+"0";}
+    TimeString = TimeString+minute;
+    // Now loop through each of the new results, and add the time to the "Date" column
+    for (row = 0; row < nResults; row++)
+    {
+        setResult("Date", row, TimeString);
+        setResult("Version", row, tool_version);
+        setResult("MaxThreshold", row, maxThreshold);
+    }
 
     // Save the results data
     saveAs("results", outputDirectory + "/" + filename + "__Results.csv");

@@ -1,5 +1,8 @@
-<tool id="measureGastruloids" name="measureGastruloids" version="0.0.1">
+<tool id="measureGastruloids" name="measureGastruloids" version="@TOOL_VERSION@">
     <description> Use macro from Pierre Osteil to measure gastruloids.</description>
+    <macros>
+        <token name="@TOOL_VERSION@">20211201</token>
+    </macros>
     <requirements>
         <requirement type="package" version="20170530">fiji</requirement>
     </requirements>
@@ -17,7 +20,8 @@
             #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
             ln -s '$file' input/${identifier}.${input_format.file_type} &&
         #end for
-        ImageJ --ij2 --headless --console -macro  '$__tool_directory__/'Area_measure_for_OMERO.ijm "`pwd`/input/,output/,.${input_format.file_type},$maxThreshold" > output.log
+        ImageJ --ij2 --headless --console -macro  '$__tool_directory__/'Area_measure_for_OMERO.ijm "`pwd`/input/,output/,.${input_format.file_type},$maxThreshold" > output.log &&
+        bash '$__tool_directory__/'combine_csv.sh @TOOL_VERSION@ $maxThreshold $summary_results
         ]]>
     </command>
     <inputs>
@@ -43,12 +47,11 @@
     <outputs>
         <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ${on_string}: logfile">
         </data>
-        <collection name="Results" type="list" label="${tool.name} on ${on_string}: Results">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="output" format="csv"/>
-        </collection>
         <collection name="ROI" type="list" label="${tool.name} on ${on_string}: ROI">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt" directory="output" format="tabular"/>
         </collection>
+        <data name="summary_results" format="csv" label="${tool.name} on ${on_string}: all results">
+        </data>
     </outputs>
     <help>
     <![CDATA[
@@ -68,13 +71,16 @@ This is a ImageJ macro::
 
     // Specify global variables
 
+    tool_version = "20211201";
+
     parameter_string = getArgument();
     print(parameter_string);
     arglist = split(parameter_string, ",");
 
     inputDirectory = arglist[0];
-    suffix = arglist[1];
-    maxThreshold = arglist[2];
+    outputDirectory = arglist[1];
+    suffix = arglist[2];
+    maxThreshold = arglist[3];
 
     setBatchMode(true); 
 
@@ -97,9 +103,11 @@ This is a ImageJ macro::
         for (i = 0; i < list.length; i++) {
             print(list[i]);
             if(File.isDirectory(input + "/" + list[i])){
+                print('Folder');
                 processFolder("" + input + "/" + list[i]);          
             }
             if(endsWith(list[i], suffix)){
+                print('Process');
                 processImage("" + input + "/" + list[i]);          
             }
         }
@@ -131,25 +139,47 @@ This is a ImageJ macro::
         run("Set Scale...", "distance=1 known=0.92 unit=micron"); //objective 4x 2.27 on TC microscope for x10 use 0.92 (measured by PierreO)
         // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
         run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
+        print("nRes:" + nResults);
+
+        // Get date:
+        getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
+        TimeString = ""+year+"-";
+        if (month<10) {TimeString = TimeString+"0";}
+        TimeString = TimeString+month+"-";
+        if (dayOfMonth<10) {TimeString = TimeString+"0";}
+        TimeString = TimeString+dayOfMonth+"_";
+        if (hour<10) {TimeString = TimeString+"0";}
+        TimeString = TimeString+hour+"-";
+        if (minute<10) {TimeString = TimeString+"0";}
+        TimeString = TimeString+minute;
+        // Now loop through each of the new results, and add the time to the "Date" column
+        for (row = 0; row < nResults; row++)
+        {
+            setResult("Date", row, TimeString);
+            setResult("Version", row, tool_version);
+            setResult("MaxThreshold", row, maxThreshold);
+        }
 
         // Save the results data
-        saveAs("results", inputDirectory + "/" + filename + "__Results.csv");
+        saveAs("results", outputDirectory + "/" + filename + "__Results.csv");
         // Now loop through Overlay:
+        print("Overlay size:" + Overlay.size);
         for (i=0; i<Overlay.size; i++) {
         Overlay.activateSelection(i);
         getSelectionCoordinates(x,y);
-        f = File.open(filename + "__" + i + "_roi_coordinates.txt");
+        print("Opening file");
+        f = File.open(outputDirectory + "/" + filename + "__" + i + "_roi_coordinates.txt");
         for (j=0; j<x.length; j++){
             print(f, x[j] + "\t" + y[j]);        
         }
         File.close(f);
         }
         print("Selection OK");
-        print("nRes:" + nResults);
         
         close();  // Closes the current image
         print("OK");
     }
+
 ]]>
     </help>
 </tool>
