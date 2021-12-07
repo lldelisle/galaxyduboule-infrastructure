@@ -159,9 +159,10 @@ nginx_ssl_servers:
 nginx_enable_default_server: false
 nginx_conf_http:
   client_max_body_size: 1g # This increases the upload size
-nginx_conf_ssl_certificate: galaxyduboule.epfl.ch.pem # This file must be in files/ssl/
-nginx_conf_ssl_certificate_key: galaxyduboule.epfl.ch.key # This is the name of the destination
-sslkeys: "{{ vault_sslkeys }}"
+# The SV-IT is in charge of the certificate
+# nginx_conf_ssl_certificate: galaxyduboule.epfl.ch.pem # This file must be in files/ssl/
+# nginx_conf_ssl_certificate_key: galaxyduboule.epfl.ch.key # This is the name of the destination
+# sslkeys: "{{ vault_sslkeys }}"
 
 # Proftpd:
 galaxy_ftp_upload_dir: /data/galaxy/uploads
@@ -176,8 +177,8 @@ proftpd_options:
   - Group: galaxy
 proftpd_sql_db: galaxy@/var/run/postgresql
 proftpd_sql_user: galaxy
-proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were created by nginx ansible role
-proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were created by nginx ansible role
+proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were uploaded by the SV-IT
+proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were uploaded by the SV-IT
 proftpd_global_options:
   - PassivePorts: 30000 40000
 proftpd_use_mod_tls_shmcache: false # New option to not use this module
