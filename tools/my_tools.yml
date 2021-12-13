@@ -135,6 +135,10 @@ tools:
   owner: iuc
   tool_panel_section_label: Homer
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: homer_scanmotifgenomewide
+  owner: iuc
+  tool_panel_section_label: Homer
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: idr_download_by_ids
   owner: iuc
   tool_panel_section_label: Imaging
