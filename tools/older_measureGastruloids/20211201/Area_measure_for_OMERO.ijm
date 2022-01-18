@@ -6,7 +6,7 @@
 
 // Specify global variables
 
-tool_version = "20220118";
+tool_version = "20211201";
 
 parameter_string = getArgument();
 print(parameter_string);
@@ -15,7 +15,7 @@ arglist = split(parameter_string, ",");
 inputDirectory = arglist[0];
 outputDirectory = arglist[1];
 suffix = arglist[2];
-// maxThreshold = arglist[3];
+maxThreshold = arglist[3];
 
 setBatchMode(true); 
 
@@ -63,78 +63,19 @@ function processImage(imageFile)
     print(filename);
     
     // Perform the analysis
-    rename("original-image");
-  	run("Duplicate...", "title=Image");
-  	run("8-bit");
-  	run("Sharpen");
-  	run("Median...", "radius=1");
-  	run("Duplicate...", "title=temp");
-  	run("Maximum...", "radius=5");
-  	run("Morphological Reconstruction", "marker=temp mask=Image type=[By Erosion] connectivity=4");
-  	// Close previously used images:
-  	selectWindow("Image");
-  	close();
-  	selectWindow("temp");
-  	close();
-  	selectWindow("temp-rec");
-  	// Go on with analysis
-  	run("Duplicate...", "title=temp2");
-  	run("Minimum...", "radius=5");
-  	run("Morphological Reconstruction", "marker=temp2 mask=temp-rec type=[By Dilation] connectivity=4");
-  	// Close previously used images:
-  	selectWindow("temp-rec");
-  	close();
-  	selectWindow("temp2");
-  	close();
-  	selectWindow("temp2-rec");
-  	run("Invert LUT");
-  	setAutoThreshold("Default dark");
-  	run("Convert to Mask");
-  	run("Fill Holes");
+    run("16-bit");
+    setThreshold(0, maxThreshold);
+    run("Convert to Mask");
+    run("Dilate");
+    run("Fill Holes");
 
     //Get the measurements
-    rename(filename);
     run("Set Measurements...", "area feret's perimeter shape display redirect=None decimal=3");
     run("Set Scale...", "distance=1 known=0.92 unit=micron"); //objective 4x 2.27 on TC microscope for x10 use 0.92 (measured by PierreO)
     // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
     run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
     print("nRes:" + nResults);
-    
-    if (nResults == 0) {
-        print("Running low contrast analysis");
-        // Another analysis is performed:
-        // First close all unused windows:
-  	    selectWindow(filename);
-  	    close();
-  	    selectWindow("original-image");
-        rename(filename);
-        run("8-bit"); 
-        run("Enhance Contrast", "saturated=0.35");
-        run("Sharpen"); 
-        run("Median...", "radius=1");
-        run("Maximum...", "radius=5");
-        setAutoThreshold("Li dark");
-        run("Convert to Mask");
-        run("Dilate");
-        run("Dilate");
-        run("Dilate");
-        run("Fill Holes");
-        run("Erode");
-        run("Erode");
-        run("Erode");
-        
-        //Get the measurements
-        run("Set Measurements...", "area feret's perimeter shape display redirect=None decimal=3");
-        run("Set Scale...", "distance=1 known=0.92 unit=micron"); //objective 4x 2.27 on TC microscope for x10 use 0.92 (measured by PierreO)
-        // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
-        run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
-        print("nRes:" + nResults);
-    } else {
-        // Close the original-image
-  	    selectWindow("original-image");
-  	    close();
-  	    selectWindow(filename);
-    }
+
     // Get date:
     getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
     TimeString = ""+year+"-";
@@ -151,7 +92,7 @@ function processImage(imageFile)
     {
         setResult("Date", row, TimeString);
         setResult("Version", row, tool_version);
-        // setResult("MaxThreshold", row, maxThreshold);
+        setResult("MaxThreshold", row, maxThreshold);
     }
 
     // Save the results data
@@ -159,19 +100,17 @@ function processImage(imageFile)
     // Now loop through Overlay:
     print("Overlay size:" + Overlay.size);
     for (i=0; i<Overlay.size; i++) {
-        Overlay.activateSelection(i);
-        getSelectionCoordinates(x,y);
-        print("Opening file");
-        f = File.open(outputDirectory + "/" + filename + "__" + i + "_roi_coordinates.txt");
-        for (j=0; j<x.length; j++){
-            print(f, x[j] + "\t" + y[j]);        
-            print(f, x[j] + "\t" + y[j]);        
-            print(f, x[j] + "\t" + y[j]);        
-        }
-        File.close(f);
+      Overlay.activateSelection(i);
+      getSelectionCoordinates(x,y);
+      print("Opening file");
+      f = File.open(outputDirectory + "/" + filename + "__" + i + "_roi_coordinates.txt");
+      for (j=0; j<x.length; j++){
+        print(f, x[j] + "\t" + y[j]);        
+      }
+      File.close(f);
     }
     print("Selection OK");
+    
     close();  // Closes the current image
     print("OK");
 }
- 

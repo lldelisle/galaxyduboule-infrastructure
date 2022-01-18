@@ -1,11 +1,10 @@
 <tool id="measureGastruloids" name="measureGastruloids" version="@TOOL_VERSION@">
     <description> Use macro from Pierre Osteil to measure gastruloids.</description>
     <macros>
-        <token name="@TOOL_VERSION@">20220118</token>
+        <token name="@TOOL_VERSION@">20211201</token>
     </macros>
     <requirements>
         <requirement type="package" version="20170530">fiji</requirement>
-        <requirement type="package" version="1.5.0">fiji-morpholibj</requirement>
     </requirements>
     <stdio>
         <regex match="\[ERROR\]" source="stdout" level="fatal"/>
@@ -21,8 +20,8 @@
             #set identifier = re.sub('[^\s\w\-]', '_', str($file.element_identifier))
             ln -s '$file' input/${identifier}.${input_format.file_type} &&
         #end for
-        ImageJ --ij2 --headless --console -macro  '$__tool_directory__/'Area_measure_for_OMERO.ijm "`pwd`/input/,output/,.${input_format.file_type}" > output.log &&
-        bash '$__tool_directory__/'combine_csv.sh @TOOL_VERSION@ $summary_results
+        ImageJ --ij2 --headless --console -macro  '$__tool_directory__/'Area_measure_for_OMERO.ijm "`pwd`/input/,output/,.${input_format.file_type},$maxThreshold" > output.log &&
+        bash '$__tool_directory__/'combine_csv.sh @TOOL_VERSION@ $maxThreshold $summary_results
         ]]>
     </command>
     <inputs>
@@ -42,6 +41,7 @@
                 <param name="input" multiple="true"  type="data" format="jpg" label="Select Images to analyse."/>
             </when>
         </conditional>
+        <param name="maxThreshold" type="integer" value="140" label="Maximum value for threshold."/>
     </inputs>
 
     <outputs>
@@ -71,7 +71,7 @@ This is a ImageJ macro::
 
     // Specify global variables
 
-    tool_version = "20220118";
+    tool_version = "20211201";
 
     parameter_string = getArgument();
     print(parameter_string);
@@ -80,7 +80,7 @@ This is a ImageJ macro::
     inputDirectory = arglist[0];
     outputDirectory = arglist[1];
     suffix = arglist[2];
-    // maxThreshold = arglist[3];
+    maxThreshold = arglist[3];
 
     setBatchMode(true); 
 
@@ -113,6 +113,7 @@ This is a ImageJ macro::
         }
     }
 
+
     function processImage(imageFile)
     {
         print(imageFile);
@@ -127,77 +128,19 @@ This is a ImageJ macro::
         print(filename);
         
         // Perform the analysis
-        rename("original-image");
-      	run("Duplicate...", "title=Image");
-      	run("8-bit");
-      	run("Sharpen");
-      	run("Median...", "radius=1");
-      	run("Duplicate...", "title=temp");
-      	run("Maximum...", "radius=5");
-      	run("Morphological Reconstruction", "marker=temp mask=Image type=[By Erosion] connectivity=4");
-      	// Close previously used images:
-      	selectWindow("Image");
-      	close();
-      	selectWindow("temp");
-      	close();
-      	selectWindow("temp-rec");
-      	// Go on with analysis
-      	run("Duplicate...", "title=temp2");
-      	run("Minimum...", "radius=5");
-      	run("Morphological Reconstruction", "marker=temp2 mask=temp-rec type=[By Dilation] connectivity=4");
-      	// Close previously used images:
-      	selectWindow("temp-rec");
-      	close();
-      	selectWindow("temp2");
-      	close();
-      	selectWindow("temp2-rec");
-      	run("Invert LUT");
-      	setAutoThreshold("Default dark");
-      	run("Convert to Mask");
-      	run("Fill Holes");
-    
+        run("16-bit");
+        setThreshold(0, maxThreshold);
+        run("Convert to Mask");
+        run("Dilate");
+        run("Fill Holes");
+
         //Get the measurements
         run("Set Measurements...", "area feret's perimeter shape display redirect=None decimal=3");
         run("Set Scale...", "distance=1 known=0.92 unit=micron"); //objective 4x 2.27 on TC microscope for x10 use 0.92 (measured by PierreO)
         // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
         run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
         print("nRes:" + nResults);
-        
-        if (nResults == 0) {
-            print("Running low contrast analysis");
-            // Another analysis is performed:
-            // First close all unused windows:
-      	    selectWindow("temp2-rec");
-      	    close();
-      	    selectWindow("original-image");
-            
-            run("8-bit"); 
-            run("Enhance Contrast", "saturated=0.35");
-            run("Sharpen"); 
-            run("Median...", "radius=1");
-            run("Maximum...", "radius=5");
-            setAutoThreshold("Li dark");
-            run("Convert to Mask");
-            run("Dilate");
-            run("Dilate");
-            run("Dilate");
-            run("Fill Holes");
-            run("Erode");
-            run("Erode");
-            run("Erode");
-            
-            //Get the measurements
-            run("Set Measurements...", "area feret's perimeter shape display redirect=None decimal=3");
-            run("Set Scale...", "distance=1 known=0.92 unit=micron"); //objective 4x 2.27 on TC microscope for x10 use 0.92 (measured by PierreO)
-            // run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude add"); // add clear to have one Result file per image
-            run("Analyze Particles...", "size=10000-400000 circularity=0.05-1.00 display clear exclude show=Overlay"); // add clear to have one Result file per image
-            print("nRes:" + nResults);
-        } else {
-            // Close the original-image
-      	    selectWindow("original-image");
-      	    close();
-      	    selectWindow("temp2-rec");
-        }
+
         // Get date:
         getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
         TimeString = ""+year+"-";
@@ -214,7 +157,7 @@ This is a ImageJ macro::
         {
             setResult("Date", row, TimeString);
             setResult("Version", row, tool_version);
-            // setResult("MaxThreshold", row, maxThreshold);
+            setResult("MaxThreshold", row, maxThreshold);
         }
 
         // Save the results data
@@ -222,18 +165,17 @@ This is a ImageJ macro::
         // Now loop through Overlay:
         print("Overlay size:" + Overlay.size);
         for (i=0; i<Overlay.size; i++) {
-            Overlay.activateSelection(i);
-            getSelectionCoordinates(x,y);
-            print("Opening file");
-            f = File.open(outputDirectory + "/" + filename + "__" + i + "_roi_coordinates.txt");
-            for (j=0; j<x.length; j++){
-                print(f, x[j] + "\t" + y[j]);        
-                print(f, x[j] + "\t" + y[j]);        
-                print(f, x[j] + "\t" + y[j]);        
-            }
-            File.close(f);
+        Overlay.activateSelection(i);
+        getSelectionCoordinates(x,y);
+        print("Opening file");
+        f = File.open(outputDirectory + "/" + filename + "__" + i + "_roi_coordinates.txt");
+        for (j=0; j<x.length; j++){
+            print(f, x[j] + "\t" + y[j]);        
+        }
+        File.close(f);
         }
         print("Selection OK");
+        
         close();  // Closes the current image
         print("OK");
     }
