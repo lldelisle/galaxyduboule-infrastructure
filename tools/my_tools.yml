@@ -159,4 +159,18 @@ tools:
   owner: lldelisle
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: measure_gastruloids
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+  revisions:
+  - e98bdc46476f
+  - c02bddeb8650
+  - e2ab05f49de1
+- name: upload_roi_and_measures_to_omero
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+
+
 
