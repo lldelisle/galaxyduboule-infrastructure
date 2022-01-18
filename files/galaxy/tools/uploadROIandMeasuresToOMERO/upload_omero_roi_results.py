@@ -11,7 +11,8 @@ from omero.gateway import BlitzGateway
 from omero.rtypes import rstring
 from omero.cmd import Delete2
 
-file_base_name = re.compile(r'^.*__(\d+)__0__0__\d+__\d+$')
+file_base_name_exportedTIFF = re.compile(r'^.*__(\d+)__0__0__\d+__\d+$')
+file_base_name_original = re.compile(r'^.*__(\d+)$')
 
 
 def get_omero_credentials(config_file):
@@ -130,9 +131,11 @@ def scan_and_upload(roi_directory, summary_results,
     full_df = pd.read_csv(summary_results)
     for image_file_name in np.unique(full_df['Label']):
         # Check the file name corresponds to the expected:
-        match = file_base_name.findall(image_file_name.replace('.tiff', ''))
+        match = file_base_name_exportedTIFF.findall(image_file_name.replace('.tiff', ''))
         if len(match) == 0:
-            raise Exception(f"{r_file} does not match the expected format")
+            match = file_base_name_original.findall(image_file_name.replace('.tiff', ''))
+            if len(match) == 0:
+                raise Exception(f"{r_file} does not match the expected format")
         # Get the image_id
         image_id = int(match[0])
         if verbose:

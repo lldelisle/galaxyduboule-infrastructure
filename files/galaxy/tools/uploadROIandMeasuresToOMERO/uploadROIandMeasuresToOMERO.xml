@@ -1,4 +1,4 @@
-<tool id="uploadROIandMeasuresToOMERO" name="uploadROIandMeasuresToOMERO" version="0.0.2">
+<tool id="uploadROIandMeasuresToOMERO" name="uploadROIandMeasuresToOMERO" version="0.0.3">
     <description>Designed to work after measureGastruloids</description>
     <requirements>
         <requirement type="package" version="5.10.1">omero-py</requirement>
