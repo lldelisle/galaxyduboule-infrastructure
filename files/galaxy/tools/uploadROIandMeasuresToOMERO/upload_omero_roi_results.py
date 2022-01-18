@@ -15,6 +15,18 @@ file_base_name_exportedTIFF = re.compile(r'^.*__(\d+)__0__0__\d+__\d+$')
 file_base_name_original = re.compile(r'^.*__(\d+)$')
 
 
+def get_image_id(image_file_name):
+    # Check the file name corresponds to the expected:
+    match = file_base_name_exportedTIFF.findall(image_file_name.replace('.tiff', ''))
+    if len(match) == 0:
+        match = file_base_name_original.findall(image_file_name.replace('.tiff', ''))
+        if len(match) == 0:
+            raise Exception(f"{r_file} does not match the expected format")
+    # Get the image_id
+    image_id = int(match[0])
+    return(image_id)
+
+
 def get_omero_credentials(config_file):
     if config_file is None:  # IDR connection
         omero_username = 'public'
@@ -130,14 +142,8 @@ def scan_and_upload(roi_directory, summary_results,
                     verbose=False):
     full_df = pd.read_csv(summary_results)
     for image_file_name in np.unique(full_df['Label']):
-        # Check the file name corresponds to the expected:
-        match = file_base_name_exportedTIFF.findall(image_file_name.replace('.tiff', ''))
-        if len(match) == 0:
-            match = file_base_name_original.findall(image_file_name.replace('.tiff', ''))
-            if len(match) == 0:
-                raise Exception(f"{r_file} does not match the expected format")
         # Get the image_id
-        image_id = int(match[0])
+        image_id = get_image_id(image_file_name)
         if verbose:
             print(f"Image:{image_id} is in the table. Cleaning old results.")
         clean(image_id,
@@ -166,7 +172,7 @@ def scan_and_upload(roi_directory, summary_results,
                omero_host, omero_secured,
                verbose)
     # Update the full_df with image id:
-    full_df['id'] = [int(file_base_name.findall(image_file_name.replace('.tiff', ''))[0])
+    full_df['id'] = [get_image_id(image_file_name)
                      for image_file_name in full_df['Label']]
     # Attach it to the dataset:
     with BlitzGateway(omero_username, omero_password, host=omero_host, secure=omero_secured) as conn:
