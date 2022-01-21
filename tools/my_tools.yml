@@ -47,6 +47,10 @@ tools:
   owner: iuc
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: samtools_merge
+  owner: iuc
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: samtools_sort
   owner: devteam
   tool_panel_section_label: 'NGS: SAM Tools'
