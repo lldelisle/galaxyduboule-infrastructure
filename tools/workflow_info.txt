@@ -29,6 +29,8 @@ RNAseq_PE	add non-stranded coverage	https://raw.githubusercontent.com/lldelisle/
 RNAseq_PE	set adapter sequence at running time	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/404549fa423cdf62d85dd783d917fbf9cbf7e72e/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 RNAseq_PE	rename both strand coverage output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/4d352fa2b517a442fdabd11248ab80e4758359d1/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 
+RNAseq_SR	first workflow	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/7dad7c76281b70b025e11b62bcb79347c4031f1d/galaxy_workflows/RNAseq_SR/Galaxy-Workflow-RNAseq_SR_from_collection.ga
+
 Hi-C_fromFastqToValidPairs_mm10_DpnII	fromFastqToValidPairs_mm10_DpnII_withNewCutadapt_basedOnv6.1_20181212	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/03746e136b3411d059ecefd5eb4d75620bab0f60/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
 Hi-C_fromFastqToValidPairs_mm10_DpnII	correct the bug in StatsOnCaptureRegions	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e54caf862e5fb34fec154986040b6abd1c622113/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
 Hi-C_fromFastqToValidPairs_mm10_DpnII	cutadapt up to date, both at the same time with more stringent filters + last version of awk on 20210311	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/f39c3cee6b89b4f098d3acde3d4186d9bd7443c8/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
