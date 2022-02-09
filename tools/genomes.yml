@@ -59,6 +59,16 @@ genomes:
       blob:
       indexers:
         - genome
+    - dbkey: mm39
+      description: mm39
+      id: mm39
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
     - dbkey: mm10_UCSC
       description: mm10_UCSC
       id: mm10_UCSC
