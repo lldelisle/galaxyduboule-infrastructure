@@ -28,6 +28,7 @@ RNAseq_PE	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/
 RNAseq_PE	add non-stranded coverage	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e67d902d3e2a06caee3865f86e5a5f8ff897bcc4/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 RNAseq_PE	set adapter sequence at running time	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/404549fa423cdf62d85dd783d917fbf9cbf7e72e/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 RNAseq_PE	rename both strand coverage output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/4d352fa2b517a442fdabd11248ab80e4758359d1/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	upadte all tools to last version	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/fabea0fa2563a9fe08db106a1b100b1e45c437f5/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 
 RNAseq_SR	first workflow	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/7dad7c76281b70b025e11b62bcb79347c4031f1d/galaxy_workflows/RNAseq_SR/Galaxy-Workflow-RNAseq_SR_from_collection.ga
 
