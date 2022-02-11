@@ -26,7 +26,7 @@ Then use `shed-tools` from ephemeris:
 ```bash
 conda activate bioblend
 # I get the API key
-apikey=""
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
 shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/my_tools.yml 
 ```
@@ -71,7 +71,7 @@ Fetch the missing genomes (if you uses a lot of ucsc genome you must rerun it mu
 ```bash
 conda activate bioblend
 # I get the API key
-apikey=""
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 run-data-managers --config tools/fetch.yml -g https://galaxyduboule.epfl.ch -a $apikey
 ```
 
@@ -105,7 +105,7 @@ Then use `shed-tools` from ephemeris:
 ```bash
 conda activate bioblend
 # I get the API key
-apikey=""
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
 shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/data_managers_tools.yml 
 ```
@@ -142,7 +142,7 @@ Then run the python script:
 ```bash
 conda activate bioblend
 # I get the API key
-apikey=""
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Create the history
 python tools/create_History_with_UsefulFiles.py $apikey
 ```
