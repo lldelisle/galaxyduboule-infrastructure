@@ -59,3 +59,11 @@ sudo R CMD javareconf
 # I need to create a conda env with omero.
 sudo su - galaxy
 /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -n omero  -c ome python=3.6 zeroc-ice36-python omero-py pandas
+
+# Update rstudio:
+sudo rstudio-server active-sessions
+sudo rstudio-server offline
+wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-2022.02.0-443-amd64.deb
+sudo gdebi rstudio-server-2022.02.0-443-amd64.deb
+sudo rstudio-server restart
+sudo rstudio-server online
