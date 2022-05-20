@@ -67,3 +67,8 @@ wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-2022.02.0-
 sudo gdebi rstudio-server-2022.02.0-443-amd64.deb
 sudo rstudio-server restart
 sudo rstudio-server online
+
+# Install libgeos for SeuratObject_4.1.0
+sudo apt install libgeos-dev
+# Install cmake for ggpubr
+sudo apt install cmake
