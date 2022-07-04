@@ -230,6 +230,12 @@
               "key": "username",
               "operator": "!=",
               "value": "josephine"
+            },
+            {
+              "condition": "AND",
+              "key": "username",
+              "operator": "!=",
+              "value": "boltc"
             }
           ]
         }
@@ -536,7 +542,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -551,5 +557,5 @@
   "timezone": "",
   "title": "main",
   "uid": "c61Pj2yGz",
-  "version": 11
+  "version": 12
 }
