@@ -53,3 +53,31 @@ To get the time as human readable:
 ```bash
 precision rfc3339
 ```
+
+## Conda fails to solve environment
+
+This has been solved thanks to @mvdbeek
+
+In my example, a conda process was never ending:
+
+```log
+Jul 04 11:25:46 updubsrv1 uwsgi[19861]: Solving environment: ...working...
+```
+
+A way to check what is running:
+```bash
+$ ps -axf| grep conda
+19861 ?        Sl     0:28  |   \_ /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults --name mulled-v1-c9f488ec0e9a96bed61dcc2e074b26ce37ed596751861ff368fd824a2a5f11d4 htseq=0.9.1 samtools=1.7
+```
+
+I killed the process: ``sudo kill 19861``
+
+Then galaxy is trying to solve each dependency by itself.
+
+Meanwhile, we can create the conda environment:
+
+```
+sudo su galaxy
+/data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults -p /data/galaxy/galaxy/var/dependencies/_conda/envs/mulled-v1-c9f488ec0e9a96bed61dcc2e074b26ce37ed596751861ff368fd824a2a5f11d4 htseq=0.9.1 samtools=1.7 python=3.8
+```
+
