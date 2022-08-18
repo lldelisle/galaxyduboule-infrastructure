@@ -77,7 +77,7 @@ Then galaxy is trying to solve each dependency by itself.
 Meanwhile, we can create the conda environment:
 
 ```
-sudo su galaxy
+sudo su - galaxy
 /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults -p /data/galaxy/galaxy/var/dependencies/_conda/envs/mulled-v1-c9f488ec0e9a96bed61dcc2e074b26ce37ed596751861ff368fd824a2a5f11d4 htseq=0.9.1 samtools=1.7 python=3.8
 ```
 
@@ -87,4 +87,16 @@ Finally @cat-bro gave me the list of the mulled which worked and the solution wa
 
 ```
 /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults -p /data/galaxy/galaxy/var/dependencies/_conda/envs/mulled-v1-c9f488ec0e9a96bed61dcc2e074b26ce37ed596751861ff368fd824a2a5f11d4 htseq=0.9.1 samtools=1.7 python=3.7.1 openssl=1.0.2p
+```
+
+### When it is simply too long and would be faster with mamba
+
+```bash
+ldelisle@updubsrv1:/data/home/ldelisle$ ps aux | grep conda
+galaxy    984736  105  0.1 1051200 564896 ?      R    15:04   0:19 /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults --channel pytorch --channel ilastik-forge --name mulled-v1-2f81e71dc6f04cbc79963dc095824fbd17740893f6238b8659bee0b436f66105 fiji=20220414 python=3.7 fiji-max_inscribed_circles=1.1.2 fiji-ilastik=1.8.2
+ldelisle@updubsrv1:/data/home/ldelisle$ sudo kill 984736
+ldelisle@updubsrv1:/data/home/ldelisle$ sudo su - galaxy
+galaxy@updubsrv1:~$ /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults -p /data/galaxy/galaxy/var/dependencies/_conda/envs/mulled-v1-2f81e71dc6f04cbc79963dc095824fbd17740893f6238b8659bee0b436f66105 python=3.7 mamba
+galaxy@updubsrv1:~$ . '/data/galaxy/galaxy/var/dependencies/_conda/bin/activate' /data/galaxy/galaxy/var/dependencies/_conda/envs/mulled-v1-2f81e71dc6f04cbc79963dc095824fbd17740893f6238b8659bee0b436f66105/
+(mulled-v1-2f81e71dc6f04cbc79963dc095824fbd17740893f6238b8659bee0b436f66105) galaxy@updubsrv1:~$ mamba install  -y --quiet --override-channels --channel conda-forge --channel bioconda --channel defaults --channel pytorch --channel ilastik-forge  fiji=20220414 python=3.7 fiji-max_inscribed_circles=1.1.2 fiji-ilastik=1.8.2
 ```
