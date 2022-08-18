@@ -101,6 +101,7 @@ galaxy_config:
     builds_file_path: "{{ galaxy_config_dir }}/builds.txt" # in order to only use the installed genomes a minimal build file is provided
     sanitize_all_html: false # Allow to see html pages in galaxy
     nginx_x_accel_redirect_base: /_x_accel_redirect # nginx will serve the files at download
+    conda_ensure_channels: conda-forge,bioconda,defaults,pytorch,ilastik-forge
   uwsgi:
     socket: 127.0.0.1:8080
     harakiri: 6000 # This increase the timeout to 6000 in case of large downloads
