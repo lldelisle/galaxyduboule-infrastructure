@@ -263,6 +263,7 @@ tools:
   - f8c1c68e597c
   - d5c59900dcdd
   - 9f1b05f346eb
+  - 76d664dea10c
 - name: upload_roi_and_measures_to_omero
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
