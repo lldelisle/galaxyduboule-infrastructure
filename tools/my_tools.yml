@@ -235,6 +235,26 @@ tools:
   owner: iuc
   tool_panel_section_label: RNA Analysis
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cooler_makebins
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cooler_csort_tabix
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cooler_cload_tabix
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: cooler_balance
+  owner: lldelisle
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
+- name: revertr2orientationinbam
+  owner: lldelisle
+  tool_panel_section_label: 'NGS: SAM Tools'
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
