@@ -23,6 +23,10 @@ tools:
   owner: bgruening
   tool_panel_section_label: Hi-C
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: hicup2juicer
+  owner: bgruening
+  tool_panel_section_label: Hi-C
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: sra_tools
   owner: iuc
   tool_panel_section_label: Get Data
