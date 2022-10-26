@@ -229,3 +229,13 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: oryCun2
+      description: Rabbit (oryCun2.0)
+      id: oryCun2
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
