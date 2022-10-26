@@ -259,6 +259,16 @@ tools:
   owner: lldelisle
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: map_param_value
+  owner: iuc
+  tool_panel_section_label: Expression Tools
+- name: compose_text_param
+  owner: iuc
+  tool_panel_section_label: Expression Tools
+- name: calculate_numeric_param
+  owner: iuc
+  tool_panel_section_label: Expression Tools
+- name: param_value_from_file
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
