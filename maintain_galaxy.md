@@ -57,6 +57,9 @@ Download the shed_data_manager_conf.xml from the server:
 sudo cp /data/galaxy/galaxy/var/config/shed_data_manager_conf.xml /tmp/
 sudo chmod 777 /tmp/shed_data_manager_conf.xml 
 # Locally:
+port=22
+guest=galaxyduboule.epfl.ch
+username=ldelisle
 scp -P $port ${username}@${guest}:/tmp/shed_data_manager_conf.xml tools/
 ```
 
