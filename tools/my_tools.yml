@@ -268,7 +268,9 @@ tools:
 - name: calculate_numeric_param
   owner: iuc
   tool_panel_section_label: Expression Tools
-- name: param_value_from_file
+- name: map_chromosomes
+  owner: pmac
+  tool_panel_section_label: Text Manipulation
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
