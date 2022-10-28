@@ -239,3 +239,13 @@ genomes:
       blob:
       indexers:
         - genome
+    - dbkey: dm6
+      description: dm6
+      id: dm6
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
