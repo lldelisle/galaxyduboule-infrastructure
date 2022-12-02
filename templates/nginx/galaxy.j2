@@ -6,6 +6,8 @@ map $http_upgrade $connection_upgrade {
 server {
     # Listen on port 443
     listen        *:443 ssl default_server;
+    ssl_certificate /etc/nginx/ssl/galaxyduboule-test.epfl.ch.pem;
+    ssl_certificate_key /etc/nginx/ssl/galaxyduboule-test.epfl.ch.key;
     # listen          *:80 default_server;
     # The virtualhost is our domain name
     server_name   "{{ inventory_hostname }}";

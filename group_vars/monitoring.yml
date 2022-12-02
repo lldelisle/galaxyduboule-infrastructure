@@ -23,8 +23,8 @@ grafana_datasources:
    database: telegraf
 
 grafana_address: 127.0.0.1
-grafana_instance: galaxyduboule.epfl.ch
-grafana_domain: galaxyduboule.epfl.ch
+grafana_instance: galaxyduboule-test.epfl.ch
+grafana_domain: galaxyduboule-test.epfl.ch
 
 grafana_server:
   serve_from_sub_path: true
@@ -33,4 +33,4 @@ grafana_server:
 #   protocol: https
 #   enforce_domain: false
 
-grafana_url: "https://galaxyduboule.epfl.ch:3000/{{ grafana_hash }}/grafana/"
+grafana_url: "https://galaxyduboule-test.epfl.ch:3000/{{ grafana_hash }}/grafana/"

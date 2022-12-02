@@ -1,5 +1,5 @@
 [galaxyservers]
-galaxyduboule.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule.epfl.ch ansible_ssh_user=ldelisle
+galaxyduboule-test.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule-test.epfl.ch ansible_ssh_user=ldelisle
 
 [monitoring]
-galaxyduboule.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule.epfl.ch ansible_ssh_user=ldelisle
+galaxyduboule-test.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule-test.epfl.ch ansible_ssh_user=ldelisle
