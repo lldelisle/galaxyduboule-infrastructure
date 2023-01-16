@@ -13,11 +13,11 @@
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
             <param id="tmp_dir">True</param>
         </destination>
-        <destination id="slurm4c" runner="slurm">
+        <destination id="slurm4c" runner="slurm" tags="4cores">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
             <param id="tmp_dir">True</param>
         </destination>
-        <destination id="slurm4cLM" runner="slurm">
+        <destination id="slurm4cLM" runner="slurm" tags="4cores">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=50000</param>
             <param id="tmp_dir">True</param>
         </destination>
@@ -32,6 +32,8 @@
     </destinations>
     <limits>
         <limit type="destination_total_concurrent_jobs" id="fiji">1</limit>
+        <limit type="destination_user_concurrent_jobs" tag="4cores">6</limit>
+        <limit type="destination_user_concurrent_jobs" id="slurm8c">3</limit>
     </limits>
      <tools>
         <tool id="bowtie2" destination="slurm4c"/>
