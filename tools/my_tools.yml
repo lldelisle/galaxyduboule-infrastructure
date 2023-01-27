@@ -361,6 +361,9 @@ tools:
 - name: dropletutils
   owner: iuc
   tool_panel_section_label: Single-cell
+- name: cite_seq_count
+  owner: iuc
+  tool_panel_section_label: Single-cell
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
