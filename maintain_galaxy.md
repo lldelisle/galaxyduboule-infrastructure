@@ -39,7 +39,7 @@ ansible-playbook galaxy.yml -K
 
 ### Local tool
 
-Create a new folder in [./files/galaxy/tools/] with the name of your tool. Put the xml and other script in the new directory. Then modify [tool_conf.xml.j2](./templates/galaxy/config/tool_conf.xml.j2) add the tool at the end following the above examples. Modify the [group_var file](./group_vars/galaxyserers.yml) in the section galaxy_local_tools add a new line following the above examples.
+Create a new folder in [./files/galaxy/tools/] with the name of your tool. Put the xml and other script in the new directory. Then modify [tool_conf.xml.j2](./templates/galaxy/config/tool_conf.xml.j2) add the tool at the end following the above examples. Modify the [group_var file](./group_vars/galaxyservers.yml) in the section galaxy_local_tools add a new line following the above examples.
 Finally run the playbook:
 
 ```bash
