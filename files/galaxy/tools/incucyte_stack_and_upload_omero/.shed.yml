@@ -1,0 +1,7 @@
+categories:
+   - Imaging
+description: Combine images to stack and upload to the omero server
+name: incucyte_stack_and_upload_omero
+owner: lldelisle
+long_description: Uses a groovy to combine images and a bash script to upload as plate to the omero server
+remote_repository_url: https://github.com/lldelisle/tools-lldelisle/tree/master/tools/incucyte_stack_and_upload_omero

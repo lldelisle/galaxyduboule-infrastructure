@@ -147,6 +147,7 @@ galaxy_config_templates:
 galaxy_local_tools:
   - splitbedGraphFromBed
   - ScaleBedGraph
+  - incucyte_stack_and_upload_omero
 
 
 # NGINX
