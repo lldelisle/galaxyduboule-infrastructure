@@ -1,7 +1,7 @@
 <tool id="incucyte_stack_and_upload_omero" name="Stack Incucyte Plate" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="BSD-3">
     <description>And upload to omero</description>
     <macros>
-        <token name="@TOOL_VERSION@">20230210</token>
+        <token name="@TOOL_VERSION@">20230214</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
@@ -10,6 +10,7 @@
         <requirement type="package" version="5.1.0">gawk</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+        #import os
         ## the user wants to use a non-public OMERO instance
         ## check if credentials are set in the user-preferences, if not warn the user and exit
         #set $username = $__user__.extra_preferences.get('omero_account|username', "")
@@ -28,21 +29,38 @@
         #if str($structure.structure_type) == "directory":
             #set $original_file = ""
             #if str($structure.phase_dir_s3) != "":
+                #if not os.path.isdir($prefix + "/" + str($structure.phase_dir_s3)):
+                    echo "'${prefix}/${structure.phase_dir_s3}'" &&
+                    echo "Phase dir $structure.phase_dir_s3 does not exists" &&
+                    exit 1 &&
+                #end if
                 mkdir input/Phase/ &&
                 ln -s '${prefix}/${structure.phase_dir_s3}/'* input/Phase/ &&
                 #set $original_file = str($structure.phase_dir_s3)
             #end if
             #if str($structure.green_dir_s3) != "":
+                #if not os.path.isdir($prefix + "/" + str($structure.green_dir_s3)):
+                    echo "Green dir $structure.green_dir_s3 does not exists" &&
+                    exit 1 &&
+                #end if
                 mkdir input/Green/ &&
                 ln -s '${prefix}/${structure.green_dir_s3}/'* input/Green/ &&
                 #set $original_file = "$original_file," + str($structure.green_dir_s3)
             #end if
             #if str($structure.red_dir_s3) != "":
+                #if not os.path.isdir($prefix + "/" + str($structure.red_dir_s3)):
+                    echo "Red dir $structure.red_dir_s3 does not exists" &&
+                    exit 1 &&
+                #end if
                 mkdir input/Red/ &&
                 ln -s '${prefix}/${structure.red_dir_s3}/'* input/Red/ &&
                 #set $original_file = "$original_file," + str($structure.red_dir_s3)
             #end if
         #else:
+            #if not os.path.isdir($prefix + "/" + str($structure.base_dir)):
+                echo "Base dir $structure.base_dir does not exists" &&
+                exit 1 &&
+            #end if
             #set $original_file = str($structure.base_dir)
             #if str($structure.phase_key) != "":
                 mkdir input/Phase/ &&
@@ -116,10 +134,14 @@ $password
                 <param name="screenNameOrID" type="integer" min="0" value="605" label="ID of the screen (on omero)" />
             </when>
         </conditional>
+        <param name="get_stacks_in_galaxy" type="boolean" checked="false" label="Get stacks in galaxy" />
     </inputs>
     <outputs>
-        <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ${on_string}: logfile">
-        </data>
+        <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ${on_string}: logfile" />
+        <collection name="list_output" type="list" label="Stacks">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tif" directory="output/" ext="tiff" />
+            <filter>get_stacks_in_galaxy</filter>
+        </collection>
     </outputs>
     <help><![CDATA[
 
@@ -136,7 +158,7 @@ Usage
 
 **Input**
 
-- 3 paths of directories (some can be empty of phase, green and red)
+- 3 paths of directories (some can be empty of phase, green and red) or one path of directory and 3 keywords (some of them can be empty)
 - plateMap generated with the software coming with Incucyte
 - objective used (to correctly set the pixel size)
 - number of well in your plate (96 or 384), they don't need to be all in your input directories.
@@ -148,42 +170,45 @@ Usage
 **Output**
 
 - A log file with info
+- Optionally all images as T-stack
 - On OMERO your images all channels combined and all time points combined into a plate.
 
 **License**
 
-Code written by Rémy Dornier, EPFL - SV -PTECH - BIOP
-by Pierre Osteil, EPFL - SV - UPDUB
-by Romain Guiet, EPFL - SV -PTECH - BIOP
-by Lucille Delisle, EPFL - SV -UPDUB
-Last modification: 2023-02-09
+License text::
 
-
-= COPYRIGHT =
-© All rights reserved. ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, BioImaging And Optics Platform (BIOP), 2023
-
-Licensed under the BSD-3-Clause License:
-Redistribution and use in source and binary forms, with or without modification, are permitted provided
-that the following conditions are met:
-     1. Redistributions of source code must retain the above copyright notice,
-         this list of conditions and the following disclaimer.
-     2. Redistributions in binary form must reproduce the above copyright notice,
-         this list of conditions and the following disclaimer
-         in the documentation and/or other materials provided with the distribution.
-     3. Neither the name of the copyright holder nor the names of its contributors
-         may be used to endorse or promote products
-         derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
+    Code written by Rémy Dornier, EPFL - SV -PTECH - BIOP
+    by Pierre Osteil, EPFL - SV - UPDUB
+    by Romain Guiet, EPFL - SV -PTECH - BIOP
+    by Lucille Delisle, EPFL - SV -UPDUB
+    Last modification: 2023-02-09
+    
+    
+    = COPYRIGHT =
+    © All rights reserved. ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, BioImaging And Optics Platform (BIOP), 2023
+    
+    Licensed under the BSD-3-Clause License:
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided
+    that the following conditions are met:
+         1. Redistributions of source code must retain the above copyright notice,
+             this list of conditions and the following disclaimer.
+         2. Redistributions in binary form must reproduce the above copyright notice,
+             this list of conditions and the following disclaimer
+             in the documentation and/or other materials provided with the distribution.
+         3. Neither the name of the copyright holder nor the names of its contributors
+             may be used to endorse or promote products
+             derived from this software without specific prior written permission.
+    
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
     ]]></help>
 </tool>
