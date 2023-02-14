@@ -2,7 +2,7 @@
     <description>And upload to omero</description>
     <macros>
         <token name="@TOOL_VERSION@">20230214</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="20220414">Fiji</requirement>
@@ -45,7 +45,7 @@
                 #end if
                 mkdir input/Green/ &&
                 ln -s '${prefix}/${structure.green_dir_s3}/'* input/Green/ &&
-                #set $original_file = "$original_file," + str($structure.green_dir_s3)
+                #set $original_file = $original_file + "," + str($structure.green_dir_s3)
             #end if
             #if str($structure.red_dir_s3) != "":
                 #if not os.path.isdir($prefix + "/" + str($structure.red_dir_s3)):
@@ -54,7 +54,7 @@
                 #end if
                 mkdir input/Red/ &&
                 ln -s '${prefix}/${structure.red_dir_s3}/'* input/Red/ &&
-                #set $original_file = "$original_file," + str($structure.red_dir_s3)
+                #set $original_file = $original_file + "," + str($structure.red_dir_s3)
             #end if
         #else:
             #if not os.path.isdir($prefix + "/" + str($structure.base_dir)):
@@ -77,9 +77,11 @@
         #end if
         ## Run the groovy
         ImageJ --ij2 --headless --console --run '$__tool_directory__/'rename_bleachCorr_buildXml.groovy 
-            'base_dir="input/",output_dir="output/",incucyteXMLFile="${incucyteXMLFile}",objectiveChoice="${objectiveChoice}",nWells="${nWells}",plateName="${plateName}",commonKeyValues="original_file=${original_file}",xmlName="${plateName}"' > output.log
+            'base_dir="input/",output_dir="output/",incucyteXMLFile="${incucyteXMLFile}",objectiveChoice="${objectiveChoice}",nWells="${nWells}",plateName="${plateName}",commonKeyValues="original_file=${original_file}",xmlName="${plateName}",ignoreConcentration="${ignoreConcentration}",ignorePassage="${ignorePassage}",ignoreSeeding="${ignoreSeeding}"' > output.log
         ## Upload to omero
         && bash '$__tool_directory__/'upload_omero.sh '$omero_host' '$credentials' '$screen.screen_create' '$screen.screenNameOrID' >> output.log
+        ## Copy the companion.ome
+        && cp output/*.companion.ome output.companion.ome
     ]]></command>
     <configfiles>
         <configfile name="credentials"><![CDATA[
@@ -135,13 +137,19 @@ $password
             </when>
         </conditional>
         <param name="get_stacks_in_galaxy" type="boolean" checked="false" label="Get stacks in galaxy" />
+        <param name="ignoreConcentration" type="boolean" checked="true" label="Ignore the concentration of compounds from the plateMap" />
+        <param name="ignorePassage" type="boolean" checked="true" label="Ignore the passage number of Cells from the plateMap" />
+        <param name="ignoreSeeding" type="boolean" checked="true" label="Ignore the seeding concentration of Cells from the plateMap" />
     </inputs>
     <outputs>
         <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ${on_string}: logfile" />
-        <collection name="list_output" type="list" label="Stacks">
+        <collection name="list_output" type="list" label="${tool.name} on ${on_string}: Stacks">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tif" directory="output/" ext="tiff" />
             <filter>get_stacks_in_galaxy</filter>
         </collection>
+        <data format="xml" name="companion.ome" from_work_dir="output.companion.ome" label="${tool.name} on ${on_string}: companion.ome" >
+            <filter>get_stacks_in_galaxy</filter>
+        </data>
     </outputs>
     <help><![CDATA[
 
