@@ -1,8 +1,8 @@
 <tool id="incucyte_stack_and_upload_omero" name="Stack Incucyte Plate" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="BSD-3">
     <description>And upload to omero</description>
     <macros>
-        <token name="@TOOL_VERSION@">20230214</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@TOOL_VERSION@">20230216</token>
+        <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
         <requirement type="package" version="20220414">Fiji</requirement>
@@ -77,7 +77,7 @@
         #end if
         ## Run the groovy
         ImageJ --ij2 --headless --console --run '$__tool_directory__/'rename_bleachCorr_buildXml.groovy 
-            'base_dir="input/",output_dir="output/",incucyteXMLFile="${incucyteXMLFile}",objectiveChoice="${objectiveChoice}",nWells="${nWells}",plateName="${plateName}",commonKeyValues="original_file=${original_file}",xmlName="${plateName}",ignoreConcentration="${ignoreConcentration}",ignorePassage="${ignorePassage}",ignoreSeeding="${ignoreSeeding}"' > output.log
+            'base_dir="input/",output_dir="output/",incucyteXMLFile="${incucyteXMLFile}",objectiveChoice="${objectiveChoice}",nWells="${nWells}",n_images_per_well="${n_images_per_well}",plateName="${plateName}",commonKeyValues="original_file=${original_file}",xmlName="${plateName}",ignoreConcentration="${ignoreConcentration}",ignorePassage="${ignorePassage}",ignoreSeeding="${ignoreSeeding}"' > output.log
         ## Upload to omero
         && bash '$__tool_directory__/'upload_omero.sh '$omero_host' '$credentials' '$screen.screen_create' '$screen.screenNameOrID' >> output.log
         ## Copy the companion.ome
@@ -119,6 +119,7 @@ $password
             <option value="96">96</option>
             <option value="384">384</option>
         </param>
+        <param name="n_images_per_well" type="integer" min="1" value="1" label="Maximum number of images per well" />
         <param name="omero_host" type="text" label="OMERO host URL">
             <validator type="regex" message="Enter a valid host location, for example, your.omero.server">^[a-zA-Z0-9._-]*$</validator>
             <validator type="expression" message="No two dots (..) allowed">'..' not in value</validator>
@@ -147,7 +148,7 @@ $password
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tif" directory="output/" ext="tiff" />
             <filter>get_stacks_in_galaxy</filter>
         </collection>
-        <data format="xml" name="companion.ome" from_work_dir="output.companion.ome" label="${tool.name} on ${on_string}: companion.ome" >
+        <data format="xml" name="companion_ome" from_work_dir="output.companion.ome" label="${tool.name} on ${on_string}: companion.ome" >
             <filter>get_stacks_in_galaxy</filter>
         </data>
     </outputs>
@@ -170,15 +171,17 @@ Usage
 - plateMap generated with the software coming with Incucyte
 - objective used (to correctly set the pixel size)
 - number of well in your plate (96 or 384), they don't need to be all in your input directories.
+- maximum number of images per well
 - URL of omero
 - Name of the Plate in omero
 - Whether the Screen should be created or use an existing one
 - Name of the new screen or id of the existing screen
+- Whether the concentration of the compounds, the passage and the seeding concentration should be ignored from the plateMap.
 
 **Output**
 
 - A log file with info
-- Optionally all images as T-stack
+- Optionally all images as T-stack and the xml to upload to omero
 - On OMERO your images all channels combined and all time points combined into a plate.
 
 **License**
