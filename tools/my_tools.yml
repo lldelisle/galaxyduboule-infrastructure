@@ -107,6 +107,10 @@ tools:
   owner: nml
   tool_panel_section_label: Collection Operations
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: collection_element_identifiers
+  owner: iuc
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: rgrnastar
   owner: iuc
   tool_panel_section_label: 'NGS: Mapping'
@@ -395,6 +399,10 @@ tools:
   - 76d664dea10c
   - 5dd91d6c570f
 - name: upload_roi_and_measures_to_omero
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: incucyte_stack_and_upload_omero
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
