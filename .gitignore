@@ -14,9 +14,6 @@ roles/dj-wasabi.telegraf
 roles/usegalaxy_eu.gxadmin
 roles/galaxyproject.proftpd
 
-# Groovy without consent of authors yet:
-files/galaxy/tools/incucyte_stack_and_upload_omero/rename_bleachCorr_buildXml.groovy
-
 # To keep secrets
 vault-password.txt
 hosts_decrypted
