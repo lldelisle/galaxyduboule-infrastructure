@@ -368,6 +368,9 @@ tools:
 - name: cite_seq_count
   owner: iuc
   tool_panel_section_label: Single-cell
+- name: datamash_transpose
+  owner: iuc
+  tool_panel_section_label: Text Manipulation
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
@@ -406,6 +409,7 @@ tools:
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
-
-
-
+- name: hyperstack_to_bleach_corrected_movie
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
