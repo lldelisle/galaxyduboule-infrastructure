@@ -2,13 +2,18 @@ ChIPseqOrChipMentationPairedEnd	ChIPseqOrChipMentationPairEnd_cutadaptBoth_withM
 ChIPseqOrChipMentationPairedEnd	updated tools on 20210311 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/bfdfd414b3bcbc16b331e463a7bcec54248d2d0d/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
 ChIPseqOrChipMentationPairedEnd	use collection of paired datasets + min length for cutadapt = 15	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
 ChIPseqOrChipMentationPairedEnd	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/ChIPseqOrChIPMentationPairedEnd/Galaxy-Workflow-ChIPseqOrChipMentationPairEnd.ga
+ChIPseqOrChipMentationPairedEnd	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/chipseq-pe/main:main?tab=info
 
-ChIPseqOrChipMentationPairedEnd	derived from PE	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/9b47ab1228df3f15c49ecf3985d693095c021548/galaxy_workflows/ChIPseqOrChIPMentationSingleRead/Galaxy-Workflow-ChIPseqOrChipMentationSingleRead_fromCollection.ga
+ChIPseqOrChipMentationSingleRead	derived from PE	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/9b47ab1228df3f15c49ecf3985d693095c021548/galaxy_workflows/ChIPseqOrChIPMentationSingleRead/Galaxy-Workflow-ChIPseqOrChipMentationSingleRead_fromCollection.ga
+ChIPseqOrChipMentationSingleRead	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/chipseq-sr/main:main?tab=info
+
 
 CUTandRUN	CUT_amp_RUNpipeline_v20200127	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/82e4a034e4803f751637f89d4c46e90bcb7ea681/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
 CUTandRUN	updated tools on 20210311 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/14656c5102739e437520c1894f22c3542bb3589c/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
 CUTandRUN	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
 CUTandRUN	use multiQC	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5018f5805a1d48f98e8830486ab33d944f6c6913/galaxy_workflows/CUTandRUN/Galaxy-Workflow-CUTandRUN.ga
+CUTandRUN	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/cutandrun/main:main?tab=info
+
 
 ATAC-seq	ATAC-Seq_MAPQfilter_useBAM_newMacs2_bugCorrectedTwice_v20191031	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/eebb633d12161cf66579bffc699448103cf292d8/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
 ATAC-seq	updated tools on 20210311 + bigwig	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e660dfc78e3a1ca20f57f91cbeb4961c20400e5e/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
@@ -17,6 +22,7 @@ ATAC-seq	remove unused input	https://raw.githubusercontent.com/lldelisle/myNGSan
 ATAC-seq	use collection of paired datasets	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/0b387d55aa47dacae03fcf4420834dbce2189e1b/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
 ATAC-seq	use multiQC, fix number of reads in peaks, compute chrM fraction	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/33748354db4e64e985e5d803fe24aa9c09a6be4d/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
 ATAC-seq	fix chrM fraction	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/295b85af71744a02cbc6ab4dba37b8cbdcec1181/galaxy_workflows/ATACseq/Galaxy-Workflow-ATAC-Seq.ga
+ATAC-seq	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/atacseq/main:v0.1?tab=info
 
 RNAseq_PE	RNAseq_PE_mapping_with_Newcutadapt_and_STAR_ENCODE_parameters_mm10_RevertRO_v20190417	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e50ba073a4afb18f886db13671cbbb5db6d23019/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
 RNAseq_PE	updated tools on 20210311 + min length for cutadapt = 15 + bigwig instead of bedgraph	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/6c6ea0d0136301302a1180d02e0026a76180d47f/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE.ga
@@ -29,10 +35,12 @@ RNAseq_PE	add non-stranded coverage	https://raw.githubusercontent.com/lldelisle/
 RNAseq_PE	set adapter sequence at running time	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/404549fa423cdf62d85dd783d917fbf9cbf7e72e/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 RNAseq_PE	rename both strand coverage output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/4d352fa2b517a442fdabd11248ab80e4758359d1/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
 RNAseq_PE	upadte all tools to last version	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/f40a87b39e49c6fd602eef426a4f252ef961d7da/galaxy_workflows/RNAseq_PE/Galaxy-Workflow-RNAseq_PE_from_collection.ga
+RNAseq_PE	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/rnaseq-pe/main:main?tab=info
 
 RNAseq_SR	first workflow	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/7dad7c76281b70b025e11b62bcb79347c4031f1d/galaxy_workflows/RNAseq_SR/Galaxy-Workflow-RNAseq_SR_from_collection.ga
 RNAseq_SR	update all tools	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/5e272bb405edcc1df4531df6dc59ad36910222a3/galaxy_workflows/RNAseq_SR/Galaxy-Workflow-RNAseq_SR_from_collection.ga
 RNAseq_SR	put back filter for 15bp minimum	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/4a23c05a1e08421ae9251304bba2406f22ed80f2/galaxy_workflows/RNAseq_SR/Galaxy-Workflow-RNAseq_SR_from_collection.ga
+RNAseq_SR	up-to-date-on-iwc	https://dockstore.org/workflows/github.com/iwc-workflows/rnaseq-pe/main:main?tab=info
 
 Hi-C_fromFastqToValidPairs_mm10_DpnII	fromFastqToValidPairs_mm10_DpnII_withNewCutadapt_basedOnv6.1_20181212	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/03746e136b3411d059ecefd5eb4d75620bab0f60/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
 Hi-C_fromFastqToValidPairs_mm10_DpnII	correct the bug in StatsOnCaptureRegions	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/e54caf862e5fb34fec154986040b6abd1c622113/galaxy_workflows/Hi-C/Galaxy-Workflow-Hi-C_fromFastqToValidPairs_mm10_DpnII.ga
