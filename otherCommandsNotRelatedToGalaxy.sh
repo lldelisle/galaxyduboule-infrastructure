@@ -72,3 +72,8 @@ sudo rstudio-server online
 sudo apt install libgeos-dev
 # Install cmake for ggpubr
 sudo apt install cmake
+# Install for tidyverse:
+sudo apt-get update
+sudo apt-get install libfontconfig1-dev
+sudo apt-get install libharfbuzz-dev libfribidi-dev
+sudo apt-get install libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
