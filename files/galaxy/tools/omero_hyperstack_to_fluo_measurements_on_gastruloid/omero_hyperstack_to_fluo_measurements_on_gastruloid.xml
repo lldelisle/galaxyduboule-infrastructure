@@ -1,0 +1,96 @@
+<tool id="omero_hyperstack_to_fluo_measurements_on_gastruloid" name="Omero hyperstack to Fluo measurements" profile="20.01" version="@TOOL_VERSION@+galaxy0">
+    <description>on gastruloid</description>
+    <macros>
+        <token name="@TOOL_VERSION@">20230324</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="20220414">fiji</requirement>
+        <requirement type="package" version="5.8.0">fiji-omero_ij</requirement>
+        <requirement type="package" version="5.12.2">fiji-simple_omero_client</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ## the user wants to use a non-public OMERO instance
+        ## check if credentials are set in the user-preferences, if not warn the user and exit
+        #set $username = $__user__.extra_preferences.get('omero_account|username', "")
+        #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+
+        #if ($username == "" or $password ==""):
+            echo "OMERO connection credentials are empty. Set your credentials via: User -> Preferences -> Manage Information" 1>&2 &&
+            exit 1 &&
+        #end if
+        mkdir output &&
+        ## Because ilastik wants to write to ${HOME}/.cache and ${HOME}/.config
+        export HOME=`pwd` &&
+        ImageJ --ij2 --headless --console --run '$__tool_directory__/'2-omero_timelapse_image_to_fluo_measurements.groovy 
+            'USERNAME="",PASSWORD="",credentials="${credentials}",host="${omero_host}",port="${omero_port}",object_type="${omero_object.object_type}",id="${omero_object.omero_id}",n_pieces="${n_pieces}",quantif_ch="${quantif_ch}",output_directory="output"' > output.log
+        ]]>
+    </command>
+    <configfiles>
+        <configfile name="credentials"><![CDATA[#set $username = $__user__.extra_preferences.get('omero_account|username', "")
+    #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+$username
+$password
+        ]]></configfile>
+    </configfiles>
+    <inputs>
+        <param name="omero_host" type="text" label="OMERO host URL">
+            <validator type="regex" message="Enter a valid host location, for example, your.omero.server">^[a-zA-Z0-9._-]*$</validator>
+            <validator type="expression" message="No two dots (..) allowed">'..' not in value</validator>
+        </param>
+        <param name="omero_port" type="integer" value="4064" label="Omero port" />
+        <conditional name="omero_object">
+            <param name="object_type" type="select" label="Type of object to analyze">
+                <option value="image">Single Omero Image</option>
+                <option value="well">All images of a Well</option>
+                <option value="plate">All images of a Plate</option>
+                <option value="dataset">All images of a Dataset</option>
+            </param>
+            <when value="image">
+                <param name="omero_id" type="integer" value="" label="Image ID on omero" />
+            </when>
+            <when value="well">
+                <param name="omero_id" type="integer" value="" label="Well ID on omero" />
+            </when>
+            <when value="plate">
+                <param name="omero_id" type="integer" value="" label="Plate ID on omero" />
+            </when>
+            <when value="dataset">
+                <param name="omero_id" type="integer" value="" label="Dataset ID on omero" />
+            </when>
+        </conditional>
+        <param name="n_pieces" type="integer" value="10" label="Number of segments along the spine" />
+        <param name="quantif_ch" type="integer" value="2" label="Index of the channel to quantify (1-based)" />
+    </inputs>
+
+    <outputs>
+        <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ID ${omero_object.omero_id}: logfile">
+        </data>
+        <collection name="tables" type="list" label="${tool.name} on ID ${omero_object.omero_id}: Profile Tables">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="output" format="csv"/>
+        </collection>
+        <collection name="hyperstacks_with_overlay" type="list" label="${tool.name} on ID ${omero_object.omero_id}: Hyperstacks">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tif" directory="output" format="tiff"/>
+        </collection>
+    </outputs>
+    <help>
+    <![CDATA[
+**Overview**
+
+This tool must be run after omero_hyperstack_to_gastruloid_measurements.
+It will get images from omero, measure fluorescence on the gastruloids and outside.
+It will also cut the gastruloid along the spine into segments and quantify the fluo on each segment.
+
+**License**
+
+License text::
+
+    // This macro was written by Lucille Delisle
+    // A block was taken from https://www.geeksforgeeks.org/minimum-distance-from-a-point-to-the-line-segment-using-vectors/
+    // written by 29AjayKumar
+    // A block was written by Romain Guiet (BIOP, EPFL)
+    // Interactions with omero are largely inspired by
+    // templates available at https://github.com/BIOP/OMERO-scripts/tree/main/Fiji
+
+]]>
+    </help>
+</tool>

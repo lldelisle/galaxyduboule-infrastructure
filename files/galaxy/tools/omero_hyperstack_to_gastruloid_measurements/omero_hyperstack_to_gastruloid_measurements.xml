@@ -1,0 +1,136 @@
+<tool id="omero_hyperstack_to_gastruloid_measurements" name="Omero hyperstack to Gastruloid measurements" profile="20.01" version="@TOOL_VERSION@+galaxy0">
+    <macros>
+        <token name="@TOOL_VERSION@">20230324</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="20220414">fiji</requirement>
+        <requirement type="package" version="3.7">python</requirement>
+        <requirement type="package" version="2.0.0">fiji-max_inscribed_circles</requirement>
+        <requirement type="package" version="1.8.2">fiji-ilastik</requirement>
+        <requirement type="package" version="5.8.0">fiji-omero_ij</requirement>
+        <requirement type="package" version="5.12.2">fiji-simple_omero_client</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ## the user wants to use a non-public OMERO instance
+        ## check if credentials are set in the user-preferences, if not warn the user and exit
+        #set $username = $__user__.extra_preferences.get('omero_account|username', "")
+        #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+
+        #if ($username == "" or $password ==""):
+            echo "OMERO connection credentials are empty. Set your credentials via: User -> Preferences -> Manage Information" 1>&2 &&
+            exit 1 &&
+        #end if
+        mkdir output &&
+        ## Because ilastik wants to write to ${HOME}/.cache and ${HOME}/.config
+        export HOME=`pwd` &&
+        ImageJ-ilastik --ij2 --headless --console --run '$__tool_directory__/'1-omero_timelapse_image_to_measurements_phase.groovy 
+            'USERNAME="",PASSWORD="",credentials="${credentials}",host="${omero_host}",port="${omero_port}",object_type="${omero_object.object_type}",id="${omero_object.omero_id}",ilastik_project="${ilastik_project}",ilastik_project_short_name="${ilastik_project.name}",ilastik_project_type="${ilastik_project_type}",ilastik_label_OI="${ilastik_label_OI}",probability_threshold="${probability_threshold}",radius_median="${radius_median}",min_size_particle="${min_size_particle}",get_spine="true",minimum_diameter="${minimum_diameter}",closeness_tolerance="${closeness_tolerance}",min_similarity="${min_similarity}",output_directory="output",debug="${debug}"' > output.log
+        ]]>
+    </command>
+    <configfiles>
+        <configfile name="credentials"><![CDATA[#set $username = $__user__.extra_preferences.get('omero_account|username', "")
+    #set $password = $__user__.extra_preferences.get('omero_account|password', "")
+$username
+$password
+        ]]></configfile>
+    </configfiles>
+    <inputs>
+        <param name="omero_host" type="text" label="OMERO host URL">
+            <validator type="regex" message="Enter a valid host location, for example, your.omero.server">^[a-zA-Z0-9._-]*$</validator>
+            <validator type="expression" message="No two dots (..) allowed">'..' not in value</validator>
+        </param>
+        <param name="omero_port" type="integer" value="4064" label="Omero port" />
+        <conditional name="omero_object">
+            <param name="object_type" type="select" label="Type of object to analyze">
+                <option value="image">Single Omero Image</option>
+                <option value="well">All images of a Well</option>
+                <option value="plate">All images of a Plate</option>
+                <option value="dataset">All images of a Dataset</option>
+            </param>
+            <when value="image">
+                <param name="omero_id" type="integer" value="" label="Image ID on omero" />
+            </when>
+            <when value="well">
+                <param name="omero_id" type="integer" value="" label="Well ID on omero" />
+            </when>
+            <when value="plate">
+                <param name="omero_id" type="integer" value="" label="Plate ID on omero" />
+            </when>
+            <when value="dataset">
+                <param name="omero_id" type="integer" value="" label="Dataset ID on omero" />
+            </when>
+        </conditional>
+        <param name="ilastik_project" type="data" format="h5" label="Ilastik project" />
+        <param name="ilastik_project_type" type="select" label="Type of Ilastik project">
+            <option value="Regular">Regular</option>
+            <option value="Auto-context">Auto-context</option>
+        </param>
+        <param name="ilastik_label_OI" type="integer" value="3" label="Index of label of interest in Ilastik project" />
+        <param name="probability_threshold" type="float" min="0" max="1" value="0.4" label="Probability threshold for ilastik" />
+        <param name="radius_median" type="float" value="20" label="Radius for median (=smooth the mask)" />
+        <param name="min_size_particle" type="integer" min="0" value="5000" label="Minimum surface for Analyze Particle" />
+        <param name="minimum_diameter" type="integer" min="0" value="20" label="Minimum diameter of inscribed circles" />
+        <param name="closeness_tolerance" type="integer" min="0" value="50" label="Closeness Tolerance for the spine" help="Maximum distance between circles along the spine"/>
+        <param name="min_similarity" type="float" min="-1" max="1" value="0.1" label="Min similarity for the spine" help="Close to 0 values allow more U shapes while close to 1 values only allows I shapes" />
+        <param name="debug" type="boolean" truevalue="true" falsevalue="false" checked="false" label="Debug the elongation index" help="This will output all inscribed circles" />
+        <param name="keep_intermediate" type="boolean" checked="false" label="Keep intermediate results (ilastik prediction + tables)" />
+    </inputs>
+
+    <outputs>
+        <data name="logfile" format="txt" from_work_dir="output.log" label="${tool.name} on ID ${omero_object.omero_id} with ${ilastik_project.name}: logfile">
+        </data>
+        <collection name="tables" type="list" label="${tool.name} on ID ${omero_object.omero_id} with ${ilastik_project.name}: Tables">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="output" format="csv"/>
+            <filter>keep_intermediate</filter>
+        </collection>
+        <collection name="hyperstacks_with_overlay" type="list" label="${tool.name} on ID ${omero_object.omero_id} with ${ilastik_project.name}: Hyperstacks">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tiff" directory="output" format="tiff"/>
+        </collection>
+        <collection name="ilastik_results" type="list" label="${tool.name} on ID ${omero_object.omero_id} with ${ilastik_project.name}: Ilastik">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.tif$" directory="output" format="tiff"/>
+            <filter>keep_intermediate</filter>
+        </collection>
+    </outputs>
+    <help>
+    <![CDATA[
+**Overview**
+
+This tool will get images from omero, use an ilastik project to get propability and generate a mask.
+The potential gastruloids will be indentified by analyze Particles.
+On each ROI, the elongation index will be computed.
+
+**License**
+
+License text::
+
+    // This macro was written by the BIOP (https://github.com/BIOP)
+    // Romain Guiet and Rémy Dornier
+    // Lucille Delisle modified to support headless
+    // merge the analysis script with templates available at
+    // https://github.com/BIOP/OMERO-scripts/tree/main/Fiji
+
+    /*
+    * = COPYRIGHT =
+    * © All rights reserved. ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, BioImaging And Optics Platform (BIOP), 2022
+    * 
+    * Licensed under the BSD-3-Clause License:
+    * Redistribution and use in source and binary forms, with or without modification, are permitted provided 
+    * that the following conditions are met:
+    * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+    *    in the documentation and/or other materials provided with the distribution.
+    * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products 
+    *     derived from this software without specific prior written permission.
+    * 
+    * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+    * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+    * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+    * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+    * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+    * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    */
+
+]]>
+    </help>
+</tool>

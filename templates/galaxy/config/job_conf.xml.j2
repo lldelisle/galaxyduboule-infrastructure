@@ -9,10 +9,6 @@
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
             <param id="tmp_dir">True</param>
         </destination>
-        <destination id="fiji" runner="slurm">
-            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
-            <param id="tmp_dir">True</param>
-        </destination>
         <destination id="slurm4c" runner="slurm" tags="4cores">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
             <param id="tmp_dir">True</param>
@@ -31,7 +27,6 @@
         </destination>
     </destinations>
     <limits>
-        <limit type="destination_total_concurrent_jobs" id="fiji">1</limit>
         <limit type="destination_user_concurrent_jobs" tag="4cores">6</limit>
         <limit type="destination_user_concurrent_jobs" id="slurm8c">3</limit>
     </limits>
@@ -42,8 +37,8 @@
         <tool id="rna_star" destination="slurm4cLM"/>
         <tool id="rna_starsolo" destination="slurm4cLM"/>
         <tool id="rna_star_index_builder_data_manager" destination="slurm4cLM"/>
-        <tool id="measureGastruloids" destination="fiji"/>
         <tool id="hicup_hicup" destination="slurm8c"/>
         <tool id="cutadapt" destination="slurm4c"/>
+        <tool id="omero_hyperstack_to_gastruloid_measurements" destination="slurm8c"/>
      </tools>
 </job_conf>

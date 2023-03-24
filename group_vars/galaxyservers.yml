@@ -102,6 +102,7 @@ galaxy_config:
     sanitize_all_html: false # Allow to see html pages in galaxy
     nginx_x_accel_redirect_base: /_x_accel_redirect # nginx will serve the files at download
     conda_ensure_channels: conda-forge,bioconda,defaults,pytorch,ilastik-forge
+    expose_potentially_sensitive_job_metrics: true
   uwsgi:
     socket: 127.0.0.1:8080
     harakiri: 6000 # This increase the timeout to 6000 in case of large downloads
@@ -147,6 +148,8 @@ galaxy_config_templates:
 galaxy_local_tools:
   - splitbedGraphFromBed
   - ScaleBedGraph
+  - omero_hyperstack_to_gastruloid_measurements
+  - omero_hyperstack_to_fluo_measurements_on_gastruloid
 
 
 # NGINX
