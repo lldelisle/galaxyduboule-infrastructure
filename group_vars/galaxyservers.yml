@@ -148,8 +148,6 @@ galaxy_config_templates:
 galaxy_local_tools:
   - splitbedGraphFromBed
   - ScaleBedGraph
-  - omero_hyperstack_to_gastruloid_measurements
-  - omero_hyperstack_to_fluo_measurements_on_gastruloid
 
 
 # NGINX
