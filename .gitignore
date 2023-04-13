@@ -17,3 +17,6 @@ roles/galaxyproject.proftpd
 # To keep secrets
 vault-password.txt
 hosts_decrypted
+
+# Hidden useful_datasets
+useful_datasets/bf5a*
