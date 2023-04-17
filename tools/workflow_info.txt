@@ -64,3 +64,4 @@ scRNA-seq_preprocessing_10X_cellPlex_UPDUB	add reference genome as parameter	htt
 
 scRNA-seq_preprocessing_10X_v3_Bundle	created on 20230414	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/eac4754062a9e8032d728a6d3935a5b98841682a/galaxy_workflows/scRNAseq/Galaxy-Workflow-scRNA-seq_preprocessing_10X_v3_Bundle.ga
 scRNA-seq_preprocessing_10X_v3_Bundle	add reference genome as parameter	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/9f17b7d0b7ebc846b5f5df0f9dca75672ce6943d/galaxy_workflows/scRNAseq/Galaxy-Workflow-scRNA-seq_preprocessing_10X_v3_Bundle.ga
+scRNA-seq_preprocessing_10X_v3_Bundle	relabel final output	https://raw.githubusercontent.com/lldelisle/myNGSanalysis/9f17b7d0b7ebc846b5f5df0f9dca75672ce6943d/galaxy_workflows/scRNAseq/Galaxy-Workflow-scRNA-seq_preprocessing_10X_v3_Bundle.gaa7029a1c6bf6da4dc48884a8a8f2f2d414eb5df5/galaxy_workflows/scRNAseq/Galaxy-Workflow-scRNA-seq_preprocessing_10X_v3_Bundle.ga
