@@ -249,3 +249,13 @@ genomes:
       blob:
       indexers:
         - genome
+    - dbkey: mm39_hsp68_venus_h19_enh2
+      description: mm39_hsp68_venus_h19_enh2
+      id: mm39_hsp68_venus_h19_enh2
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_hsp68_venus_h19_enh2.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
