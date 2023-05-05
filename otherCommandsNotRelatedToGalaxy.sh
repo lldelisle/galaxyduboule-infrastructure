@@ -266,3 +266,36 @@ install.packages("readxl")
 install.packages("readxl")
 install.packages("DWLS")
 BiocManager::install("demuxmix")
+
+
+# Reinstall last version of R:
+sudo apt-get update
+# W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://repos.influxdata.com/ubuntu focal InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY D8FF8E1F7DF8B07E
+# W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://packages.grafana.com/oss/deb stable InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9E439B102CF3C0C6
+# W: Failed to fetch https://packages.grafana.com/oss/deb/dists/stable/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9E439B102CF3C0C6
+# W: Failed to fetch https://repos.influxdata.com/ubuntu/dists/focal/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY D8FF8E1F7DF8B07E
+# W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+sudo apt-get upgrade
+# This updates R
+
+# How to know if reboot is required?
+# https://askubuntu.com/questions/164/how-can-i-tell-from-the-command-line-whether-the-machine-requires-a-reboot
+ls /var/run/reboot-required
+# The file exists so I need to reboot
+sudo reboot
+
+# Apparently training.galaxyproject.org was unresponsive at the time nginx started.
+
+sudo systemctl restart nginx.service 
+
+
+
+sudo R
+update.packages(checkBuilt = TRUE, ask = FALSE)
+BiocManager::install(version = '3.17')
+version <- "0.4.12"
+install.packages(paste0("https://github.com/ome/rOMERO-gateway/releases/download/v", version, "/romero.gateway_", version, ".tar.gz"), type='source', repos = NULL)
+library(romero.gateway)
+# I need to download OMERO Java libraries
+devtools::install_github("lldelisle/usefulLDfunctions")
