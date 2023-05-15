@@ -139,6 +139,10 @@ tools:
   owner: iuc
   tool_panel_section_label: Homer
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: homer_findmotifs
+  owner: iuc
+  tool_panel_section_label: Homer
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: homer_findmotifsgenome
   owner: iuc
   tool_panel_section_label: Homer
@@ -366,6 +370,9 @@ tools:
   owner: iuc
   tool_panel_section_label: Single-cell
 - name: cite_seq_count
+  owner: iuc
+  tool_panel_section_label: Single-cell
+- name: velocyto_cli
   owner: iuc
   tool_panel_section_label: Single-cell
 - name: datamash_transpose
