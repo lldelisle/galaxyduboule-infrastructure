@@ -37,7 +37,7 @@ postgresql_backup_mail_recipient: lucille.delisle@epfl.ch
 slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
 slurm_nodes:
   - name: localhost    # Name of our host
-    CPUs: 28           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side
+    CPUs: 29           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29
     RealMemory: 380000 # htop gives 386942MB -> I put 385000 -> following the disaster of March 18th I put 380000 to be on the safe side
     ThreadsPerCore: 1
 slurm_partitions:
