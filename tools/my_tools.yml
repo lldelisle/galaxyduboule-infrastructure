@@ -372,9 +372,10 @@ tools:
 - name: cite_seq_count
   owner: iuc
   tool_panel_section_label: Single-cell
-- name: velocyto_cli
-  owner: iuc
-  tool_panel_section_label: Single-cell
+# This tool takes too much memory
+# - name: velocyto_cli
+#   owner: iuc
+#   tool_panel_section_label: Single-cell
 - name: datamash_transpose
   owner: iuc
   tool_panel_section_label: Text Manipulation
