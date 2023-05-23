@@ -235,6 +235,10 @@ tools:
   owner: bgruening
   tool_panel_section_label: deepTools
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: deeptools_bigwig_average
+  owner: bgruening
+  tool_panel_section_label: deepTools
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: rna_starsolo
   owner: iuc
   tool_panel_section_label: Mapping
