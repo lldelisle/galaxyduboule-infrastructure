@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,14 +23,16 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "65k5u08Gz"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -64,7 +69,6 @@
         "y": 0
       },
       "id": 2,
-      "interval": null,
       "maxDataPoints": 1,
       "options": {
         "orientation": "auto",
@@ -79,10 +83,14 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.2.4",
       "targets": [
         {
           "alias": "[[tag_username]]",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "65k5u08Gz"
+          },
           "groupBy": [
             {
               "params": [
@@ -236,12 +244,16 @@
               "key": "username",
               "operator": "!=",
               "value": "boltc"
+            },
+            {
+              "condition": "AND",
+              "key": "username",
+              "operator": "!=",
+              "value": "guillaume.jeanneret"
             }
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "disk usage",
       "transformations": [],
       "type": "gauge"
@@ -251,7 +263,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "65k5u08Gz"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -292,7 +307,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.2.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -303,6 +318,10 @@
       "targets": [
         {
           "alias": "[[tag_tool_id]]",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "65k5u08Gz"
+          },
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -353,9 +372,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Galaxy Queued Jobs",
       "tooltip": {
         "shared": true,
@@ -364,33 +381,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -398,7 +407,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "65k5u08Gz"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -434,13 +446,12 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "maxDataPoints": null,
       "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.2.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -451,6 +462,10 @@
       "targets": [
         {
           "alias": "[[tag_tool_id]]",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "65k5u08Gz"
+          },
           "groupBy": [
             {
               "params": [
@@ -501,9 +516,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Galaxy Running Tools",
       "tooltip": {
         "shared": true,
@@ -512,38 +525,30 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "",
-  "schemaVersion": 31,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -557,5 +562,6 @@
   "timezone": "",
   "title": "main",
   "uid": "c61Pj2yGz",
-  "version": 12
+  "version": 13,
+  "weekStart": ""
 }
