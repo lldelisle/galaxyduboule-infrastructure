@@ -48,7 +48,7 @@ ansible-playbook galaxy.yml -K
 
 ## Add a new genome
 
-Modify [genomes.yml](./tools/genomes.yml) to add your new genome. Be aware that if the source is ucsc, you need to put the same value in id and dbkey. If it is a custom genome, put the fasta [here](s3://11705-388fd8245175782087c769d3c1f8dabd/custom_genomes/).
+Modify [genomes.yml](./tools/genomes.yml) to add your new genome. Be aware that if the source is ucsc, you need to put the same value in id and dbkey. If it is a custom genome, put the fasta on s3://11705-388fd8245175782087c769d3c1f8dabd/custom_genomes/.
 
 Download the shed_data_manager_conf.xml from the server:
 
