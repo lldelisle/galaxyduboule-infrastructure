@@ -383,6 +383,9 @@ tools:
 - name: datamash_transpose
   owner: iuc
   tool_panel_section_label: Text Manipulation
+- name: datamash_ops
+  owner: iuc
+  tool_panel_section_label: 'Join, Subtract and Group'
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
@@ -430,6 +433,10 @@ tools:
   tool_panel_section_label: 'Imaging'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
+  tool_shed_url: testtoolshed.g2.bx.psu.edu
+- name: omero_clean_rois_tables
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
