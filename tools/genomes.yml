@@ -259,3 +259,44 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm39_Mesp_Del_CTCFA_f1
+      description: mm39_Mesp_Del_CTCFA_f1
+      id: mm39_Mesp_Del_CTCFA_f1
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFA_f1.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_Del_CTCFB_f2
+      description: mm39_Mesp_Del_CTCFB_f2
+      id: mm39_Mesp_Del_CTCFB_f2
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFB_f2.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_Del_CTCFC_d6
+      description: mm39_Mesp_Del_CTCFC_d6
+      id: mm39_Mesp_Del_CTCFC_d6
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFC_d6.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_inversion3
+      description: mm39_Mesp_inversion3
+      id: mm39_Mesp_inversion3
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_inversion3.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+
