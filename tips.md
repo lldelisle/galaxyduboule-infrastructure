@@ -182,3 +182,17 @@ I just got a curious error about permission denied which I solved with
 ```bash
 sudo chown -R galaxy:galaxy /data/galaxy/galaxy/server/database/cache/
 ```
+
+## Node in drained status
+
+I got multiple times:
+```bash
+$ sinfo
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+main*        up   infinite      1  drain localhost
+```
+
+The solution is:
+```bash
+sudo scontrol update nodename=localhost state=idle
+```
