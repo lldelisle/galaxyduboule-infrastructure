@@ -299,3 +299,30 @@ install.packages(paste0("https://github.com/ome/rOMERO-gateway/releases/download
 library(romero.gateway)
 # I need to download OMERO Java libraries
 devtools::install_github("lldelisle/usefulLDfunctions")
+
+# 20230705 Installing velocytoR
+sudo su -
+R
+library(devtools)
+install_github("velocyto-team/velocyto.R")
+# I don't update anything
+# ERROR: dependency ‘pcaMethods’ is not available for package ‘velocyto.R’
+BiocManager::install("pcaMethods")
+# I don't update old packages
+install_github("velocyto-team/velocyto.R")
+# I don't update
+# /usr/bin/ld: cannot find -lboost_filesystem
+# /usr/bin/ld: cannot find -lboost_system
+# collect2: error: ld returned 1 exit status
+# make: *** [/usr/share/R/share/make/shlib.mk:10: velocyto.R.so] Error 1
+# ERROR: compilation failed for package ‘velocyto.R’
+quit()
+
+apt-get install libboost-filesystem-dev libboost-system-dev
+
+R
+library(devtools)
+install_github("velocyto-team/velocyto.R")
+quit()
+
+
