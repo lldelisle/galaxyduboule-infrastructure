@@ -326,3 +326,7 @@ install_github("velocyto-team/velocyto.R")
 quit()
 
 
+sudo apt-get install libcairo2-dev
+
+sudo R
+install.packages('ggrastr')
