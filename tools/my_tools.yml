@@ -386,6 +386,9 @@ tools:
 - name: datamash_ops
   owner: iuc
   tool_panel_section_label: 'Join, Subtract and Group'
+- name: freebayes
+  owner: devteam
+  tool_panel_section_label: Variant Calling
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
