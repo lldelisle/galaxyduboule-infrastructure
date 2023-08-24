@@ -376,10 +376,9 @@ tools:
 - name: cite_seq_count
   owner: iuc
   tool_panel_section_label: Single-cell
-# This tool takes too much memory
-# - name: velocyto_cli
-#   owner: iuc
-#   tool_panel_section_label: Single-cell
+- name: velocyto_cli
+  owner: iuc
+  tool_panel_section_label: Single-cell
 - name: datamash_transpose
   owner: iuc
   tool_panel_section_label: Text Manipulation
@@ -388,6 +387,12 @@ tools:
   tool_panel_section_label: 'Join, Subtract and Group'
 - name: freebayes
   owner: devteam
+  tool_panel_section_label: Variant Calling
+- name: lumpy_prep
+  owner: iuc
+  tool_panel_section_label: Variant Calling
+- name: lumpy_sv
+  owner: iuc
   tool_panel_section_label: Variant Calling
 - name: from_hicup_to_juicebox
   owner: lldelisle
