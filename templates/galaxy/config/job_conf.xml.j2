@@ -9,6 +9,10 @@
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000</param>
             <param id="tmp_dir">True</param>
         </destination>
+        <destination id="slurm20G" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=20000</param>
+            <param id="tmp_dir">True</param>
+        </destination>
         <destination id="slurm4c" runner="slurm" tags="4cores">
             <param id="nativeSpecification">--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000</param>
             <param id="tmp_dir">True</param>
@@ -41,5 +45,6 @@
         <tool id="rna_star" destination="slurm4cLM"/>
         <tool id="rna_starsolo" destination="slurm4cLM"/>
         <tool id="rna_star_index_builder_data_manager" destination="slurm4cLM"/>
+        <tool id="bedtools_coveragebed" destination="slurm20G"/>
      </tools>
 </job_conf>
