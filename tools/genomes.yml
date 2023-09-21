@@ -249,6 +249,16 @@ genomes:
       blob:
       indexers:
         - genome
+    - dbkey: calJac4
+      description: calJac4
+      id: calJac4
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
     - dbkey: mm39_hsp68_venus_h19_enh2
       description: mm39_hsp68_venus_h19_enh2
       id: mm39_hsp68_venus_h19_enh2
