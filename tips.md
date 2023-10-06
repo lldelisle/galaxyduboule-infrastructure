@@ -196,3 +196,23 @@ The solution is:
 ```bash
 sudo scontrol update nodename=localhost state=idle
 ```
+
+## Delete all shared workflow of a user who has been deleted
+
+Thanks to @hrhotz
+
+```bash
+# Become postgres user
+sudo su - postgres
+# Open the galaxy database
+psql -d galaxy
+# Find the user_id
+select * from stored_workflow where name like '%Ensembl%' and published = 'true';
+# Select and check the workflows to delete
+select * from stored_workflow where user_id = 11 and published = 'true';
+# Mark them as deleted
+update stored_workflow set deleted = 't' where user_id = 11 and published = 'true';
+# Check it changed:
+select * from stored_workflow where user_id = 11 and published = 'true';
+# Youhou
+```
