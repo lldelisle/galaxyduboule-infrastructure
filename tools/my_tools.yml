@@ -394,6 +394,18 @@ tools:
 - name: lumpy_sv
   owner: iuc
   tool_panel_section_label: Variant Calling
+- name: baredsc_1d
+  owner: iuc
+  tool_panel_section_label: Single-cell
+- name: baredsc_2d
+  owner: iuc
+  tool_panel_section_label: Single-cell
+- name: baredsc_combine_1d
+  owner: iuc
+  tool_panel_section_label: Single-cell
+- name: baredsc_combine_2d
+  owner: iuc
+  tool_panel_section_label: Single-cell
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
