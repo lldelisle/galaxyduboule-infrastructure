@@ -148,7 +148,6 @@ galaxy_config_templates:
 galaxy_local_tools:
   - splitbedGraphFromBed
   - ScaleBedGraph
-  - deeptools_bigwig_average
 
 
 # NGINX

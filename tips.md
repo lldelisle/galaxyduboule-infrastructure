@@ -216,3 +216,15 @@ update stored_workflow set deleted = 't' where user_id = 11 and published = 'tru
 select * from stored_workflow where user_id = 11 and published = 'true';
 # Youhou
 ```
+
+## Use tool whose profile is above
+
+I think I should not do that but...
+
+I wanted to use deeptools_bigwig_average but the profile was 22.05 and I have 22.01.
+
+First I installed the tool.
+
+Then I modified the profile version in `/data/galaxy/galaxy/var/shed_tools/toolshed.g2.bx.psu.edu/repos/bgruening/deeptools_bigwig_average/4a53856a5b85/deeptools_bigwig_average/deepTools_macros.xml`
+
+Then I added the tool to `/data/galaxy/galaxy/var/config/shed_tool_conf.xml`
