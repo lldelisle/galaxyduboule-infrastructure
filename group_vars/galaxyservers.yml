@@ -59,8 +59,8 @@ galaxy_user: {name: galaxy, shell: /bin/bash}
 galaxy_commit_id: release_22.01
 galaxy_force_checkout: true
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
-miniconda_version: "4.7.10"
-miniconda_manage_dependencies: false
+miniconda_version: 23.9
+miniconda_channels: ['conda-forge', 'defaults']
 
 # systemd
 galaxy_systemd_mode: mule

@@ -14,16 +14,16 @@
         state: restarted
   roles:
     - galaxyproject.postgresql
-    - role: natefoo.postgresql_objects
+    - role: galaxyproject.postgresql_objects
       become: true
       become_user: postgres
     - geerlingguy.pip
     - galaxyproject.galaxy
-    - role: uchida.miniconda
+    - role: galaxyproject.miniconda
       become: true
       become_user: "{{ galaxy_user.name }}"
     - usegalaxy_eu.galaxy_systemd
     - galaxyproject.nginx
     - galaxyproject.proftpd
     - dj-wasabi.telegraf
-    - usegalaxy_eu.gxadmin
+    - galaxyproject.gxadmin
