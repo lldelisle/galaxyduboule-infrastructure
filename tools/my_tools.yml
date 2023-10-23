@@ -409,6 +409,9 @@ tools:
 - name: column_maker
   owner: devteam
   tool_panel_section_label: 'Text Manipulation'
+- name: table_compute
+  owner: iuc
+  tool_panel_section_label: Text Manipulation
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
