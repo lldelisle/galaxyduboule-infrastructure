@@ -22,6 +22,34 @@ To remove:
 
 `gpasswd -d <username> galaxyduboule`
 
+## Allow them to mount server
+
+Create a file `mount_svnas1.sh` with adaptation of:
+```bash
+#!/bin/bash
+
+if mountpoint -q /home/ldelisle/mountDuboule
+then
+        echo "It's mounted, unmounting it.."
+        sudo umount /home/ldelisle/mountDuboule
+else
+    echo "It's not mounted, mounting it...."
+        sudo mount -o user=ldelisle,uid=$(id -u),gid=$(id -g),vers=3.0,domain=INTRANET //sv-nas1.rcp.epfl.ch/Duboule-Lab /home/ldelisle/mountDuboule
+fi
+```
+(For Zenk lab, use `//sv-nas1.rcp.epfl.ch/upzenk` in directory `mountZenkNas`)
+
+Ask the user to create `mountDuboule`
+
+Allow temporarily to run sudo:
+
+```bash
+ldelisle@updubsrv1:~$ sudo usermod -aG sudo mayran
+ldelisle@updubsrv1:~$ sudo deluser mayran sudo
+```
+
+The user needs to run the bash script while he has sudo rights.
+
 ## Grafana shows no more data
 
 It was because there was no space left on `/`.
