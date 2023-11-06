@@ -91,6 +91,10 @@ tools:
   owner: bgruening
   tool_panel_section_label: Collection Operations
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: concatenate_multiple_datasets
+  owner: artbio
+  tool_panel_section_label: Text Manipulation
+  tool_shed_url: toolshed.g2.bx.psu.edu
 - name: extract_element_from_collection
   owner: erasmus-medical-center
   tool_panel_section_label: Collection Operations
