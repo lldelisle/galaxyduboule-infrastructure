@@ -330,3 +330,6 @@ sudo apt-get install libcairo2-dev
 
 sudo R
 install.packages('ggrastr')
+
+# 20231107 install h5py and ipython:
+sudo apt-get -y install python3-h5py ipython3
