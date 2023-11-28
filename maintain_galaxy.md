@@ -3,7 +3,10 @@
 ## Install ephemeris/bioblend
 
 ```bash
-conda create -n bioblend bioblend ephemeris
+conda create -n lastVersion bioblend ephemeris
+# Or
+conda activate lastVersion
+conda install bioblend ephemeris
 ```
 
 ## Update galaxy tag
@@ -24,7 +27,7 @@ Update the file [my_tools.xml](./tools/my_tools.yml). If it is a tool which was 
 Then use `shed-tools` from ephemeris:
 
 ```bash
-conda activate bioblend
+conda activate lastVersion
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
@@ -72,7 +75,7 @@ python tools/make_fetch.py -g tools/genomes.yml -d tools/data_managers_tools.yml
 Fetch the missing genomes (if you uses a lot of ucsc genome you must rerun it multiple times):
 
 ```bash
-conda activate bioblend
+conda activate lastVersion
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 run-data-managers --config tools/fetch.yml -g https://galaxyduboule.epfl.ch -a $apikey
@@ -108,7 +111,7 @@ Update the file [data_managers_tools.yml](./tools/data_managers_tools.yml).
 Then use `shed-tools` from ephemeris:
 
 ```bash
-conda activate bioblend
+conda activate lastVersion
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
@@ -148,7 +151,7 @@ Locally, add it to [./useful_datasets]. URL add it to [create_History_with_Usefu
 Then run the python script:
 
 ```bash
-conda activate bioblend
+conda activate lastVersion
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Create the history
