@@ -333,3 +333,40 @@ install.packages('ggrastr')
 
 # 20231107 install h5py and ipython:
 sudo apt-get -y install python3-h5py ipython3
+
+# 20231128 auto mount at boot:
+# Update /etc/fstab
+# Update all except r packages:
+sudo apt-get update
+sudo apt list --upgradable
+# All r packages start with r-
+for package in $(sudo apt list --upgradable | grep "^r-" | cut -d "/" -f 1); do sudo apt-mark hold $package; done
+sudo apt-mark showhold
+# When I want to remove them from hold:
+# sudo apt-mark showhold
+sudo apt-get update
+# ...
+# update-initramfs: Generating /boot/initrd.img-5.15.0-89-generic
+# I: The initramfs will attempt to resume from /dev/dm-1
+# I: (/dev/mapper/vgubuntu-swap_1)
+# I: Set the RESUME variable to override this.
+# update-initramfs: Generating /boot/initrd.img-5.15.0-71-generic
+# I: The initramfs will attempt to resume from /dev/dm-1
+# I: (/dev/mapper/vgubuntu-swap_1)
+# I: Set the RESUME variable to override this.
+# ...                                        
+# Installing new version of config file /etc/grub.d/20_linux_xen ...
+# update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
+# ...
+# pam-auth-update: Local modifications to /etc/pam.d/common-*, not updating.
+# pam-auth-update: Run pam-auth-update --force to override.
+# ...
+# update-initramfs: Generating /boot/initrd.img-5.15.0-89-generic
+# I: The initramfs will attempt to resume from /dev/dm-1
+# I: (/dev/mapper/vgubuntu-swap_1)
+# I: Set the RESUME variable to override this.
+
+# Check if reboot is required
+ls /var/run/reboot-required
+
+# Reboot
