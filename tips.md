@@ -13,9 +13,14 @@ For example this happened when the server ran out of memory.
 ## Give access to the server to an EPFL member
 
 ```bash
-usermod -a -G galaxyduboule <username>
+usermod -aG galaxyduboule <username>
 # Then to create a home directory
+# Ask the user to login by ssh
+# Other solution but not recommanded:
 sudo su - <username>
+# If the user wants to have the sv-nas1 mounted
+# Update the /etc/fstab file
+# Then use mount -a
 ```
 
 To remove:
