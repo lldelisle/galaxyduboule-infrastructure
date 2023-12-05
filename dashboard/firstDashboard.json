@@ -250,6 +250,18 @@
               "key": "username",
               "operator": "!=",
               "value": "guillaume.jeanneret"
+            },
+            {
+              "condition": "AND",
+              "key": "username",
+              "operator": "!=",
+              "value": "antoine"
+            },
+            {
+              "condition": "AND",
+              "key": "username",
+              "operator": "!=",
+              "value": "leoxanne"
             }
           ]
         }
@@ -562,6 +574,6 @@
   "timezone": "",
   "title": "main",
   "uid": "c61Pj2yGz",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }
