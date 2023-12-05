@@ -261,3 +261,18 @@ First I installed the tool.
 Then I modified the profile version in `/data/galaxy/galaxy/var/shed_tools/toolshed.g2.bx.psu.edu/repos/bgruening/deeptools_bigwig_average/4a53856a5b85/deeptools_bigwig_average/deepTools_macros.xml`
 
 Then I added the tool to `/data/galaxy/galaxy/var/config/shed_tool_conf.xml`
+
+## Influxdb data is taking too much space on '/'
+
+First I stop influxdb:
+```bash
+sudo systemctl stop influxdb
+```
+Move the data to another place:
+```bash
+sudo mkdir /data/influxdb/
+sudo chown influxdb:influxdb /data/influxdb/
+sudo mv /var/lib/influxdb/data/ /data/influxdb/
+```
+Change the playbook by setting `influxdb_data_dir: "/data/influxdb_data/"`
+Run playbook 

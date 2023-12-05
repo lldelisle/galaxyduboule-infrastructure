@@ -34,3 +34,7 @@ grafana_server:
 #   enforce_domain: false
 
 grafana_url: "https://galaxyduboule.epfl.ch:3000/{{ grafana_hash }}/grafana/"
+
+# Influxdb:
+
+influxdb_data_dir: "/data/influxdb/data/"
