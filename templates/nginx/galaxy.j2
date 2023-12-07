@@ -53,15 +53,6 @@ server {
         expires 24h;
     }
 
-    # In Galaxy instances started with run.sh, many config files are
-    # automatically copied around. The welcome page is one of them. In
-    # production, this step is skipped, so we will manually alias that.
-    # location /static/{{ welcome_hash }}.html {
-    #     alias {{ galaxy_server_dir }}/static/welcome.html.sample;
-    #     expires 24h;
-
-    # }
-    # serve visualization and interactive environment plugin static content
     location ~ ^/plugins/(?<plug_type>[^/]+?)/((?<vis_d>[^/_]*)_?)?(?<vis_name>[^/]*?)/static/(?<static_file>.*?)$ {
         alias {{ galaxy_server_dir }}/config/plugins/$plug_type/;
         try_files $vis_d/${vis_d}_${vis_name}/static/$static_file
