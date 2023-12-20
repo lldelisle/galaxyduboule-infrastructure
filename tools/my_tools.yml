@@ -419,6 +419,9 @@ tools:
 - name: incucyte_stack_and_upload_omero
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
+- name: omero_hyperstack_to_gastruloid_measurements
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
@@ -461,10 +464,10 @@ tools:
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: omero_hyperstack_to_gastruloid_measurements
-  owner: lldelisle
-  tool_panel_section_label: 'Imaging'
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: omero_hyperstack_to_gastruloid_measurements
+#   owner: lldelisle
+#   tool_panel_section_label: 'Imaging'
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
