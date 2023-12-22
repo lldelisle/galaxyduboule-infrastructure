@@ -422,6 +422,9 @@ tools:
 - name: omero_hyperstack_to_gastruloid_measurements
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
+- name: omero_get_children_ids
+  owner: lldelisle
+  tool_panel_section_label: 'Imaging'
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
