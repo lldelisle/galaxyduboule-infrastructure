@@ -309,4 +309,14 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm39_invHoxd3-Hoxd4_cloneE10
+      description: mm39_invHoxd3-Hoxd4_cloneE10
+      id: mm39_invHoxd3-Hoxd4_cloneE10
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_invHoxd3-Hoxd4_cloneE10.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
 
