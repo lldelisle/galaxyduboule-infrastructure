@@ -370,3 +370,9 @@ sudo apt-get update
 ls /var/run/reboot-required
 
 # Reboot
+
+# Install scvelo
+sudo su - galaxy
+/data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create --override-channels --channel conda-forge -p /data/galaxy/galaxy/var/dependencies/_conda/envs/scVelo0.3.1 python=3.11 mamba
+. '/data/galaxy/galaxy/var/dependencies/_conda/bin/activate' /data/galaxy/galaxy/var/dependencies/_conda/envs/scVelo0.3.1
+mamba install --override-channels --channel conda-forge scvelo=0.3.1
