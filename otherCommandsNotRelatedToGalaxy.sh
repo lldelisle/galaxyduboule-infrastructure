@@ -376,3 +376,24 @@ sudo su - galaxy
 /data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create --override-channels --channel conda-forge -p /data/galaxy/galaxy/var/dependencies/_conda/envs/scVelo0.3.1 python=3.11 mamba
 . '/data/galaxy/galaxy/var/dependencies/_conda/bin/activate' /data/galaxy/galaxy/var/dependencies/_conda/envs/scVelo0.3.1
 mamba install --override-channels --channel conda-forge scvelo=0.3.1
+
+# Install monocle3
+sudo R
+devtools::install_github('cole-trapnell-lab/monocle3')                                                              # ERROR: dependencies ‘sf’, ‘spdep’ are not available for package ‘monocle3’   
+BiocManager::install('sf')
+# Configuration failed because libudunits2.so was not found.
+# I need to install sudo apt-get install libudunits2-dev
+BiocManager::install('sf')
+# configure: error: gdal-config not found or not executable.
+# sudo apt-get install libgdal-dev 
+BiocManager::install('sf')
+BiocManager::install('spdep')
+devtools::install_github('cole-trapnell-lab/monocle3')
+# Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+#   namespace ‘igraph’ 1.4.2 is being loaded, but >= 1.5.0 is required
+
+# Install gsl
+install.packages("gsl")
+# configure: error: gsl-config not found, is GSL installed?
+# I tried sudo apt-get install libgsl23
+# Same issue, I tried sudo apt-get install libgsl-dev
