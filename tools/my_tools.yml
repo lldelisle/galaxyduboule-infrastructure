@@ -469,8 +469,8 @@ tools:
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 # - name: omero_hyperstack_to_gastruloid_measurements
 #   owner: lldelisle
-#   tool_panel_section_label: 'Imaging'
 #   tool_shed_url: testtoolshed.g2.bx.psu.edu
+#   tool_panel_section_label: Old tools for compatibility
 - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
