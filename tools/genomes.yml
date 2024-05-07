@@ -319,4 +319,13 @@ genomes:
       blob: ""
       indexers:
         - genome
-
+    - dbkey: mm39_Cyp26a1_mCherry_PEST
+      description: mm39_Cyp26a1_mCherry_PEST
+      id: mm39_Cyp26a1_mCherry_PEST
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Cyp26a1_mCherry_PEST.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
