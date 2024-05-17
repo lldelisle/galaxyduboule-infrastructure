@@ -425,6 +425,16 @@ tools:
 - name: omero_get_children_ids
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
+- name: sinto_barcode
+  owner: iuc
+  # revisions: d1b34ac42b8f
+  tool_panel_section_label: Single-cell
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: sinto_fragments
+  owner: iuc
+  # revisions: 29e6bfb2cf49
+  tool_panel_section_label: Single-cell
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
