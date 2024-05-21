@@ -465,6 +465,9 @@ tools:
   # revisions: 2062be7efc84
   tool_panel_section_label: Single-cell
   tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: omero_get_full_images
+  owner: lldelisle
+  tool_panel_section_label: Imaging
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
