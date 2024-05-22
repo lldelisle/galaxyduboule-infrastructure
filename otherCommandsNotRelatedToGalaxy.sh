@@ -397,3 +397,8 @@ install.packages("gsl")
 # configure: error: gsl-config not found, is GSL installed?
 # I tried sudo apt-get install libgsl23
 # Same issue, I tried sudo apt-get install libgsl-dev
+
+# Create a conda env for bioblend to retrieve datasets/collections from galaxy
+sudo su - galaxy
+/data/galaxy/galaxy/var/dependencies/_conda/bin/python /data/galaxy/galaxy/var/dependencies/_conda/bin/conda create --override-channels --channel conda-forge --channel bioconda --channel defaults -p /data/galaxy/galaxy/var/dependencies/_conda/envs/bioblend bioblend
+
