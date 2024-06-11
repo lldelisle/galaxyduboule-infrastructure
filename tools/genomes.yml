@@ -329,3 +329,13 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm39_invd3d4_A110all1
+      description: mm39_invd3d4_A110all1
+      id: mm39_invd3d4_A110all1
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
