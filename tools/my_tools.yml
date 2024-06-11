@@ -471,6 +471,9 @@ tools:
 - name: omero_get_full_images
   owner: lldelisle
   tool_panel_section_label: Imaging
+- name: brew3r_r
+  owner: iuc
+  tool_panel_section_label: RNA Analysis
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
