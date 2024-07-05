@@ -7,6 +7,14 @@
     - name: Install Dependencies
       package:
         name: ['acl', 'git', 'make', 'virtualenv', 'python3-psycopg2', 'tar', 'bzip2']
+    - name: Install RHEL/CentOS/Rocky specific dependencies
+      package:
+        name: ['tmpwatch']
+      when: ansible_os_family == 'RedHat'
+    - name: Install Debian/Ubuntu specific dependencies
+      package:
+        name: ['tmpreaper']
+      when: ansible_os_family == 'Debian'
   handlers:
     - name: Restart Galaxy
       systemd:
