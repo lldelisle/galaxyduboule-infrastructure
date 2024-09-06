@@ -261,3 +261,9 @@ GALAXY_CONFIG_FILE=/data/galaxy/galaxy/config/galaxy.yml sh /data/galaxy/galaxy/
 # INFO:alembic.runtime.migration:Will assume transactional DDL.
 # INFO:alembic.runtime.migration:Context impl PostgresqlImpl.
 # INFO:alembic.runtime.migration:Will assume transactional DDL.
+
+# Change the config files the way I think is good to be compatible with 23.0
+# Using git-gat Step-4
+
+# Install dependencies
+ansible-galaxy install -p roles/ --force -r requirements.yml 

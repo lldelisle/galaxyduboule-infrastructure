@@ -1,4 +1,16 @@
 ---
+- hosts: dbservers
+  become: true
+  pre_tasks:
+    - name: Install Dependencies
+      package:
+        name: 'acl'
+  roles:
+    - galaxyproject.postgresql
+    - role: galaxyproject.postgresql_objects
+      become: true
+      become_user: postgres
+
 - hosts: galaxyservers
   become: true
   vars_files:
@@ -6,7 +18,7 @@
   pre_tasks:
     - name: Install Dependencies
       package:
-        name: ['acl', 'git', 'make', 'virtualenv', 'python3-psycopg2', 'tar', 'bzip2']
+        name: ['acl', 'bzip2', 'git', 'make', 'tar', 'python3-venv', 'python3-setuptools']
     - name: Install RHEL/CentOS/Rocky specific dependencies
       package:
         name: ['tmpwatch']
@@ -21,16 +33,11 @@
         name: galaxy
         state: restarted
   roles:
-    - galaxyproject.postgresql
-    - role: galaxyproject.postgresql_objects
-      become: true
-      become_user: postgres
     - geerlingguy.pip
     - galaxyproject.galaxy
     - role: galaxyproject.miniconda
       become: true
-      become_user: "{{ galaxy_user.name }}"
-    - usegalaxy_eu.galaxy_systemd
+      become_user: "{{ galaxy_user_name }}"
     - galaxyproject.nginx
     - galaxyproject.proftpd
     - dj-wasabi.telegraf

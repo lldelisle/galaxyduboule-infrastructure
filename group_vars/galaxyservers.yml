@@ -1,38 +1,5 @@
 ---
-# Python 3 support
-pip_virtualenv_command: /usr/bin/python3 -m virtualenv # usegalaxy_eu.tiaas2, galaxyproject.galaxy
 pip_package: python3-pip                               # geerlingguy.pip
-
-# PostgreSQL
-postgresql_objects_users:
-  - name: galaxy
-  - name: telegraf
-    password: null
-
-# And this to grant telegraf privileges to
-# SELECT values from the Galaxy database
-postgresql_objects_privileges:
-  - database: galaxy
-    roles: telegraf
-    privs: SELECT
-    objs: ALL_IN_SCHEMA
-
-postgresql_objects_databases:
-  - name: galaxy
-    owner: galaxy
-
-# PostgreSQL Backups
-# Set this to a directory where your database will be backed up (this can be any format supported by rsync, e.g. user@host:/path).
-# The most recent backup will be in a subdirectory named current.
-postgresql_backup_dir: ldelisle@jed.epfl.ch:/work/updub/backups_galaxyDB
-# Boolean, defaults to true, which will cause the current directory to be renamed prior to creating a new backup.
-# If set to false, current will be deleted (this is useful if you are using snapshots or some other means to archive previous backups).
-postgresql_backup_rotate: false
-postgresql_backup_local_dir: "~postgres/backups"
-# Do not back up everyday but every week:
-postgresql_backup_weekday: 0
-# User or address that should receive mail from the backup scripts.
-postgresql_backup_mail_recipient: lucille.delisle@epfl.ch
 # slurm
 slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
 slurm_nodes:
@@ -50,14 +17,14 @@ slurm_config:
   SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
 
 # Galaxy
-galaxy_create_user: true
-galaxy_separate_privileges: true
-galaxy_manage_paths: true
+galaxy_create_user: true # False by default, as e.g. you might have a 'galaxy' user provided by LDAP or AD.
+galaxy_separate_privileges: true # Best practices for security, configuration is owned by 'root' (or a different user) than the processes
+galaxy_manage_paths: true # False by default as your administrator might e.g. have root_squash enabled on NFS. Here we can create the directories so it's fine.
 galaxy_manage_cleanup: true
 galaxy_layout: root-dir
 galaxy_root: /data/galaxy/galaxy
-galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_22.05
+galaxy_user: {name: "{{ galaxy_user_name }}", shell: /bin/bash}
+galaxy_commit_id: release_23.0
 galaxy_force_checkout: true
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: 23.9
@@ -72,8 +39,9 @@ galaxy_config:
   galaxy:
     brand: "Galaxyduboule"
     welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
-    admin_users: lucille.delisle@epfl.ch
-    database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
+    admin_users:
+    - lucille.delisle@epfl.ch
+    database_connection: "postgresql:///{{ galaxy_db_name }}?host=/var/run/postgresql"
     file_path: /data/galaxy/data
     check_migrate_tools: false
     tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
@@ -81,6 +49,7 @@ galaxy_config:
     tool_sheds_config_file: "{{ galaxy_config_dir }}/tool_sheds_conf.xml"
     tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml,{{ galaxy_shed_tool_conf_file }}" # Use both customized tool_conf and shed_tool_conf
     user_preferences_extra_conf_path: "{{ galaxy_config_dir }}/user_preferences_extra_conf.yml"
+    nginx_x_accel_redirect_base: /_x_accel_redirect # nginx will serve the files at download
     statsd_host: localhost
     statsd_influxdb: true
     smtp_server: localhost # Use a local smtp server to be able to send email without specifying the password
@@ -93,43 +62,42 @@ galaxy_config:
     require_login: true # Only users can use galaxy
     allow_user_creation: false # Only the admins can create users
     allow_user_deletion: true
-    allow_user_impersonation: true
-    allow_user_dataset_purge: true
+    expose_dataset_path: true # Users will see the path and the command lines
     ftp_upload_dir: /data/galaxy/uploads
     ftp_upload_site: galaxyduboule
-    expose_dataset_path: true # Users will see the path and the command lines
     ftp_upload_purge: false # The ftp is not automatically purged on import.
     builds_file_path: "{{ galaxy_config_dir }}/builds.txt" # in order to only use the installed genomes a minimal build file is provided
     sanitize_all_html: false # Allow to see html pages in galaxy
-    nginx_x_accel_redirect_base: /_x_accel_redirect # nginx will serve the files at download
     conda_ensure_channels: conda-forge,bioconda,defaults,pytorch,ilastik-forge
     expose_potentially_sensitive_job_metrics: true
-  uwsgi:
-    socket: 127.0.0.1:8080
-    harakiri: 6000 # This increase the timeout to 6000 in case of large downloads
-    buffer-size: 16384
-    processes: 1
-    threads: 4
-    offload-threads: 2
-    static-map:
-      - /static={{ galaxy_server_dir }}/static
-      - /favicon.ico={{ galaxy_server_dir }}/static/favicon.ico
-    static-safe: client/galaxy/images
-    master: true
+    allow_user_impersonation: true
+    allow_user_dataset_purge: true
+  gravity:
+    process_manager: systemd
+    galaxy_root: "{{ galaxy_root }}/server"
+    galaxy_user: "{{ galaxy_user_name }}"
     virtualenv: "{{ galaxy_venv_dir }}"
-    pythonpath: "{{ galaxy_server_dir }}/lib"
-    module: galaxy.webapps.galaxy.buildapp:uwsgi_app()
-    thunder-lock: true
-    die-on-term: true
-    hook-master-start:
-      - unix_signal:2 gracefully_kill_them_all
-      - unix_signal:15 gracefully_kill_them_all
-    py-call-osafterfork: true
-    enable-threads: true
-    mule:
-      - lib/galaxy/main.py
-      - lib/galaxy/main.py
-    farm: job-handlers:1,2
+    gunicorn:
+      # listening options
+      bind: "unix:{{ galaxy_mutable_config_dir }}/gunicorn.sock"
+      # performance options
+      workers: 2
+      # Other options that will be passed to gunicorn
+      # This permits setting of 'secure' headers like REMOTE_USER (and friends)
+      # https://docs.gunicorn.org/en/stable/settings.html#forwarded-allow-ips
+      extra_args: '--forwarded-allow-ips="*"'
+      # This lets Gunicorn start Galaxy completely before forking which is faster.
+      # https://docs.gunicorn.org/en/stable/settings.html#preload-app
+      preload: true
+    celery:
+      concurrency: 2
+      loglevel: DEBUG
+    handlers:
+      handler:
+        processes: 2
+        pools:
+          - job-handlers
+          - workflow-schedulers
 
 # specifies config files to copy from the playbook
 galaxy_config_files:
@@ -154,7 +122,7 @@ galaxy_local_tools:
 # NGINX
 nginx_selinux_allow_local_connections: true
 nginx_servers:
- - redirect-ssl
+  - redirect-ssl
 nginx_ssl_servers:
   - galaxy
 nginx_enable_default_server: false
