@@ -19,7 +19,7 @@ ssh-copy-id -p ${port} ${username}@${guest}
 # ssh on the machine
 ssh -p ${port} ${username}@${guest}
 # Copy the ssh to helvetios:
-ssh-keygen 
+ssh-keygen
 ssh-copy-id helvetios.epfl.ch
 # Get the last version of the DB:
 scp helvetios.epfl.ch:/work/updub/2021-03-09.tar /tmp/
@@ -45,7 +45,7 @@ ln -s /data/postgresql /var/lib/postgresql
 ## Start ansible:
 
 # Install dependencies (use --force if you updated it);
-ansible-galaxy install -p roles/ --force -r requirements.yml 
+ansible-galaxy install -p roles/ --force -r requirements.yml
 
 # I think that first you need to put slurm:
 ansible-playbook slurm.yml -K
@@ -74,7 +74,7 @@ pg_restore --dbname=galaxy --verbose /tmp/2021-03-09.tar
 # pg_restore: warning: errors ignored on restore: 2
 
 # Prepare the backup sync:
-ssh-keygen 
+ssh-keygen
 ssh-copy-id ldelisle@helvetios.epfl.ch
 ssh -q -t ldelisle@helvetios.epfl.ch "mkdir -p /work/updub/backups_galaxyDB/current"
 # Logout as postgres
@@ -97,7 +97,7 @@ ansible-playbook galaxy.yml -K
 # ssh -p $port ${username}@${guest}
 # sudo grafana-cli plugins install grafana-image-renderer
 # sudo apt-get install cups fonts-liberation libx11-6 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrender1 libxtst6 libglib2.0-0 libnss3 libcups2  libdbus-1-3 libxss1 libxrandr2 libgtk-3-0 libgtk-3-0 libasound2
-# sudo systemctl restart grafana-server.service 
+# sudo systemctl restart grafana-server.service
 # # I can get a picture at http://galaxyduboule.epfl.ch:3000/render/d/c61Pj2yGz/main?orgId=1&width=1000&height=800&autofitpanels
 # # curl -H "Authorization: Bearer {{ api_grafana }}"  "http://localhost:3000/render/d/c61Pj2yGz/main?orgId=1&width=1000&height=800&autofitpanels" > test.png
 
@@ -132,15 +132,15 @@ sudo systemctl restart galaxy
 # reported the tools without the version in the my_tools.yml
 
 # Reinstallation:
-shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/my_tools.yml 
+shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/my_tools.yml
 shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/tools_in_wf.yml
-shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/data_managers_tools.yml 
+shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/data_managers_tools.yml
 # I need to restart galaxy
 ssh -p $port ${username}@${guest}
 sudo systemctl restart galaxy
 # I also need to make shed_data_manager_conf.xml downloadable
 sudo cp /data/galaxy/galaxy/var/config/shed_data_manager_conf.xml /tmp/
-sudo chmod 777 /tmp/shed_data_manager_conf.xml 
+sudo chmod 777 /tmp/shed_data_manager_conf.xml
 exit
 
 scp -P $port ${username}@${guest}:/tmp/shed_data_manager_conf.xml tools/
@@ -295,3 +295,70 @@ sudo galaxyctl status
 # To show all installed unit files use 'systemctl list-unit-files'.
 
 # I convert my job_conf.xml.j2 to yaml in galaxyservers.yml group_vars
+# Run the playbook, everything looks fine
+
+# I check the status
+sudo galaxyctl status
+#   UNIT LOAD ACTIVE SUB DESCRIPTION
+# 0 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+# Try what Helena suggested:
+sudo galaxyctl -c /data/galaxy/galaxy/config/galaxy.yml update
+# Adding systemd unit galaxy-gunicorn.service
+# Adding systemd unit galaxy-celery.service
+# Adding systemd unit galaxy-celery-beat.service
+# Adding systemd unit galaxy-handler@.service
+# Adding systemd unit galaxy.target
+# Created symlink /etc/systemd/system/multi-user.target.wants/galaxy.target → /etc/systemd/system/galaxy.target.
+sudo rm /etc/systemd/system/galaxy.service
+
+# Check the status:
+sudo galaxyctl status
+#   UNIT                       LOAD   ACTIVE   SUB  DESCRIPTION
+#   galaxy-celery-beat.service loaded inactive dead Galaxy celery-beat
+#   galaxy-celery.service      loaded inactive dead Galaxy celery
+#   galaxy-gunicorn.service    loaded inactive dead Galaxy gunicorn
+#   galaxy-handler@0.service   loaded inactive dead Galaxy handler (process 0)
+#   galaxy-handler@1.service   loaded inactive dead Galaxy handler (process 1)
+#   galaxy.target              loaded inactive dead Galaxy
+
+# LOAD   = Reflects whether the unit definition was properly loaded.
+# ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+# SUB    = The low-level unit activation state, values depend on unit type.
+
+# 6 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+# Try to restart
+sudo galaxyctl restart galaxy
+# Warning: Not a known instance or service name: galaxy
+# Error: No provided names are known instance or service names
+sudo galaxyctl restart galaxy.target
+# Warning: Not a known instance or service name: galaxy.target
+# Error: No provided names are known instance or service names
+
+# The command line was simpler:
+sudo galaxyctl restart
+
+# Then I checked what was happening:
+sudo galaxyctl restart
+# And I noticed:
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]: Failed to initialize Galaxy application
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]: Traceback (most recent call last):
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:   File "/data/galaxy/galaxy/server/lib/galaxy/jobs/runners/drmaa.py", line 70, in __init__
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:     drmaa = __import__("drmaa")
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:   File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/drmaa/__init__.py", line 65, in <module>
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:     from .session import JobInfo, JobTemplate, Session
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:   File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/drmaa/session.py", line 39, in <module>
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:     from drmaa.helpers import (adapt_rusage, Attribute, attribute_names_iterator,
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:   File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/drmaa/helpers.py", line 36, in <module>
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:     from drmaa.wrappers import (drmaa_attr_names_t, drmaa_attr_values_t,
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:   File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/drmaa/wrappers.py", line 52, in <module>
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]:     raise RuntimeError(('Could not find drmaa library.  Please specify its ' +
+# Sep 06 16:15:14 updubsrv1 galaxyctl[3275401]: RuntimeError: Could not find drmaa library.  Please specify its full path using the environment variable DRMAA_LIBRARY_PATH
+
+# Indeed in git-gat it is specified.
+
+# Change this parameter + other updates
+ansible-galaxy install -p roles/ --force -r requirements.yml 

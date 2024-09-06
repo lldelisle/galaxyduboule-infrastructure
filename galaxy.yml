@@ -27,21 +27,17 @@
       package:
         name: ['tmpreaper']
       when: ansible_os_family == 'Debian'
-  handlers:
-    - name: Restart Galaxy
-      systemd:
-        name: galaxy
-        state: restarted
   roles:
-    - geerlingguy.pip
+    - galaxyproject.repos
+    - galaxyproject.slurm
     - galaxyproject.galaxy
     - role: galaxyproject.miniconda
       become: true
       become_user: "{{ galaxy_user_name }}"
     - galaxyproject.nginx
     - galaxyproject.proftpd
-    - dj-wasabi.telegraf
     - galaxyproject.gxadmin
+    - dj-wasabi.telegraf
   post_tasks:
     - name: Setup gxadmin cleanup task
       ansible.builtin.cron:
@@ -50,3 +46,6 @@
         minute: "0"
         hour: "0"
         job: "SHELL=/bin/bash source {{ galaxy_venv_dir }}/bin/activate &&  GALAXY_LOG_DIR=/tmp/gxadmin/ GALAXY_ROOT={{ galaxy_root }}/server GALAXY_CONFIG_FILE={{ galaxy_config_file }} /usr/local/bin/gxadmin galaxy cleanup 60"
+    - name: Install slurm-drmaa
+      package:
+        name: slurm-drmaa1

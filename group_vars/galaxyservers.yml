@@ -1,21 +1,4 @@
 ---
-pip_package: python3-pip                               # geerlingguy.pip
-# slurm
-slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
-slurm_nodes:
-  - name: localhost    # Name of our host
-    CPUs: 27           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27
-    RealMemory: 380000 # htop gives 386942MB -> I put 385000 -> following the disaster of March 18th I put 380000 to be on the safe side
-    ThreadsPerCore: 1
-slurm_partitions:
-  - name: main
-    Nodes: localhost
-    Default: YES
-slurm_config:
-  SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
-  SelectType: select/cons_res
-  SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
-
 # Galaxy
 galaxy_create_user: true # False by default, as e.g. you might have a 'galaxy' user provided by LDAP or AD.
 galaxy_separate_privileges: true # Best practices for security, configuration is owned by 'root' (or a different user) than the processes
@@ -30,11 +13,6 @@ miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: 23.9
 miniconda_channels: ['conda-forge', 'defaults']
 
-# systemd
-galaxy_systemd_mode: mule
-galaxy_zergpool_listen_addr: 127.0.0.1:8080
-galaxy_restart_handler_name: "Restart Galaxy"
-
 # Galaxy Job Configuration
 galaxy_job_config:
   runners:
@@ -43,6 +21,7 @@ galaxy_job_config:
       workers: 4
     slurm:
       load: galaxy.jobs.runners.slurm:SlurmJobRunner
+      drmaa_library_path: /usr/lib/slurm-drmaa/lib/libdrmaa.so.1
       workers: 4
   handling:
     assign: ['db-skip-locked']
@@ -207,33 +186,48 @@ nginx_ssl_servers:
 nginx_enable_default_server: false
 nginx_conf_http:
   client_max_body_size: 1g # This increases the upload size
+  # gzip: "on" # This is enabled by default in Ubuntu, and the duplicate directive will cause a crash.
+  gzip_proxied: "any"
+  gzip_static: "on"   # The ngx_http_gzip_static_module module allows sending precompressed files with the ".gz" filename extension instead of regular files.
+  gzip_vary: "on"
+  gzip_min_length: 128
+  gzip_comp_level: 6  # Tradeoff of better compression for slightly more CPU time.
+  gzip_types: |
+      text/plain
+      text/css
+      text/xml
+      text/javascript
+      application/javascript
+      application/x-javascript
+      application/json
+      application/xml
+      application/xml+rss
+      application/xhtml+xml
+      application/x-font-ttf
+      application/x-font-opentype
+      image/png
+      image/svg+xml
+      image/x-icon
 # The SV-IT is in charge of the certificate
 # nginx_conf_ssl_certificate: galaxyduboule.epfl.ch.pem # This file must be in files/ssl/
 # nginx_conf_ssl_certificate_key: galaxyduboule.epfl.ch.key # This is the name of the destination
 # sslkeys: "{{ vault_sslkeys }}"
 
-# Proftpd:
-galaxy_ftp_upload_dir: /data/galaxy/uploads
-
-proftpd_display_connect: |
-  example.org FTP server
-
-  Unauthorized access is prohibited
-proftpd_galaxy_auth: yes
-proftpd_options:
-  - User: galaxy
-  - Group: galaxy
-proftpd_sql_db: galaxy@/var/run/postgresql
-proftpd_sql_user: galaxy
-proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were uploaded by the SV-IT
-proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were uploaded by the SV-IT
-proftpd_global_options:
-  - PassivePorts: 30000 40000
-proftpd_use_mod_tls_shmcache: false # New option to not use this module
-proftpd_tls_options: NoSessionReuseRequired # Option to allow filezilla to work...
-
-# Drmaa
-galaxy_systemd_zergling_env: DRMAA_LIBRARY_PATH="/usr/lib/slurm-drmaa/lib/libdrmaa.so.1"
+# Slurm
+slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
+slurm_nodes:
+  - name: localhost    # Name of our host
+    CPUs: 27           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27
+    RealMemory: 380000 # htop gives 386942MB -> I put 385000 -> following the disaster of March 18th I put 380000 to be on the safe side
+    ThreadsPerCore: 1
+slurm_partitions:
+  - name: main
+    Nodes: localhost
+    Default: YES
+slurm_config:
+  SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
+  SelectType: select/cons_res
+  SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
 
 # Telegraf for grafana
 telegraf_plugins_default:
@@ -267,3 +261,22 @@ telegraf_plugins_extra:
       - timeout = "10s"
       - data_format = "influx"
       - interval = "15s"
+
+# Proftpd:
+proftpd_galaxy_auth: yes
+galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"
+proftpd_display_connect: |
+  {{ inventory_hostname }} FTP server
+
+  Unauthorized access is prohibited
+proftpd_options:
+  - User: galaxy
+  - Group: galaxy
+proftpd_sql_db: galaxy@/var/run/postgresql
+proftpd_sql_user: galaxy
+proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were uploaded by the SV-IT
+proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were uploaded by the SV-IT
+proftpd_global_options:
+  - PassivePorts: 30000 40000
+proftpd_use_mod_tls_shmcache: false # New option to not use this module
+proftpd_tls_options: NoSessionReuseRequired # Option to allow filezilla to work...
