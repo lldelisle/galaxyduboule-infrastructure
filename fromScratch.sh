@@ -284,3 +284,14 @@ ansible-playbook galaxy.yml -K
 # fatal: [galaxyduboule.epfl.ch]: FAILED! => {"changed": false, "msg": "The new nginx configuration failed to install or validate, so the previous configuration has been restored. Please investigate the errors above for more information."}
 
 # I change the galaxy.j2 and the playbook goes to the end.
+
+# Check the status with
+# On the galaxy machine
+
+sudo galaxyctl status
+# Dynamic handlers are configured in Gravity but Galaxy is not configured to assign jobs to handlers dynamically, so these handlers will not handle jobs. Set the job handler assignment method in the Galaxy job configuration to `db-skip-locked` or `db-transaction-isolation` to fix this.
+#   UNIT LOAD ACTIVE SUB DESCRIPTION
+# 0 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+# I convert my job_conf.xml.j2 to yaml in galaxyservers.yml group_vars
