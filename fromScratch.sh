@@ -266,4 +266,21 @@ GALAXY_CONFIG_FILE=/data/galaxy/galaxy/config/galaxy.yml sh /data/galaxy/galaxy/
 # Using git-gat Step-4
 
 # Install dependencies
-ansible-galaxy install -p roles/ --force -r requirements.yml 
+ansible-galaxy install -p roles/ --force -r requirements.yml
+
+# Run playbook
+ansible-playbook galaxy.yml -K
+
+# Stopped it in the middle as I forgot to mv the venv
+# On galaxy server
+sudo mv /data/galaxy/galaxy/venv/ /data/galaxy/galaxy/venv-old
+
+# Locally
+# Run playbook
+ansible-playbook galaxy.yml -K
+
+# Everything seems to work except:
+# TASK [galaxyproject.nginx : Fail due to previous configuration installation or validation errors] *****************************************************************************************************************************
+# fatal: [galaxyduboule.epfl.ch]: FAILED! => {"changed": false, "msg": "The new nginx configuration failed to install or validate, so the previous configuration has been restored. Please investigate the errors above for more information."}
+
+# I change the galaxy.j2 and the playbook goes to the end.
