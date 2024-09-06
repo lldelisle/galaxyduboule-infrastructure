@@ -237,4 +237,27 @@ sudo apt autoremove
 sudo systemctl stop galaxy
 
 # Then I change the release and run the playbook
+# Locally
 ansible-playbook galaxy.yml -K
+
+# I get an error at the build client stage but I ignore it
+# I do the migration manually
+# On the galaxy machine
+sudo su - galaxy
+
+GALAXY_CONFIG_FILE=/data/galaxy/galaxy/config/galaxy.yml sh /data/galaxy/galaxy/server/manage_db.sh -c /data/galaxy/galaxy/config/galaxy.yml upgrade
+# Traceback (most recent call last):
+#   File "/data/galaxy/galaxy/server/./scripts/db.py", line 11, in <module>
+#     from galaxy.model.migrations.dbscript import ParserBuilder
+#   File "/data/galaxy/galaxy/server/lib/galaxy/model/__init__.py", line 43, in <module>
+#     import sqlalchemy
+# ModuleNotFoundError: No module named 'sqlalchemy'
+
+# Try to activate the venv
+. /data/galaxy/galaxy/venv/bin/activate
+GALAXY_CONFIG_FILE=/data/galaxy/galaxy/config/galaxy.yml sh /data/galaxy/galaxy/server/manage_db.sh -c /data/galaxy/galaxy/config/galaxy.yml upgrade
+
+# INFO:alembic.runtime.migration:Context impl PostgresqlImpl.
+# INFO:alembic.runtime.migration:Will assume transactional DDL.
+# INFO:alembic.runtime.migration:Context impl PostgresqlImpl.
+# INFO:alembic.runtime.migration:Will assume transactional DDL.
