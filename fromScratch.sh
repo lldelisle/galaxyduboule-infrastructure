@@ -225,3 +225,16 @@ sudo apt-get upgrade
 
 # Clean:
 sudo apt autoremove
+
+##################
+### BIG UPDATE ###
+##################
+
+# Follow: https://training.galaxyproject.org/training-material/topics/admin/faqs/galaxy-update-22.05.html
+
+# First I stop galaxy
+# On the galaxy machine
+sudo systemctl stop galaxy
+
+# Then I change the release and run the playbook
+ansible-playbook galaxy.yml -K

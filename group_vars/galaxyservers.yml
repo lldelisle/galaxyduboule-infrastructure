@@ -57,7 +57,7 @@ galaxy_manage_cleanup: true
 galaxy_layout: root-dir
 galaxy_root: /data/galaxy/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_22.01
+galaxy_commit_id: release_22.05
 galaxy_force_checkout: true
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: 23.9
