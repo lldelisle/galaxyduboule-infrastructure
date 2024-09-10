@@ -73,27 +73,27 @@ galaxy_job_config:
 
   tools:
   - id: bowtie2
-    handler: slurm4c
+    environment: slurm4c
   - id: cite_seq_count
-    handler: slurm4c
+    environment: slurm4c
   - id: cufflinks
-    handler: slurm4c
+    environment: slurm4c
   - id: cutadapt
-    handler: slurm4c
+    environment: slurm4c
   - id: hicup_hicup
-    handler: slurm8c
+    environment: slurm8c
   - id: hicup_mapper
-    handler: slurm8c
+    environment: slurm8c
   - id: omero_hyperstack_to_gastruloid_measurements
-    handler: slurm8c
+    environment: slurm8c
   - id: rna_star
-    handler: slurm4cLM
+    environment: slurm4cLM
   - id: rna_starsolo
-    handler: slurm4cLM
+    environment: slurm4cLM
   - id: rna_star_index_builder_data_manager
-    handler: slurm4cLM
+    environment: slurm4cLM
   - id: bedtools_coveragebed
-    handler: slurm100G
+    environment: slurm100G
 
 galaxy_config:
   galaxy:
