@@ -474,6 +474,58 @@ tools:
 - name: brew3r_r
   owner: iuc
   tool_panel_section_label: RNA Analysis
+- name: 2d_auto_threshold
+  owner: imgteam
+  # revisions: 3df9f0a4bf34
+  # revisions: 0c777d708acc
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: 2d_histogram_equalization
+  owner: imgteam
+  # revisions: 77f7159d775a
+  # revisions: 70316d792fc9
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: 2d_simple_filter
+  owner: imgteam
+  # revisions: f70b215d155c
+  # revisions: dba87c4b32d3
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: bfconvert
+  owner: imgteam
+  # revisions: 85edbb7a436b
+  # revisions: 10eed33aa9b2
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: binary2labelimage
+  owner: imgteam
+  # revisions: 9bb446db4a1e
+  # revisions: 6e65fd971e13
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: count_objects
+  owner: imgteam
+  # revisions: b58447a2eed2
+  # revisions: 5bf8eb50b280
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: image_info
+  owner: imgteam
+  # revisions: 7b6d9412c7f8
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: overlay_images
+  owner: imgteam
+  # revisions: 22ff7c705a83
+  # revisions: b74693340624
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: unzip
+  owner: imgteam
+  # revisions: 57f0914ddb7b
+  tool_panel_section_label: Collection Operations
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
