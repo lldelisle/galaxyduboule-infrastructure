@@ -526,6 +526,28 @@ tools:
   # revisions: 57f0914ddb7b
   tool_panel_section_label: Collection Operations
   tool_shed_url: https://toolshed.g2.bx.psu.edu/
+- name: imagej2_adjust_threshold_binary
+  owner: imgteam
+  tool_panel_section_label: Imaging
+- name: imagej2_watershed_binary
+  owner: imgteam
+  tool_panel_section_label: Imaging
+- name: imagej2_crop
+  owner: bgruening
+  tool_panel_section_label: Imaging
+- name: imagej2_filter
+  owner: bgruening
+  tool_panel_section_label: Imaging
+- name: imagej2_analyze_particles_binary
+  owner: imgteam
+  tool_panel_section_label: Imaging
+- name: omero_roi_import
+  owner: ufz
+  tool_panel_section_label: Imaging
+- name: 2d_feature_extraction
+  owner: imgteam
+  tool_panel_section_label: Imaging
+  tool_shed_url: https://toolshed.g2.bx.psu.edu/
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
