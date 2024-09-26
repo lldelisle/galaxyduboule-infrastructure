@@ -533,10 +533,10 @@ tools:
   owner: imgteam
   tool_panel_section_label: Imaging
 - name: imagej2_crop
-  owner: bgruening
+  owner: imgteam
   tool_panel_section_label: Imaging
 - name: imagej2_filter
-  owner: bgruening
+  owner: imgteam
   tool_panel_section_label: Imaging
 - name: imagej2_analyze_particles_binary
   owner: imgteam
