@@ -362,3 +362,112 @@ sudo galaxyctl restart
 
 # Change this parameter + other updates
 ansible-galaxy install -p roles/ --force -r requirements.yml 
+
+# When it failed (20240926):
+# changed: [galaxyduboule.epfl.ch] => 
+#   msg: Galaxy version changed from 'a5da8acfc581c77de8d5c5b460ee8e433c295c6e' to 'd914cac22f8fb086f07b5a667cf770b3ac2cba54'
+
+# TASK [galaxyproject.galaxy : Upgrade Galaxy DB] **************************************************************************************************************************************
+# fatal: [galaxyduboule.epfl.ch]: FAILED! => changed=true 
+#   cmd:
+#   - /data/galaxy/galaxy/venv/bin/python
+#   - /data/galaxy/galaxy/server/scripts/manage_db.py
+#   - -c
+#   - /data/galaxy/galaxy/config/galaxy.yml
+#   - upgrade
+#   delta: '0:00:10.522205'
+#   end: '2024-09-26 16:05:51.078271'
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2024-09-26 16:05:40.556066'
+#   stderr: |-
+#     INFO:alembic.runtime.migration:Context impl PostgresqlImpl.
+#     INFO:alembic.runtime.migration:Will assume transactional DDL.
+#     INFO:alembic.runtime.migration:Running upgrade c63848676caf -> 04288b6a5b25, make dataset uuids unique
+#     Traceback (most recent call last):
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+#         self.dialect.do_execute(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 924, in do_execute
+#         cursor.execute(statement, parameters)
+#     psycopg2.errors.UndefinedFunction: function gen_random_uuid() does not exist
+#     LINE 3:         SET uuid=REPLACE(gen_random_uuid()::text, '-', '')
+#                                      ^
+#     HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+  
+  
+#     The above exception was the direct cause of the following exception:
+  
+#     Traceback (most recent call last):
+#       File "/data/galaxy/galaxy/server/scripts/manage_db.py", line 48, in <module>
+#         run()
+#       File "/data/galaxy/galaxy/server/scripts/manage_db.py", line 31, in run
+#         result = lmdb.run_upgrade()
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/scripts.py", line 182, in run_upgrade
+#         self._upgrade(gxy_db_url, GXY)
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/scripts.py", line 202, in _upgrade
+#         am.upgrade(model)
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/__init__.py", line 79, in upgrade
+#         command.upgrade(self.alembic_cfg, revision)
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/command.py", line 403, in upgrade
+#         script.run_env()
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/script/base.py", line 583, in run_env
+#         util.load_python_file(self.dir, "env.py")
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+#         module = load_module_py(module_id, path)
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+#         spec.loader.exec_module(module)  # type: ignore
+#       File "<frozen importlib._bootstrap_external>", line 848, in exec_module
+#       File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/alembic/env.py", line 146, in <module>
+#         run_migrations_online()
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/alembic/env.py", line 40, in run_migrations_online
+#         _configure_and_run_migrations_online(url)
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/alembic/env.py", line 123, in _configure_and_run_migrations_online
+#         context.run_migrations()
+#       File "<string>", line 8, in run_migrations
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/runtime/environment.py", line 948, in run_migrations
+#         self.get_context().run_migrations(**kw)
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/alembic/runtime/migration.py", line 627, in run_migrations
+#         step.migration_fn(**kw)
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/alembic/versions_gxy/04288b6a5b25_make_dataset_uuids_unique.py", line 70, in upgrade
+#         _randomize_uuids_for_purged_datasets_with_duplicated_uuids(connection)
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/migrations/alembic/versions_gxy/04288b6a5b25_make_dataset_uuids_unique.py", line 225, in _randomize_uuids_for_purged_datasets_with_duplicated_uuids
+#         connection.execute(updated_purged_uuids)
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+#         return meth(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+#         return connection._execute_clauseelement(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+#         ret = self._execute_context(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+#         return self._exec_single_context(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+#         self._handle_dbapi_exception(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2353, in _handle_dbapi_exception
+#         raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+#         self.dialect.do_execute(
+#       File "/data/galaxy/galaxy/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 924, in do_execute
+#         cursor.execute(statement, parameters)
+#     sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedFunction) function gen_random_uuid() does not exist
+#     LINE 3:         SET uuid=REPLACE(gen_random_uuid()::text, '-', '')
+#                                      ^
+#     HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+  
+#     [SQL:
+#             UPDATE dataset
+#             SET uuid=REPLACE(gen_random_uuid()::text, '-', '')
+#             WHERE uuid IN (SELECT uuid FROM temp_duplicate_datasets_purged) AND purged = true
+#             ]
+#     (Background on this error at: https://sqlalche.me/e/20/f405)
+#   stderr_lines: <omitted>
+#   stdout: ''
+#   stdout_lines: <omitted>
+
+# Found on galaxyproject/admins that other people already reported this.
+sudo su - postgres
+psql -d galaxy
+CREATE EXTENSION pgcrypto;
+
+# TASK [galaxyproject.proftpd : Set OS-specific variables]
+# ERROR! [DEPRECATED]: ansible.builtin.include has been removed. Use include_tasks or import_tasks instead. This feature was removed from ansible-core in a release after 2023-05-16. Please update your playbooks.
