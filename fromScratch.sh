@@ -471,3 +471,6 @@ CREATE EXTENSION pgcrypto;
 
 # TASK [galaxyproject.proftpd : Set OS-specific variables]
 # ERROR! [DEPRECATED]: ansible.builtin.include has been removed. Use include_tasks or import_tasks instead. This feature was removed from ansible-core in a release after 2023-05-16. Please update your playbooks.
+
+# I remove this role
+

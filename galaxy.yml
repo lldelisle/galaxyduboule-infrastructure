@@ -35,7 +35,7 @@
       become: true
       become_user: "{{ galaxy_user_name }}"
     - galaxyproject.nginx
-    - galaxyproject.proftpd
+    # - galaxyproject.proftpd
     - galaxyproject.gxadmin
     - dj-wasabi.telegraf
   post_tasks:
