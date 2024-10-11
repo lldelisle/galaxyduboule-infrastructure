@@ -47,6 +47,9 @@ tools:
   owner: devteam
   tool_panel_section_label: 'NGS: Mapping'
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: bwa
+  owner: devteam
+  tool_panel_section_label: 'NGS: Mapping'
 - name: samtools_view
   owner: iuc
   tool_panel_section_label: 'NGS: SAM Tools'
