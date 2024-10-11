@@ -1,0 +1,402 @@
+data_managers:
+- data_table_reload:
+  - rnastar_index2x_versioned
+  id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_star_index_builder/rna_star_index_builder_data_manager/2.7.4a
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+- data_table_reload:
+  - homer_preparse
+  id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_homer_preparse/homer_genome_preparse_data_manager/4.11
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+  - size: 100
+- data_table_reload:
+  - homer_preparse
+  id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_homer_preparse/homer_genome_preparse_data_manager/4.11
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+  - size: 200
+- data_table_reload:
+  - homer_preparse
+  id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_homer_preparse/homer_genome_preparse_data_manager/4.11
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+  - size: 500
+- data_table_reload:
+  - homer_preparse
+  id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_homer_preparse/homer_genome_preparse_data_manager/4.11
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+  - size: 1000
+- data_table_reload:
+  - bowtie2_indexes
+  - tophat2_indexes
+  id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_bowtie2_index_builder/bowtie2_index_builder_data_manager/2.4.4+galaxy0
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+- data_table_reload:
+  - fasta_indexes
+  id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_sam_fasta_index_builder/sam_fasta_index_builder/0.0.5
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+- data_table_reload:
+  - bwa_mem_indexes
+  id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_bwa_mem_index_builder/bwa_mem_index_builder_data_manager/0.0.5
+  items: '{{ genomes }}'
+  params:
+  - all_fasta_source: '{{ item.id }}'
+  - sequence_name: '{{ item.name }}'
+  - sequence_id: '{{ item.id }}'
+genomes:
+# - blob: null
+#   checksum: null
+#   dbkey: mm9
+#   description: mm9
+#   doi: null
+#   id: mm9
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+- blob: null
+  checksum: null
+  dbkey: hg19
+  description: hg19
+  doi: null
+  id: hg19
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: null
+  checksum: null
+  dbkey: hg38
+  description: hg38
+  doi: null
+  id: hg38
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: null
+  checksum: null
+  dbkey: galGal6
+  description: galGal6
+  doi: null
+  id: galGal6
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: null
+  checksum: null
+  dbkey: danRer11
+  description: danRer11
+  doi: null
+  id: danRer11
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+# - blob: null
+#   checksum: null
+#   dbkey: tetNig2
+#   description: tetNig2
+#   doi: null
+#   id: tetNig2
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+- blob: null
+  checksum: null
+  dbkey: mm39
+  description: mm39
+  doi: null
+  id: mm39
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: null
+  checksum: null
+  dbkey: mm10_UCSC
+  description: mm10_UCSC
+  doi: null
+  id: mm10_UCSC
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm10_UCSC.fa
+  version: null
+# - blob: From http://ftp.ensembl.org/pub/release-103/fasta/tetraodon_nigroviridis/dna/Tetraodon_nigroviridis.TETRAODON8.dna.toplevel.fa.gz
+#     but UCSC format
+#   checksum: null
+#   dbkey: Tetraodon8
+#   description: Tetraodon8
+#   doi: null
+#   id: Tetraodon8
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/Tetraodon8_UCSC.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_InvCS65-SB7lacZ
+#   description: mm10_InvCS65-SB7lacZ
+#   doi: null
+#   id: mm10_InvCS65-SB7lacZ
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_InvCS65-SB7lacZ.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13insCTCF
+#   description: mm10_deli9-13insCTCF
+#   doi: null
+#   id: mm10_deli9-13insCTCF
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13insCTCF_delB
+#   description: mm10_deli9-13insCTCF_delB
+#   doi: null
+#   id: mm10_deli9-13insCTCF_delB
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_II1TDOMlacZr4-CB542
+#   description: mm10_II1TDOMlacZr4-CB542
+#   doi: null
+#   id: mm10_II1TDOMlacZr4-CB542
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_II1TDOMlacZr4-CB542.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_delTT
+#   description: mm10_delTT
+#   doi: null
+#   id: mm10_delTT
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_delTT.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+#   description: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+#   doi: null
+#   id: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+#   description: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+#   doi: null
+#   id: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+#   description: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+#   doi: null
+#   id: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/BAC_43m7-1_TETRAODON8_chr8_6699347-6844622.fa
+#   version: null
+# - blob: using vcf of SPRET cf 20211019_F1_Chase
+#   checksum: null
+#   dbkey: mm10_dbSNP142_SPRET
+#   description: mm10_dbSNP142_SPRET
+#   doi: null
+#   id: mm10_dbSNP142_SPRET
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_dbSNP142_SPRET.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13insCTCF_delB_T16-2F
+#   description: mm10_deli9-13insCTCF_delB_T16-2F
+#   doi: null
+#   id: mm10_deli9-13insCTCF_delB_T16-2F
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-2F.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13insCTCF_delB_T16-5C
+#   description: mm10_deli9-13insCTCF_delB_T16-5C
+#   doi: null
+#   id: mm10_deli9-13insCTCF_delB_T16-5C
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-5C.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13insCTCF_delB_T19-3E
+#   description: mm10_deli9-13insCTCF_delB_T19-3E
+#   doi: null
+#   id: mm10_deli9-13insCTCF_delB_T19-3E
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T19-3E.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm10_deli9-13_delB_T5-7C
+#   description: mm10_deli9-13_delB_T5-7C
+#   doi: null
+#   id: mm10_deli9-13_delB_T5-7C
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13_delB_T5-7C.fa
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: oryCun2
+#   description: Rabbit (oryCun2.0)
+#   doi: null
+#   id: oryCun2
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+- blob: null
+  checksum: null
+  dbkey: dm6
+  description: dm6
+  doi: null
+  id: dm6
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: null
+  checksum: null
+  dbkey: calJac4
+  description: calJac4
+  doi: null
+  id: calJac4
+  indexers:
+  - genome
+  source: ucsc
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_hsp68_venus_h19_enh2
+  description: mm39_hsp68_venus_h19_enh2
+  doi: null
+  id: mm39_hsp68_venus_h19_enh2
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_hsp68_venus_h19_enh2.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_Mesp_Del_CTCFA_f1
+  description: mm39_Mesp_Del_CTCFA_f1
+  doi: null
+  id: mm39_Mesp_Del_CTCFA_f1
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFA_f1.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_Mesp_Del_CTCFB_f2
+  description: mm39_Mesp_Del_CTCFB_f2
+  doi: null
+  id: mm39_Mesp_Del_CTCFB_f2
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFB_f2.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_Mesp_Del_CTCFC_d6
+  description: mm39_Mesp_Del_CTCFC_d6
+  doi: null
+  id: mm39_Mesp_Del_CTCFC_d6
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFC_d6.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_Mesp_inversion3
+  description: mm39_Mesp_inversion3
+  doi: null
+  id: mm39_Mesp_inversion3
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_inversion3.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_invHoxd3-Hoxd4_cloneE10
+  description: mm39_invHoxd3-Hoxd4_cloneE10
+  doi: null
+  id: mm39_invHoxd3-Hoxd4_cloneE10
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_invHoxd3-Hoxd4_cloneE10.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_Cyp26a1_mCherry_PEST
+  description: mm39_Cyp26a1_mCherry_PEST
+  doi: null
+  id: mm39_Cyp26a1_mCherry_PEST
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Cyp26a1_mCherry_PEST.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_invd3d4_A110all1
+  description: mm39_invd3d4_A110all1
+  doi: null
+  id: mm39_invd3d4_A110all1
+  indexers:
+  - genome
+  source: /data/mount_s3/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
+  version: null
