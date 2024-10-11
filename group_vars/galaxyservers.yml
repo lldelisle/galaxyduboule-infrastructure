@@ -94,6 +94,12 @@ galaxy_job_config:
     environment: slurm4cLM
   - id: bedtools_coveragebed
     environment: slurm100G
+  - id: bwa_mem_index_builder_data_manager
+    environment: slurm4c
+  - id: bwa
+    environment: slurm4c
+  - id: bwa_mem
+    environment: slurm4c
 
 galaxy_config:
   galaxy:
