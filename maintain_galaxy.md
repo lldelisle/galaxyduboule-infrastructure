@@ -137,6 +137,8 @@ Then prepare the dm_genomes.yml:
 python tools/make_dm_genomes_more_params.py -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -g tools/genomes.yml -o tools/dm_genomes.yml
 ```
 
+Remove duplicated DM.
+
 Build the new entries:
 
 ```bash
