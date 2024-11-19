@@ -223,7 +223,7 @@ nginx_conf_http:
 slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
 slurm_nodes:
   - name: localhost    # Name of our host
-    CPUs: 27           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27
+    CPUs: 29           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27
     RealMemory: 380000 # htop gives 386942MB -> I put 385000 -> following the disaster of March 18th I put 380000 to be on the safe side
     ThreadsPerCore: 1
 slurm_partitions:
