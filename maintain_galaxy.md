@@ -159,3 +159,13 @@ apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Create the history
 python tools/create_History_with_UsefulFiles.py $apikey
 ```
+
+## Backup the list of installed tools
+
+```bash
+conda activate lastVersion
+# I get the API key
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+# Create the list of installed tools
+get-tool-list -g galaxyduboule.epfl.ch -a $apikey -o tools/installed_tools.yml --get-all-tools
+```
