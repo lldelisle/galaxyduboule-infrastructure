@@ -339,3 +339,13 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm10_mCherry.SV40pA
+      description: mm10_mCherry.SV40pA
+      id: mm10_mCherry.SV40pA
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_mCherry.SV40pA.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome

@@ -79,46 +79,46 @@ genomes:
 #   - genome
 #   source: ucsc
 #   version: null
-- blob: null
-  checksum: null
-  dbkey: hg19
-  description: hg19
-  doi: null
-  id: hg19
-  indexers:
-  - genome
-  source: ucsc
-  version: null
-- blob: null
-  checksum: null
-  dbkey: hg38
-  description: hg38
-  doi: null
-  id: hg38
-  indexers:
-  - genome
-  source: ucsc
-  version: null
-- blob: null
-  checksum: null
-  dbkey: galGal6
-  description: galGal6
-  doi: null
-  id: galGal6
-  indexers:
-  - genome
-  source: ucsc
-  version: null
-- blob: null
-  checksum: null
-  dbkey: danRer11
-  description: danRer11
-  doi: null
-  id: danRer11
-  indexers:
-  - genome
-  source: ucsc
-  version: null
+# - blob: null
+#   checksum: null
+#   dbkey: hg19
+#   description: hg19
+#   doi: null
+#   id: hg19
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: hg38
+#   description: hg38
+#   doi: null
+#   id: hg38
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: galGal6
+#   description: galGal6
+#   doi: null
+#   id: galGal6
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: danRer11
+#   description: danRer11
+#   doi: null
+#   id: danRer11
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
 # - blob: null
 #   checksum: null
 #   dbkey: tetNig2
@@ -129,26 +129,26 @@ genomes:
 #   - genome
 #   source: ucsc
 #   version: null
-- blob: null
-  checksum: null
-  dbkey: mm39
-  description: mm39
-  doi: null
-  id: mm39
-  indexers:
-  - genome
-  source: ucsc
-  version: null
-- blob: null
-  checksum: null
-  dbkey: mm10_UCSC
-  description: mm10_UCSC
-  doi: null
-  id: mm10_UCSC
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm10_UCSC.fa
-  version: null
+# - blob: null
+#   checksum: null
+#   dbkey: mm39
+#   description: mm39
+#   doi: null
+#   id: mm39
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: mm10_UCSC
+#   description: mm10_UCSC
+#   doi: null
+#   id: mm10_UCSC
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm10_UCSC.fa
+#   version: null
 # - blob: From http://ftp.ensembl.org/pub/release-103/fasta/tetraodon_nigroviridis/dna/Tetraodon_nigroviridis.TETRAODON8.dna.toplevel.fa.gz
 #     but UCSC format
 #   checksum: null
@@ -300,103 +300,113 @@ genomes:
 #   - genome
 #   source: ucsc
 #   version: null
-- blob: null
-  checksum: null
-  dbkey: dm6
-  description: dm6
-  doi: null
-  id: dm6
-  indexers:
-  - genome
-  source: ucsc
-  version: null
-- blob: null
-  checksum: null
-  dbkey: calJac4
-  description: calJac4
-  doi: null
-  id: calJac4
-  indexers:
-  - genome
-  source: ucsc
-  version: null
+# - blob: null
+#   checksum: null
+#   dbkey: dm6
+#   description: dm6
+#   doi: null
+#   id: dm6
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: null
+#   checksum: null
+#   dbkey: calJac4
+#   description: calJac4
+#   doi: null
+#   id: calJac4
+#   indexers:
+#   - genome
+#   source: ucsc
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_hsp68_venus_h19_enh2
+#   description: mm39_hsp68_venus_h19_enh2
+#   doi: null
+#   id: mm39_hsp68_venus_h19_enh2
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_hsp68_venus_h19_enh2.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_Mesp_Del_CTCFA_f1
+#   description: mm39_Mesp_Del_CTCFA_f1
+#   doi: null
+#   id: mm39_Mesp_Del_CTCFA_f1
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFA_f1.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_Mesp_Del_CTCFB_f2
+#   description: mm39_Mesp_Del_CTCFB_f2
+#   doi: null
+#   id: mm39_Mesp_Del_CTCFB_f2
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFB_f2.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_Mesp_Del_CTCFC_d6
+#   description: mm39_Mesp_Del_CTCFC_d6
+#   doi: null
+#   id: mm39_Mesp_Del_CTCFC_d6
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFC_d6.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_Mesp_inversion3
+#   description: mm39_Mesp_inversion3
+#   doi: null
+#   id: mm39_Mesp_inversion3
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_inversion3.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_invHoxd3-Hoxd4_cloneE10
+#   description: mm39_invHoxd3-Hoxd4_cloneE10
+#   doi: null
+#   id: mm39_invHoxd3-Hoxd4_cloneE10
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_invHoxd3-Hoxd4_cloneE10.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_Cyp26a1_mCherry_PEST
+#   description: mm39_Cyp26a1_mCherry_PEST
+#   doi: null
+#   id: mm39_Cyp26a1_mCherry_PEST
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_Cyp26a1_mCherry_PEST.fa
+#   version: null
+# - blob: ''
+#   checksum: null
+#   dbkey: mm39_invd3d4_A110all1
+#   description: mm39_invd3d4_A110all1
+#   doi: null
+#   id: mm39_invd3d4_A110all1
+#   indexers:
+#   - genome
+#   source: /data/mount_s3/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
+#   version: null
 - blob: ''
   checksum: null
-  dbkey: mm39_hsp68_venus_h19_enh2
-  description: mm39_hsp68_venus_h19_enh2
+  dbkey: mm10_mCherry.SV40pA
+  description: mm10_mCherry.SV40pA
   doi: null
-  id: mm39_hsp68_venus_h19_enh2
+  id: mm10_mCherry.SV40pA
   indexers:
   - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_hsp68_venus_h19_enh2.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_Mesp_Del_CTCFA_f1
-  description: mm39_Mesp_Del_CTCFA_f1
-  doi: null
-  id: mm39_Mesp_Del_CTCFA_f1
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFA_f1.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_Mesp_Del_CTCFB_f2
-  description: mm39_Mesp_Del_CTCFB_f2
-  doi: null
-  id: mm39_Mesp_Del_CTCFB_f2
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFB_f2.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_Mesp_Del_CTCFC_d6
-  description: mm39_Mesp_Del_CTCFC_d6
-  doi: null
-  id: mm39_Mesp_Del_CTCFC_d6
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFC_d6.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_Mesp_inversion3
-  description: mm39_Mesp_inversion3
-  doi: null
-  id: mm39_Mesp_inversion3
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_inversion3.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_invHoxd3-Hoxd4_cloneE10
-  description: mm39_invHoxd3-Hoxd4_cloneE10
-  doi: null
-  id: mm39_invHoxd3-Hoxd4_cloneE10
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_invHoxd3-Hoxd4_cloneE10.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_Cyp26a1_mCherry_PEST
-  description: mm39_Cyp26a1_mCherry_PEST
-  doi: null
-  id: mm39_Cyp26a1_mCherry_PEST
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_Cyp26a1_mCherry_PEST.fa
-  version: null
-- blob: ''
-  checksum: null
-  dbkey: mm39_invd3d4_A110all1
-  description: mm39_invd3d4_A110all1
-  doi: null
-  id: mm39_invd3d4_A110all1
-  indexers:
-  - genome
-  source: /data/mount_s3/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
+  source: /data/mount_s3/perso_storage/custom_genomes/mm10_mCherry.SV40pA.fa
   version: null
