@@ -406,3 +406,6 @@ sudo su - galaxy
 sudo add-apt-repository -y ppa:apptainer/ppa
 sudo apt update
 sudo apt install -y apptainer
+
+# Install gawk
+sudo apt-get install gawk
