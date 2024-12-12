@@ -555,6 +555,9 @@ tools:
   owner: iuc
   tool_panel_section_label: 'NGS: QC and manipulation'
   tool_shed_url: toolshed.g2.bx.psu.edu
+- name: max_projections_stack_and_upload_omero
+  owner: lldelisle
+  tool_panel_section_label: Imaging
 - name: from_hicup_to_juicebox
   owner: lldelisle
   tool_panel_section_label: Hi-C
