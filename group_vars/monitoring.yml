@@ -23,8 +23,8 @@ grafana_datasources:
    database: telegraf
 
 grafana_address: 127.0.0.1
-grafana_instance: galaxyduboule.epfl.ch
-grafana_domain: galaxyduboule.epfl.ch
+grafana_instance: {{ inventory_hostname }}
+grafana_domain: {{ inventory_hostname }}
 
 grafana_server:
   serve_from_sub_path: true
@@ -33,7 +33,7 @@ grafana_server:
 #   protocol: https
 #   enforce_domain: false
 
-grafana_url: "https://galaxyduboule.epfl.ch/{{ grafana_hash }}/grafana/"
+grafana_url: "https://{{ inventory_hostname }}/{{ grafana_hash }}/grafana/"
 
 
 # logger=settings t=2024-05-14T14:05:03.631161731+02:00 level=error msg="Option '[alerting].enabled' cannot be true. Legacy Alerting is removed. It is no longer deployed, enhanced, or supported. Delete '[alerting].enabled' and use '[unified_alerting].enabled' to enable Grafana Alerting. For more information, refer to the documentation on upgrading to Grafana Alerting (https://grafana.com/docs/grafana/v10.4/alerting/set-up/migrating-alerts)"
