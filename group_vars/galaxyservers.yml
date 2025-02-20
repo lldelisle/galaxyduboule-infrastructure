@@ -232,7 +232,8 @@ slurm_partitions:
     Default: YES
 slurm_config:
   SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
-  SelectType: select/cons_res
+  # Try to comment it...
+  # SelectType: select/cons_res
   SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
 
 # Telegraf for grafana
