@@ -268,21 +268,21 @@ telegraf_plugins_extra:
       - data_format = "influx"
       - interval = "15s"
 
-# Proftpd:
-proftpd_galaxy_auth: yes
-galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"
-proftpd_display_connect: |
-  {{ inventory_hostname }} FTP server
+# # Proftpd:
+# proftpd_galaxy_auth: yes
+# galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"
+# proftpd_display_connect: |
+#   {{ inventory_hostname }} FTP server
 
-  Unauthorized access is prohibited
-proftpd_options:
-  - User: galaxy
-  - Group: galaxy
-proftpd_sql_db: galaxy@/var/run/postgresql
-proftpd_sql_user: galaxy
-proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were uploaded by the SV-IT
-proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were uploaded by the SV-IT
-proftpd_global_options:
-  - PassivePorts: 30000 40000
-proftpd_use_mod_tls_shmcache: false # New option to not use this module
-proftpd_tls_options: NoSessionReuseRequired # Option to allow filezilla to work...
+#   Unauthorized access is prohibited
+# proftpd_options:
+#   - User: galaxy
+#   - Group: galaxy
+# proftpd_sql_db: galaxy@/var/run/postgresql
+# proftpd_sql_user: galaxy
+# proftpd_conf_ssl_certificate: /etc/nginx/ssl/galaxyduboule.epfl.ch.pem # These files were uploaded by the SV-IT
+# proftpd_conf_ssl_certificate_key: /etc/nginx/ssl/galaxyduboule.epfl.ch.key # These files were uploaded by the SV-IT
+# proftpd_global_options:
+#   - PassivePorts: 30000 40000
+# proftpd_use_mod_tls_shmcache: false # New option to not use this module
+# proftpd_tls_options: NoSessionReuseRequired # Option to allow filezilla to work...
