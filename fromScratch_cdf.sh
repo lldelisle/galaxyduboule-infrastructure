@@ -159,3 +159,41 @@ systemctl status slurmctld.service
 # Feb 20 22:36:32 workstationduboule slurmctld[5349]: slurmctld: select/cons_tres: select_p_reconfigure: select/cons_tres: reconfigure
 # Feb 20 22:36:32 workstationduboule slurmctld[5349]: slurmctld: select/cons_tres: part_data_create_array: select/cons_tres: preparing for 1 partitions
 # Feb 20 22:36:32 workstationduboule slurmctld[5349]: slurmctld: Running as primary controller
+
+# I reset the SelectType I want and add SlurmctldDebug: debug5.
+# In the journalctl I could find:
+
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_linear.so
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Linear node selection plugin type:select/linear version:0x170b04
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: select/linear: init: Linear node selection plugin loaded with argument 17
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Success.
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_cons_tres.so
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Trackable RESources (TRES) Selection plugin type:select/cons_tres version:0x170b04
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: select/cons_tres: init: select/cons_tres loaded
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Success.
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_cray_aries.so
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Cray/Aries node selection plugin type:select/cray_aries version:0x170b04
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: select/cray_aries: init: Cray/Aries node selection plugin loaded
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: debug3: Success.
+# Feb 20 22:49:03 workstationduboule slurmctld[5835]: slurmctld: fatal: Can't find plugin for select/cons_res
+
+# I remove the SelectType and relaunch the ansible and everything is fine:
+
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_linear.so
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Linear node selection plugin type:select/linear version:0x170b04
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: select/linear: init: Linear node selection plugin loaded with argument 17
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Success.
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_cons_tres.so
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Trackable RESources (TRES) Selection plugin type:select/cons_tres version:0x170b04
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: select/cons_tres: init: select/cons_tres loaded
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Success.
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/select_cray_aries.so
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Cray/Aries node selection plugin type:select/cray_aries version:0x170b04
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: select/cray_aries: init: Cray/Aries node selection plugin loaded
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Success.
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug2: No acct_gather.conf file (/etc/slurm/acct_gather.conf)
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Trying to load plugin /usr/lib/x86_64-linux-gnu/slurm-wlm/prep_script.so
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: plugin_load_from_file->_verify_syms: found Slurm plugin name:Script PrEp plugin type:prep/script version:0x170b04
+# Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Success.
+
+# The value was 'cons_tres' and not 'cons_res' like in old versions.
