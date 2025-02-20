@@ -474,3 +474,7 @@ CREATE EXTENSION pgcrypto;
 
 # I remove this role
 
+# Get the list of all installed tools
+apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+# Create the list of installed tools
+get-tool-list -g galaxyduboule.epfl.ch -a $apikey -o tools/installed_tools.yml --get-all-tools
