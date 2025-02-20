@@ -49,3 +49,8 @@
     - name: Install slurm-drmaa
       package:
         name: slurm-drmaa1
+      when: ansible_os_family == "Debian"
+    - name: Install slurm-drmaa if RedHat
+      package:
+        name: slurm-drmaa
+      when: ansible_os_family == "RedHat"
