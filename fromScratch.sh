@@ -478,3 +478,7 @@ CREATE EXTENSION pgcrypto;
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Create the list of installed tools
 get-tool-list -g galaxyduboule.epfl.ch -a $apikey -o tools/installed_tools.yml --get-all-tools
+
+# To be able to run the archive script (before I changed the config):
+sudo ln -s /usr/bin/python3 /usr/bin/python
+
