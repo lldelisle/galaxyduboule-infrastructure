@@ -1,15 +1,17 @@
 - hosts: galaxyservers
   become: true
   roles:
-    - galaxyproject.repos
+    # For the moment this is not available:
+    # https://github.com/natefoo/slurm-drmaa/issues/89
+    # - galaxyproject.repos
     - galaxyproject.slurm
-  post_tasks:
-    - name: Install slurm-drmaa1 if Debian
-      package:
-        name: slurm-drmaa1
-      when: ansible_os_family == "Debian"
-    - name: Install slurm-drmaa if RedHat
-      package:
-        name: slurm-drmaa
-      when: ansible_os_family == "RedHat"
+  # post_tasks:
+  #   - name: Install slurm-drmaa1 if Debian
+  #     package:
+  #       name: slurm-drmaa1
+  #     when: ansible_os_family == "Debian"
+  #   - name: Install slurm-drmaa if RedHat
+  #     package:
+  #       name: slurm-drmaa
+  #     when: ansible_os_family == "RedHat"
         
