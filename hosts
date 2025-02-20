@@ -1,8 +1,9 @@
 [galaxyservers]
-galaxyduboule.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule.epfl.ch ansible_ssh_user=ldelisle
+# Through ssh tunnel:
+galaxyduboule.college-de-france.fr ansible_port=2222 ansible_ssh_host=localhost ansible_ssh_user=lldelisle
 
 [dbservers:children]
 galaxyservers
 
-[monitoring]
-galaxyduboule.epfl.ch ansible_port=22 ansible_ssh_host=galaxyduboule.epfl.ch ansible_ssh_user=ldelisle
+[monitoring:children]
+galaxyservers
