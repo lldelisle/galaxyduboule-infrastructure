@@ -26,10 +26,12 @@ postgresql_backup_dir: ldelisle@jed.epfl.ch:/work/updub/backups_galaxyDB_since20
 # Boolean, defaults to true, which will cause the current directory to be renamed prior to creating a new backup.
 # If set to false, current will be deleted (this is useful if you are using snapshots or some other means to archive previous backups).
 postgresql_backup_rotate: false
-postgresql_backup_local_dir: "{{ '~postgres' | expanduser }}/backups"
 # Do not back up everyday but every week:
 # postgresql_backup_weekday: 0
-# Force a backup at 2:
-postgresql_backup_hour: 14
+
+# Useful for ubuntu
+postgresql_backup_python_executable: "python3"
+
+# This is not used anymore:
 # User or address that should receive mail from the backup scripts.
-postgresql_backup_mail_recipient: lucille.delisle@epfl.ch
+# postgresql_backup_mail_recipient: lucille.delisle@epfl.ch
