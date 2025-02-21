@@ -284,3 +284,40 @@ exit
 
 # Then galaxy
 ansible-playbook galaxy.yml -K
+
+# Got an error:
+# TASK [galaxyproject.galaxy : Get current Galaxy DB version] **********************************************************************************************************************************************************************************************************************
+# fatal: [galaxyduboule.college-de-france.fr]: FAILED! => changed=false 
+#   cmd:
+#   - /data/galaxy/galaxy/venv/bin/python
+#   - /data/galaxy/galaxy/server/scripts/manage_db.py
+#   - -c
+#   - /data/galaxy/galaxy/config/galaxy.yml
+#   - db_version
+#   delta: '0:00:00.399601'
+#   end: '2025-02-21 06:55:41.246020'
+#   failed_when_result: true
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2025-02-21 06:55:40.846419'
+#   stderr: |-
+#     Traceback (most recent call last):
+#       File "/data/galaxy/galaxy/server/scripts/manage_db.py", line 12, in <module>
+#         from galaxy.model.migrations.scripts import LegacyManageDb
+#       File "/data/galaxy/galaxy/server/lib/galaxy/model/__init__.py", line 141, in <module>
+#         from galaxy.files.templates import (
+#       File "/data/galaxy/galaxy/server/lib/galaxy/files/__init__.py", line 16, in <module>
+#         from galaxy.files.sources import (
+#       File "/data/galaxy/galaxy/server/lib/galaxy/files/sources/__init__.py", line 37, in <module>
+#         from galaxy.util.template import fill_template
+#       File "/data/galaxy/galaxy/server/lib/galaxy/util/template.py", line 4, in <module>
+#         from lib2to3.refactor import RefactoringTool
+#     ModuleNotFoundError: No module named 'lib2to3'
+#   stderr_lines: <omitted>
+#   stdout: ''
+#   stdout_lines: <omitted>
+
+# I try to run the playbook in case one of the dependency was not installed correctly.
+
+# I am installing the library myself:
+sudo apt-get install python3-lib2to3
