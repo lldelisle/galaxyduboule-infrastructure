@@ -10,7 +10,7 @@ galaxy_user: {name: "{{ galaxy_user_name }}", shell: /bin/bash}
 galaxy_commit_id: release_24.1
 galaxy_force_checkout: true
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
-miniconda_version: 23.9
+miniconda_version: 25.1
 miniconda_channels: ['conda-forge', 'defaults']
 
 # Galaxy Job Configuration
