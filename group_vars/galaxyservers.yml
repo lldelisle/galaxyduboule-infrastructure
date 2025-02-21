@@ -123,8 +123,8 @@ galaxy_config:
     smtp_ssl: false
     error_email_to: lucille.delisle@epfl.ch
     email_from: 'Lucille Delisle (galaxy) <lucille.delisle@epfl.ch>'
-    library_import_dir: /data/mount_s3
-    user_library_import_dir: /data/mount_s3/perso_storage
+    # library_import_dir: /data/mount_s3
+    # user_library_import_dir: /data/mount_s3/perso_storage
     allow_library_path_paste: true
     require_login: true # Only users can use galaxy
     allow_user_creation: false # Only the admins can create users

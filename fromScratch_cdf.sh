@@ -433,3 +433,158 @@ ansible-galaxy install -p roles --force -r requirements.yml
 # Run the playbook:
 ansible-playbook galaxy.yml -K
 
+# Check the status:
+sudo galaxyctl status
+#   UNIT LOAD ACTIVE SUB DESCRIPTION
+
+# 0 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+# Rerun the playbook:
+ansible-playbook galaxy.yml -K
+
+# Check the status:
+sudo galaxyctl status
+#   UNIT LOAD ACTIVE SUB DESCRIPTION
+
+# 0 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+# Try to start galaxy:
+sudo galaxyctl start galaxy
+# Adding systemd unit galaxy-gunicorn.service
+# Adding systemd unit galaxy-celery.service
+# Adding systemd unit galaxy-celery-beat.service
+# Adding systemd unit galaxy-handler@.service
+# Adding systemd unit galaxy.target
+# Created symlink /etc/systemd/system/multi-user.target.wants/galaxy.target → /etc/systemd/system/galaxy.target.
+# Warning: Not a known instance or service name: galaxy
+# Error: No provided names are known instance or service names
+
+# Check
+sudo galaxyctl status
+#   UNIT                       LOAD   ACTIVE   SUB  DESCRIPTION              
+#   galaxy-celery-beat.service loaded inactive dead Galaxycelery-beat
+#   galaxy-celery.service      loaded inactive dead Galaxycelery
+#   galaxy-gunicorn.service    loaded inactive dead Galaxygunicorn
+#   galaxy-handler@0.service   loaded inactive dead Galaxyhandler (process 0)
+#   galaxy-handler@1.service   loaded inactive dead Galaxyhandler (process 1)
+#   galaxy.target              loaded inactive dead Galaxy
+
+# Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+#         ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+#         SUB    → The low-level unit activation state, values depend on unit type.
+
+# 6 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+sudo galaxyctl restart galaxy
+
+# Warning: Not a known instance or service name: galaxy
+# Error: No provided names are known instance or service names
+
+sudo galaxyctl start
+#   UNIT                       LOAD   ACTIVE SUB     DESCRIPTION              
+#   galaxy-celery-beat.service loaded active running Galaxycelery-beat
+#   galaxy-celery.service      loaded active running Galaxycelery
+#   galaxy-gunicorn.service    loaded active running Galaxygunicorn
+#   galaxy-handler@0.service   loaded active running Galaxyhandler (process 0)
+#   galaxy-handler@1.service   loaded active running Galaxyhandler (process 1)
+#   galaxy.target              loaded active active  Galaxy
+
+# Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+#         ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+#         SUB    → The low-level unit activation state, values depend on unit type.
+
+# 6 loaded units listed.
+# To show all installed unit files use 'systemctl list-unit-files'.
+
+sudo galaxyctl follow
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: Failed to initialize Galaxy application                                                                
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: Traceback (most recent call last):                                                                     
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 629, in _ensure_directory      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     os.makedirs(path)                                                                                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "<frozen os>", line 225, in makedirs                                                            
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: PermissionError: [Errno 13] Permission denied: '/data/galaxy/uploads'                                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: During handling of the above exception, another exception occurred:                                    
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: Traceback (most recent call last):                                                                     
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 119, in app_loop                        
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     galaxy_app = load_galaxy_app(                                                                      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:                  ^^^^^^^^^^^^^^^^                                                                      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 95, in load_galaxy_app                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     app = UniverseApplication(global_conf=config_builder.global_conf(), attach_to_pools=attach_to_pools
+# , **kwds)                                                                                                                                                   
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ^^^^^^^^^                                                                                                                                                   
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 698, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     super().__init__(fsmon=True, **kwargs)                                                             
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 550, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     super().__init__(**kwargs)                                                                         
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 268, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     self.config.check()                                                                                
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 1315, in check                 
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     self._ensure_directory(path)                                                                       
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 631, in _ensure_directory      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     raise ConfigurationError(f"Unable to create missing directory: {path}\n{unicodify(e)}")            
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: galaxy.exceptions.ConfigurationError: Unable to create missing directory: /data/galaxy/uploads         
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: [Errno 13] Permission denied: '/data/galaxy/uploads'                                                   
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: Traceback (most recent call last):                                                                     
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 629, in _ensure_directory      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     os.makedirs(path)                                                                                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "<frozen os>", line 225, in makedirs                                                            
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: PermissionError: [Errno 13] Permission denied: '/data/galaxy/uploads'                                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: During handling of the above exception, another exception occurred:                                    
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: Traceback (most recent call last):                                                                     
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 266, in <module>                        
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     main()                                                                                             
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 262, in main                            
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     func(args, log)                                                                                    
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 119, in app_loop                        
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     galaxy_app = load_galaxy_app(                                                                      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:                  ^^^^^^^^^^^^^^^^                                                                      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/./lib/galaxy/main.py", line 95, in load_galaxy_app                  
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     app = UniverseApplication(global_conf=config_builder.global_conf(), attach_to_pools=attach_to_pools
+# , **kwds)                                                                                                                                                   
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ^^^^^^^^^                                                                                                                                                   
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 698, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     super().__init__(fsmon=True, **kwargs)                                                             
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 550, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     super().__init__(**kwargs)                                                                         
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 268, in __init__                           
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     self.config.check()                                                                                
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 1315, in check                 
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     self._ensure_directory(path)                                                                       
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 631, in _ensure_directory      
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]:     raise ConfigurationError(f"Unable to create missing directory: {path}\n{unicodify(e)}")            
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: galaxy.exceptions.ConfigurationError: Unable to create missing directory: /data/galaxy/uploads         
+# Feb 21 10:29:34 workstationduboule galaxyctl[79198]: [Errno 13] Permission denied: '/data/galaxy/uploads'                                                   
+
+sudo chmod 777 /data/galaxy
+
+sudo galaxyctl follow
+
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: Traceback (most recent call last):
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 629, in _ensure_directory
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     os.makedirs(path)
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "<frozen os>", line 225, in makedirs
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: PermissionError: [Errno 13] Permission denied: '/data/mount_s3'
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: During handling of the above exception, another exception occurred:
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: Traceback (most recent call last):
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/webapps/galaxy/buildapp.py", line 68, in app_pair
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     app = galaxy.app.UniverseApplication(global_conf=global_conf, is_webapp=True, **kwargs)
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 698, in __init__
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     super().__init__(fsmon=True, **kwargs)
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 550, in __init__
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     super().__init__(**kwargs)
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/app.py", line 268, in __init__
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     self.config.check()
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 1315, in check
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     self._ensure_directory(path)
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:   File "/data/galaxy/galaxy/server/lib/galaxy/config/__init__.py", line 631, in _ensure_directory
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]:     raise ConfigurationError(f"Unable to create missing directory: {path}\n{unicodify(e)}")
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: galaxy.exceptions.ConfigurationError: Unable to create missing directory: /data/mount_s3
+# Feb 21 10:31:50 workstationduboule galaxyctl[85485]: [Errno 13] Permission denied: '/data/mount_s3'
+
+# change galaxy config
