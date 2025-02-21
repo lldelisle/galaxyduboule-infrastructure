@@ -13,8 +13,9 @@ upstream galaxy {
 
 server {
     # Listen on port 443
-    listen        *:443 ssl default_server;
-    # listen          *:80 default_server;
+    # listen        *:443 ssl default_server;
+    # Without SSL:
+    listen          *:80 default_server;
     # The virtualhost is our domain name
     server_name   "{{ inventory_hostname }}";
 

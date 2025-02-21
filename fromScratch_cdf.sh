@@ -383,3 +383,33 @@ ansible-playbook galaxy.yml -K
 #   stdout_lines: <omitted>
 
 # I need to change the host name:
+
+# TASK [usegalaxy_eu.certbot : Request certificate] ********************************************************************************************************************************************************************************************************************************
+# fatal: [workstationduboule]: FAILED! => changed=true 
+#   cmd:
+#   - /opt/certbot/bin/certbot
+#   - certonly
+#   - --test-cert
+#   - --non-interactive
+#   - --webroot
+#   - --register-unsafely-without-email
+#   - --agree-tos
+#   - -w
+#   - /srv/nginx/_well-known_root
+#   - -d
+#   - workstationduboule
+#   delta: '0:00:00.972794'
+#   end: '2025-02-21 08:51:29.042367'
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2025-02-21 08:51:28.069573'
+#   stderr: |-
+#     Saving debug log to /var/log/letsencrypt/letsencrypt.log
+#     An unexpected error occurred:
+#     Invalid identifiers requested :: Cannot issue for "workstationduboule": Domain name needs at least one dot
+#     Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+#   stderr_lines: <omitted>
+#   stdout: Requesting a certificate for workstationduboule
+#   stdout_lines: <omitted>
+
+# Change the playbook to run without ssl
