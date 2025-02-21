@@ -28,7 +28,7 @@
         name: ['tmpreaper']
       when: ansible_os_family == 'Debian'
   roles:
-    - galaxyproject.repos
+    # - galaxyproject.repos
     - galaxyproject.slurm
     - galaxyproject.galaxy
     - role: galaxyproject.miniconda
@@ -46,11 +46,11 @@
         minute: "0"
         hour: "0"
         job: "SHELL=/bin/bash source {{ galaxy_venv_dir }}/bin/activate &&  GALAXY_LOG_DIR=/tmp/gxadmin/ GALAXY_ROOT={{ galaxy_root }}/server GALAXY_CONFIG_FILE={{ galaxy_config_file }} /usr/local/bin/gxadmin galaxy cleanup 60"
-    - name: Install slurm-drmaa
-      package:
-        name: slurm-drmaa1
-      when: ansible_os_family == "Debian"
-    - name: Install slurm-drmaa if RedHat
-      package:
-        name: slurm-drmaa
-      when: ansible_os_family == "RedHat"
+    # - name: Install slurm-drmaa
+    #   package:
+    #     name: slurm-drmaa1
+    #   when: ansible_os_family == "Debian"
+    # - name: Install slurm-drmaa if RedHat
+    #   package:
+    #     name: slurm-drmaa
+    #   when: ansible_os_family == "RedHat"
