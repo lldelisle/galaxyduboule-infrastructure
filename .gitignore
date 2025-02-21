@@ -1,20 +1,5 @@
 # Dependencies
-roles/galaxyproject.galaxy
-roles/galaxyproject.nginx
-roles/galaxyproject.postgresql
-roles/galaxyproject.postgresql_objects
-roles/geerlingguy.pip
-roles/uchida.miniconda
-roles/galaxyproject.miniconda
-roles/usegalaxy_eu.galaxy_systemd
-roles/galaxyproject.repos
-roles/galaxyproject.slurm
-roles/usegalaxy_eu.influxdb
-roles/cloudalchemy.grafana
-roles/dj-wasabi.telegraf
-roles/galaxyproject.gxadmin
-roles/galaxyproject.proftpd
-roles/usegalaxy_eu.certbot
+roles/
 
 # To keep secrets
 vault-password.txt
