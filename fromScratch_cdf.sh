@@ -770,3 +770,7 @@ EOF
 sudo systemctl reload apparmor
 sudo systemctl daemon-reload
 
+# Update the config for galaxy
+# Run the playbook
+# I cannot test unfortunately...
+
