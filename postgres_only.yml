@@ -1,12 +1,12 @@
 ---
-- hosts: galaxyservers
+- hosts: dbservers
   become: true
   pre_tasks:
     - name: Install Dependencies
       package:
-        name: ['git', 'make', 'virtualenv', 'python3-psycopg2', 'tar', 'bzip2']
+        name: ['acl', 'bzip2', 'git', 'make', 'tar', 'python3-venv', 'python3-setuptools']
   roles:
     - galaxyproject.postgresql
-    - role: natefoo.postgresql_objects
+    - role: galaxyproject.postgresql_objects
       become: true
       become_user: postgres

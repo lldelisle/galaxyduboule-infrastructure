@@ -197,3 +197,90 @@ systemctl status slurmctld.service
 # Feb 20 22:54:56 workstationduboule slurmctld[6182]: slurmctld: debug3: Success.
 
 # The value was 'cons_tres' and not 'cons_res' like in old versions.
+
+# If you need to upload a postgres db
+# First install prostgres
+ansible-playbook postgres_only.yml -K
+
+
+# Ssh:
+ssh -p $port ${username}@${guest}
+# I try to follow https://github.com/galaxyproject/ansible-postgresql/pull/30#issuecomment-963600656
+# Stop the server
+sudo su -
+systemctl stop postgresql
+systemctl status postgresql
+# ○ postgresql.service - PostgreSQL RDBMS
+#      Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; preset: enabled)
+#      Active: inactive (dead) since Thu 2025-02-20 23:15:29 CET; 14s ago
+#    Duration: 2min 39.407s
+#     Process: 10158 ExecReload=/bin/true (code=exited, status=0/SUCCESS)
+#    Main PID: 8363 (code=exited, status=0/SUCCESS)
+#         CPU: 2ms
+
+# Feb 20 23:12:50 workstationduboule systemd[1]: Starting postgresql.service - PostgreSQL RDBMS...
+# Feb 20 23:12:50 workstationduboule systemd[1]: Finished postgresql.service - PostgreSQL RDBMS.
+# Feb 20 23:13:20 workstationduboule systemd[1]: Reloading postgresql.service - PostgreSQL RDBMS...
+# Feb 20 23:13:20 workstationduboule systemd[1]: Reloaded postgresql.service - PostgreSQL RDBMS.
+# Feb 20 23:15:29 workstationduboule systemd[1]: postgresql.service: Deactivated successfully.
+# Feb 20 23:15:29 workstationduboule systemd[1]: Stopped postgresql.service - PostgreSQL RDBMS.
+
+# Restore
+# Become postgres
+su - postgres
+# The current version of postgresql is 16
+# Let see if it wors:
+# Remove files:
+mkdir /tmp/test/
+mv /var/lib/postgresql/16/main/* /tmp/test/
+# Add backup
+rsync -av /data/nas/lab.data/archive/backups_galaxyDB20250220T080650Z/20250220T080650Z/ /var/lib/postgresql/16/main
+# Add the restore_command:
+vim ./16/main/postgresql.auto.conf
+# restore_command = 'cp "/data/nas/lab.data/archive/backups_galaxyDB20250220T080650Z/20250220T080650Z/wal/%f" "%p"'
+# Touch a recovery file
+touch /var/lib/postgresql/16/main/recovery.signal
+
+# As $username (with sudo right)
+sudo systemctl restart postgresql
+sudo systemctl status postgresql
+# ● postgresql.service - PostgreSQL RDBMS
+#      Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; preset: enabled)
+#      Active: active (exited) since Thu 2025-02-20 23:24:42 CET; 39s ago
+#     Process: 10694 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+#    Main PID: 10694 (code=exited, status=0/SUCCESS)
+#         CPU: 2ms
+
+# Feb 20 23:24:42 workstationduboule systemd[1]: Starting postgresql.service - PostgreSQL RDBMS...
+# Feb 20 23:24:42 workstationduboule systemd[1]: Finished postgresql.service - PostgreSQL RDBMS.
+
+# Something went wrong, check the log:
+sudo cat /var/log/postgresql/postgresql-16-main.log
+# 2025-02-20 23:24:41.963 CET [10692] FATAL:  data directory "/var/lib/postgresql/16/main" has invalid permissions
+# 2025-02-20 23:24:41.963 CET [10692] DETAIL:  Permissions should be u=rwx (0700) or u=rwx,g=rx (0750).
+chmod 0700 16/main/
+
+# 2025-02-20 23:29:36.720 CET [10780] FATAL:  database files are incompatible with server
+# 2025-02-20 23:29:36.720 CET [10780] DETAIL:  The data directory was initialized by PostgreSQL version 12, which is not compatible with this version 16.6 (Ubuntu 16.6-0ubuntu0.24.04.1).
+
+# Put back what was in main:
+rm -r /var/lib/postgresql/16/main/*
+mv /tmp/test/* /var/lib/postgresql/16/main/
+# Restart
+# As $username (with sudo right)
+sudo systemctl restart postgresql
+
+# Back to galaxyduboule.epfl.ch
+# Export the database with:
+# pg_dump -d galaxy -F t -b -f ~/20250220.tar
+
+# Restore
+pg_restore --dbname=galaxy --verbose /data/nas/lab.data/archive/backups_galaxyDB/20250220.tar
+
+# Logout as postgres
+exit
+# Logout
+exit
+
+# Then galaxy
+ansible-playbook galaxy.yml -K
