@@ -5,50 +5,25 @@
 `sudo scontrol update job=4191 Priority=4294967292`
 
 
-## Give access to the server to an EPFL member
+## Give access to the server to someone new
 
 ```bash
-usermod -aG galaxyduboule <username>
-# Then to create a home directory
-# Ask the user to login by ssh
-# Other solution but not recommanded:
+sudo adduser <username>
+# Answer the questions
+
+# Get the user id and group id with
+grep <username> /etc/passwd
+
+# Impersonate to create a directory nas:
 sudo su - <username>
-# If the user wants to have the sv-nas1 mounted
-# Update the /etc/fstab file
-# Then use mount -a
+mkdir nas
+exit
+
+# Update the /etc/fstab file so it has access to the nas
+sudo /etc/fstab
+sudo mount -a
+sudo systemctl daemon-reload
 ```
-
-To remove:
-
-`gpasswd -d <username> galaxyduboule`
-
-## Allow them to mount server
-
-Create a file `mount_svnas1.sh` with adaptation of:
-```bash
-#!/bin/bash
-
-if mountpoint -q /home/ldelisle/mountDuboule
-then
-        echo "It's mounted, unmounting it.."
-        sudo umount /home/ldelisle/mountDuboule
-else
-    echo "It's not mounted, mounting it...."
-        sudo mount -o user=ldelisle,uid=$(id -u),gid=$(id -g),vers=3.0,domain=INTRANET //sv-nas1.rcp.epfl.ch/Duboule-Lab /home/ldelisle/mountDuboule
-fi
-```
-(For Zenk lab, use `//sv-nas1.rcp.epfl.ch/upzenk` in directory `mountZenkNas`)
-
-Ask the user to create `mountDuboule`
-
-Allow temporarily to run sudo:
-
-```bash
-ldelisle@updubsrv1:~$ sudo usermod -aG sudo mayran
-ldelisle@updubsrv1:~$ sudo deluser mayran sudo
-```
-
-The user needs to run the bash script while he has sudo rights.
 
 ## Grafana shows no more data
 
