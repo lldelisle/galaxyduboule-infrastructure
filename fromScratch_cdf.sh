@@ -413,3 +413,23 @@ ansible-playbook galaxy.yml -K
 #   stdout_lines: <omitted>
 
 # Change the playbook to run without ssl
+
+ansible-playbook galaxy.yml -K
+
+# Apparently cannot install telegraf
+
+# TASK [dj-wasabi.telegraf : Debian | Install Telegraf package (repo)] *************************************************************************************************************************************************************************************************************
+# FAILED - RETRYING: [workstationduboule]: Debian | Install Telegraf package (repo) (3 retries left).
+# FAILED - RETRYING: [workstationduboule]: Debian | Install Telegraf package (repo) (2 retries left).
+# FAILED - RETRYING: [workstationduboule]: Debian | Install Telegraf package (repo) (1 retries left).
+# [WARNING]: Failed to update cache after 1 retries due to E:The repository 'https://repos.influxdata.com/ubuntu noble Release' does not have a Release file., retrying
+# [WARNING]: Sleeping for 1 seconds, before attempting to refresh the cache again
+# [WARNING]: Failed to update cache after 2 retries due to W:Updating from such a repository can't be done securely, and is therefore disabled by default., W:See apt-secure(8) manpage for repository creation and user configuration details., E:The repository
+# 'https://repos.influxdata.com/ubuntu noble Release' does not have a Release file., retrying
+
+# Try to change the version of the role
+ansible-galaxy install -p roles --force -r requirements.yml
+
+# Run the playbook:
+ansible-playbook galaxy.yml -K
+

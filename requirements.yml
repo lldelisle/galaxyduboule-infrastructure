@@ -17,9 +17,8 @@
   version: 1.0.2
 - src: usegalaxy_eu.influxdb
   version: v6.0.7
-- name: dj-wasabi.telegraf
-  src: https://github.com/dj-wasabi/ansible-telegraf
-  version: 6f6fdf7f5ead491560783d52528b79e9e088bd5b
+- src: dj-wasabi.telegraf
+  version: 0.14.1
 - src: cloudalchemy.grafana
   version: 0.14.2
 - src: galaxyproject.proftpd
