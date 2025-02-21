@@ -14,6 +14,7 @@ roles/cloudalchemy.grafana
 roles/dj-wasabi.telegraf
 roles/galaxyproject.gxadmin
 roles/galaxyproject.proftpd
+roles/usegalaxy_eu.certbot
 
 # To keep secrets
 vault-password.txt

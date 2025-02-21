@@ -321,3 +321,26 @@ ansible-playbook galaxy.yml -K
 
 # I am installing the library myself:
 sudo apt-get install python3-lib2to3
+
+# Now new error about the certificates
+# TASK [galaxyproject.nginx : Check SSL nginx config] **********************************************************************************************
+# fatal: [galaxyduboule.college-de-france.fr]: FAILED! => changed=false 
+#   cmd:
+#   - nginx
+#   - -t
+#   - -c
+#   - /etc/nginx/nginx.conf
+#   delta: '0:00:00.233247'
+#   end: '2025-02-21 08:35:55.062406'
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2025-02-21 08:35:54.829159'
+#   stderr: |-
+#     2025/02/21 08:35:54 [emerg] 36261#36261: no "ssl_certificate" is defined for the "listen ... ssl" directive in /etc/nginx/sites-enabled/galaxy:14
+#     nginx: configuration file /etc/nginx/nginx.conf test failed
+#   stderr_lines: <omitted>
+#   stdout: ''
+#   stdout_lines: <omitted>
+
+# I add the certbot role
+ansible-galaxy install -p roles -r requirements.yml

@@ -24,3 +24,5 @@
   version: 0.14.2
 - src: galaxyproject.proftpd
   version: 0.3.2
+- src: usegalaxy_eu.certbot
+  version: 0.1.11
