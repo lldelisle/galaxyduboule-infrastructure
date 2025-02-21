@@ -742,3 +742,31 @@ rm /cvmfs
 ln -s /data/cvmfs /var/lib/cvmfs
 systemctl restart autofs
 
+# Add the apptainer role (install + run playbook)
+
+# When I wanted to test:
+apptainer run docker://hello-world
+# INFO:    Converting OCI blobs to SIF format
+# INFO:    Starting build...
+# Copying blob e6590344b1a5 done   | 
+# Copying config 74cc54e27d done   | 
+# Writing manifest to image destination
+# 2025/02/21 14:24:57  info unpack layer: sha256:e6590344b1a5dc518829d6ea1524fc12f8bcd14ee9a02aa6ad8360cce3a9a9e9
+# INFO:    Creating SIF file...
+# ERROR  : Could not write info to setgroups: Permission denied
+# ERROR  : Error while waiting event for user namespace mappings: no event received
+
+sudo tee /etc/apparmor.d/apptainer << 'EOF'
+# Permit unprivileged user namespace creation for apptainer starter
+abi <abi/4.0>,
+include <tunables/global>
+profile apptainer /usr/libexec/apptainer/bin/starter{,-suid} 
+    flags=(unconfined) {
+  userns,
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/apptainer>
+}
+EOF
+sudo systemctl reload apparmor
+sudo systemctl daemon-reload
+

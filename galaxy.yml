@@ -30,6 +30,7 @@
   roles:
     # - galaxyproject.repos
     - galaxyproject.slurm
+    - usegalaxy_eu.apptainer
     - galaxyproject.galaxy
     - role: galaxyproject.miniconda
       become: true
