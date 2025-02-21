@@ -344,3 +344,42 @@ sudo apt-get install python3-lib2to3
 
 # I add the certbot role
 ansible-galaxy install -p roles -r requirements.yml
+
+ansible-playbook galaxy.yml -K
+
+# fatal: [galaxyduboule.college-de-france.fr]: FAILED! => changed=true 
+#   cmd:
+#   - /opt/certbot/bin/certbot
+#   - certonly
+#   - --test-cert
+#   - --non-interactive
+#   - --webroot
+#   - --register-unsafely-without-email
+#   - --agree-tos
+#   - -w
+#   - /srv/nginx/_well-known_root
+#   - -d
+#   - galaxyduboule.college-de-france.fr
+#   delta: '0:00:02.681775'
+#   end: '2025-02-21 08:46:49.762774'
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2025-02-21 08:46:47.080999'
+#   stderr: |-
+#     Saving debug log to /var/log/letsencrypt/letsencrypt.log
+#     Some challenges have failed.
+#     Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+#   stderr_lines: <omitted>
+#   stdout: |-
+#     Account registered.
+#     Requesting a certificate for galaxyduboule.college-de-france.fr
+  
+#     Certbot failed to authenticate some domains (authenticator: webroot). The Certificate Authority reported these problems:
+#       Domain: galaxyduboule.college-de-france.fr
+#       Type:   dns
+#       Detail: DNS problem: NXDOMAIN looking up A for galaxyduboule.college-de-france.fr - check that a DNS record exists for this domain; DNS problem: NXDOMAIN looking up AAAA for galaxyduboule.college-de-france.fr - check that a DNS record exists for this domain
+  
+#     Hint: The Certificate Authority failed to download the temporary challenge files created by Certbot. Ensure that the listed domains serve their content from the provided --webroot-path/-w and that files created there can be downloaded from the internet.
+#   stdout_lines: <omitted>
+
+# I need to change the host name:

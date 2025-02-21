@@ -1,6 +1,6 @@
 [galaxyservers]
 # Through ssh tunnel:
-galaxyduboule.college-de-france.fr ansible_port=2222 ansible_ssh_host=localhost ansible_ssh_user=lldelisle
+workstationduboule ansible_port=2222 ansible_ssh_host=localhost ansible_ssh_user=lldelisle
 
 [dbservers:children]
 galaxyservers
