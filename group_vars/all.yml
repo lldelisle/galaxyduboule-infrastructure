@@ -6,6 +6,11 @@ pip_virtualenv_command: /usr/bin/python3 -m venv  # usegalaxy_eu.tiaas2, galaxyp
 galaxy_user_name: galaxy
 galaxy_db_name: galaxy
 
+# CVMFS vars
+cvmfs_role: client
+galaxy_cvmfs_repos_enabled: config-repo
+cvmfs_quota_limit: 20000
+
 # Install the latest version
 telegraf_agent_package_state: latest
 

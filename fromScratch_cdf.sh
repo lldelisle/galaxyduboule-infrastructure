@@ -661,3 +661,84 @@ ls -alh /usr/lib/slurm-drma/lib
 
 mv /usr/lib/slurm-drma/ /usr/lib/slurm-drmaa
 
+# CVMFS
+# Add the role in the requirements
+ansible-galaxy install -p roles -r requirements.yml
+# Update the variables for all.yml
+# Create the folder for cvmfs
+sudo mkdir -p /data/cvmfs
+sudo ln -s /data/cvmfs /cvmfs
+
+# Run the playbook
+
+# TASK [galaxyproject.cvmfs : Install CernVM-FS packages and dependencies (apt)] ***************************************************************************************************************************************************************************************************
+# The following additional packages will be installed:
+#   attr autofs cvmfs-config-default libfuse2t64 libossp-uuid16 nfs-common
+#   rpcbind uuid uuid-dev
+# Suggested packages:
+#   watchdog
+# The following NEW packages will be installed:
+#   attr autofs cvmfs cvmfs-config-default libfuse2t64 libossp-uuid16 nfs-common
+#   rpcbind uuid uuid-dev
+# 0 upgraded, 10 newly installed, 0 to remove and 22 not upgraded.
+# changed: [workstationduboule]
+
+
+# TASK [galaxyproject.cvmfs : Check CernVM-FS for setup] ***************************************************************************************************************************************************************************************************************************
+# fatal: [workstationduboule]: FAILED! => changed=false 
+#   cmd:
+#   - cvmfs_config
+#   - chksetup
+#   delta: '0:00:00.040848'
+#   end: '2025-02-21 12:51:58.060121'
+#   msg: non-zero return code
+#   rc: 1
+#   start: '2025-02-21 12:51:58.019273'
+#   stderr: |-
+#     Error: failed to load cvmfs library, tried: './libcvmfs_fuse3_stub.so' '/usr/lib/libcvmfs_fuse3_stub.so' '/usr/lib64/libcvmfs_fuse3_stub.so' './libcvmfs_fuse_stub.so' '/usr/lib/libcvmfs_fuse_stub.so' '/usr/lib64/libcvmfs_fuse_stub.so'
+#     ./libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+#     /usr/lib/libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+#     /usr/lib64/libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+#     ./libcvmfs_fuse_stub.so: cannot open shared object file: No such file or directory
+#     libcrypto.so.1.0.0: cannot open shared object file: No such file or directory
+#     /usr/lib64/libcvmfs_fuse_stub.so: cannot open shared object file: No such file or directory
+  
+#     Failed to read CernVM-FS configuration
+#   stderr_lines: <omitted>
+#   stdout: ''
+#   stdout_lines: <omitted>
+# ...ignoring
+
+# As sudo:
+cvmfs_config probe
+# Error: failed to load cvmfs library, tried: './libcvmfs_fuse3_stub.so' '/usr/lib/libcvmfs_fuse3_stub.so' '/usr/lib64/libcvmfs_fuse3_stub.so' './libcvmfs_fuse_stub.so' '/usr/lib/libcvmfs_fuse_stub.so' '/usr/lib64/libcvmfs_fuse_stub.so'
+# ./libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+# /usr/lib/libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+# /usr/lib64/libcvmfs_fuse3_stub.so: cannot open shared object file: No such file or directory
+# ./libcvmfs_fuse_stub.so: cannot open shared object file: No such file or directory
+# libcrypto.so.1.0.0: cannot open shared object file: No such file or directory
+# /usr/lib64/libcvmfs_fuse_stub.so: cannot open shared object file: No such file or directory
+
+# Failed to read CernVM-FS configuration
+
+# Change the version from 0.2.21 to 0.3.0
+
+# Same error
+
+# Try to follow https://cernvm.cern.ch/fs/
+
+wget https://cvmrepo.web.cern.ch/cvmrepo/apt/cvmfs-release-latest_all.deb
+sudo dpkg -i cvmfs-release-latest_all.deb
+rm -f cvmfs-release-latest_all.deb
+sudo apt-get update
+sudo apt-get install cvmfs-fuse3
+
+# Restart the playbook
+
+# I think 
+# sudo ln -s /data/cvmfs /cvmfs
+# was a bad idea as the cache is in /var/lib/cvmfs
+rm /cvmfs
+ln -s /data/cvmfs /var/lib/cvmfs
+systemctl restart autofs
+

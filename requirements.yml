@@ -25,3 +25,6 @@
   version: 0.3.2
 - src: usegalaxy_eu.certbot
   version: 0.1.11
+# CVMFS Support
+- src: galaxyproject.cvmfs
+  version: 0.3.0
