@@ -19,88 +19,87 @@ galaxy_job_config:
     local_runner:
       load: galaxy.jobs.runners.local:LocalJobRunner
       workers: 4
-    # slurm:
-    #   load: galaxy.jobs.runners.slurm:SlurmJobRunner
-    #   drmaa_library_path: /usr/lib/slurm-drmaa/lib/libdrmaa.so.1
-    #   workers: 4
+    slurm:
+      load: galaxy.jobs.runners.slurm:SlurmJobRunner
+      drmaa_library_path: /usr/lib/slurm-drmaa/lib/libdrmaa.so.1
+      workers: 4
   handling:
     assign: ['db-skip-locked']
   execution:
-    # default: slurm
-    default: local_env
+    default: slurm
     environments:
       local_env:
         runner: local_runner
         tmp_dir: true
-      # slurm:
-      #   runner: slurm
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000'
-      #   tmp_dir: true
-      # slurm100G:
-      #   runner: slurm
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=100000'
-      #   tmp_dir: true
-      # slurm4c:
-      #   runner: slurm
-      #   tags: [4cores]
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000'
-      #   tmp_dir: true
-      # slurm4cLM:
-      #   runner: slurm
-      #   tags: [4cores]
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=50000'
-      #   tmp_dir: true
-      # slurm8c:
-      #   runner: slurm
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=8 --mem=20000'
-      #   tmp_dir: true
-      # slurm16c:
-      #   runner: slurm
-      #   native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=16 --mem=20000'
-      #   tmp_dir: true
-  # limits:
-  # -
-  #   # The number of jobs a user can have active in the specified
-  #   # environment, or across all environments identified by the
-  #   # specified tag. (formerly: concurrent_jobs)
-  #   type: environment_user_concurrent_jobs
-  #   id: slurm8c
-  #   value: 3
+      slurm:
+        runner: slurm
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=4000'
+        tmp_dir: true
+      slurm100G:
+        runner: slurm
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=1 --mem=100000'
+        tmp_dir: true
+      slurm4c:
+        runner: slurm
+        tags: [4cores]
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=20000'
+        tmp_dir: true
+      slurm4cLM:
+        runner: slurm
+        tags: [4cores]
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=4 --mem=50000'
+        tmp_dir: true
+      slurm8c:
+        runner: slurm
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=8 --mem=20000'
+        tmp_dir: true
+      slurm16c:
+        runner: slurm
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=16 --mem=20000'
+        tmp_dir: true
+  limits:
+  -
+    # The number of jobs a user can have active in the specified
+    # environment, or across all environments identified by the
+    # specified tag. (formerly: concurrent_jobs)
+    type: environment_user_concurrent_jobs
+    id: slurm8c
+    value: 3
 
-  # -
-  #   type: environment_user_concurrent_jobs
-  #   tag: 4cores
-  #   value: 6
+  -
+    type: environment_user_concurrent_jobs
+    tag: 4cores
+    value: 6
 
-  # tools:
-  # - id: bowtie2
-  #   environment: slurm4c
-  # - id: cite_seq_count
-  #   environment: slurm4c
-  # - id: cufflinks
-  #   environment: slurm4c
-  # - id: cutadapt
-  #   environment: slurm4c
-  # - id: hicup_hicup
-  #   environment: slurm8c
-  # - id: hicup_mapper
-  #   environment: slurm8c
-  # - id: omero_hyperstack_to_gastruloid_measurements
-  #   environment: slurm8c
-  # - id: rna_star
-  #   environment: slurm4cLM
-  # - id: rna_starsolo
-  #   environment: slurm4cLM
-  # - id: rna_star_index_builder_data_manager
-  #   environment: slurm4cLM
-  # - id: bedtools_coveragebed
-  #   environment: slurm100G
-  # - id: bwa_mem_index_builder_data_manager
-  #   environment: slurm4c
-  # - id: bwa
-  #   environment: slurm4c
-  # - id: bwa_mem
-  #   environment: slurm4c
+  tools:
+  - id: bowtie2
+    environment: slurm4c
+  - id: cite_seq_count
+    environment: slurm4c
+  - id: cufflinks
+    environment: slurm4c
+  - id: cutadapt
+    environment: slurm4c
+  - id: hicup_hicup
+    environment: slurm8c
+  - id: hicup_mapper
+    environment: slurm8c
+  - id: omero_hyperstack_to_gastruloid_measurements
+    environment: slurm8c
+  - id: rna_star
+    environment: slurm4cLM
+  - id: rna_starsolo
+    environment: slurm4cLM
+  - id: rna_star_index_builder_data_manager
+    environment: slurm4cLM
+  - id: bedtools_coveragebed
+    environment: slurm100G
+  - id: bwa_mem_index_builder_data_manager
+    environment: slurm4c
+  - id: bwa
+    environment: slurm4c
+  - id: bwa_mem
+    environment: slurm4c
 
 galaxy_config:
   galaxy:

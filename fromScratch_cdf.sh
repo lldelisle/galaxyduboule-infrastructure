@@ -588,3 +588,74 @@ sudo galaxyctl follow
 # Feb 21 10:31:50 workstationduboule galaxyctl[85485]: [Errno 13] Permission denied: '/data/mount_s3'
 
 # change galaxy config
+ansible-playbook galaxy.yml -K
+
+sudo galaxyctl status
+# Everything is good
+sudo galaxyctl follow
+# same error
+
+# Restart (I don't know why the ansible playbook was not restarting...)
+sudo galaxyctl restart
+
+# No error this time
+
+# Try to fix slurm-drmaa:
+sudo su -
+wget https://github.com/natefoo/slurm-drmaa/releases/download/1.1.4/slurm-drmaa-1.1.4.tar.gz
+tar zxvmf slurm-drmaa-1.1.4.tar.gz
+cd slurm-drmaa-1.1.4
+./configure --prefix="/usr/lib/slurm-drma"
+# configure: error: in `/root/slurm-drmaa-1.1.4':
+# configure: error: no acceptable C compiler found in $PATH
+apt-get install build-essential
+./configure --prefix="/usr/lib/slurm-drma"
+
+# checking for usable SLURM libraries/headers... *** The SLURM test program failed to link or run. See the file config.log
+# *** for the exact error that occured.
+# no
+# checking for slurmdb_users_get in -lslurm... no
+# configure: Using slurm libraries -lslurm -lslurmdb 
+# configure: error: 
+# Slurm libraries/headers not found;
+# add --with-slurm-inc and --with-slurm-lib with appropriate locations.
+ldd /usr/sbin/slurmd
+ldd /usr/bin/srun
+apt-get install libslurm-dev
+./configure --prefix="/usr/lib/slurm-drma"
+make
+#  cd . && /bin/bash /root/slurm-drmaa-1.1.4/scripts/missing automake-1.16 --foreign
+# /root/slurm-drmaa-1.1.4/scripts/missing: line 81: automake-1.16: command not found
+# WARNING: 'automake-1.16' is missing on your system.
+#          You should only need it if you modified 'Makefile.am' or
+#          'configure.ac' or m4 files included by 'configure.ac'.
+#          The 'automake' program is part of the GNU Automake package:
+#          <https://www.gnu.org/software/automake>
+#          It also requires GNU Autoconf, GNU m4 and Perl in order to run:
+#          <https://www.gnu.org/software/autoconf>
+#          <https://www.gnu.org/software/m4/>
+#          <https://www.perl.org/>
+# make: *** [Makefile:383: Makefile.in] Error 1
+apt-get install automake
+make
+# ...
+# /bin/bash ../m4/bison_ylwrap.sh conf_tab.y y.tab.c conf_tab.c y.tab.h `echo conf_tab.c | sed -e s/cc$/hh/ -e s/cpp$/hpp/ -e s/cxx$/hxx/ -e s/c++$/h++/ -e s/c$/h/` y.output conf_tab.output -- yacc -d 
+#  * ERROR: Bison was not found at configuration time while some sources are
+#  * build by it.  Either install Bison <http://www.gnu.org/software/bison/>
+#  * or download tarball with generated sources included (than you will
+#  * not be able to modify .y files).
+# ...
+apt-get install bison
+./configure --prefix="/usr/lib/slurm-drma"
+make
+make install
+ls -alh /usr/lib/slurm-drma/lib
+# total 1.8M
+# drwxr-xr-x 2 root root 4.0K Feb 21 11:47 .
+# drwxr-xr-x 6 root root 4.0K Feb 21 11:47 ..
+# -rw-r--r-- 1 root root 1.2M Feb 21 11:47 libdrmaa.a
+# -rwxr-xr-x 1 root root 1005 Feb 21 11:47 libdrmaa.la
+# lrwxrwxrwx 1 root root   17 Feb 21 11:47 libdrmaa.so -> libdrmaa.so.1.0.8
+# lrwxrwxrwx 1 root root   17 Feb 21 11:47 libdrmaa.so.1 -> libdrmaa.so.1.0.8
+# -rwxr-xr-x 1 root root 580K Feb 21 11:47 libdrmaa.so.1.0.8
+
