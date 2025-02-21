@@ -659,3 +659,5 @@ ls -alh /usr/lib/slurm-drma/lib
 # lrwxrwxrwx 1 root root   17 Feb 21 11:47 libdrmaa.so.1 -> libdrmaa.so.1.0.8
 # -rwxr-xr-x 1 root root 580K Feb 21 11:47 libdrmaa.so.1.0.8
 
+mv /usr/lib/slurm-drma/ /usr/lib/slurm-drmaa
+
