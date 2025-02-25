@@ -9,7 +9,7 @@ galaxy_db_name: galaxy
 # CVMFS vars
 cvmfs_role: client
 galaxy_cvmfs_repos_enabled: config-repo
-cvmfs_quota_limit: 20000
+cvmfs_quota_limit: 200000
 
 # Install the latest version
 telegraf_agent_package_state: latest
