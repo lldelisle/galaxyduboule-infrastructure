@@ -740,6 +740,8 @@ sudo apt-get install cvmfs-fuse3
 # was a bad idea as the cache is in /var/lib/cvmfs
 rm /cvmfs
 ln -s /data/cvmfs /var/lib/cvmfs
+# The command above has not done what I wanted.
+# I need to change this.
 systemctl restart autofs
 
 # Add the apptainer role (install + run playbook)
@@ -773,4 +775,22 @@ sudo systemctl daemon-reload
 # Update the config for galaxy
 # Run the playbook
 # I cannot test unfortunately...
+
+# Everything seems to work on 21st but on 24st. I don't know why I get:
+# 
+# lldelisle@workstationduboule:~$ ls /cvmfs/
+# ls: cannot access '/cvmfs/cvmfs-config.galaxyproject.org': Transport endpoint is not connected
+# ls: cannot access '/cvmfs/singularity.galaxyproject.org': Transport endpoint is not connected
+# ls: cannot access '/cvmfs/data.galaxyproject.org': Transport endpoint is not connected
+# cvmfs-config.galaxyproject.org  data.galaxyproject.org  singularity.galaxyproject.org
+
+# Let's try something dramatic:
+sudo systemctl stop autofs
+sudo umount /cvmfs/*
+sudo rm -r /var/lib/cvmfs
+
+sudo ln -s /data/cvmfs /var/lib/cvmfs
+
+# I relaunch the playbook
+
 
