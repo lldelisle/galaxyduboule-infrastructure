@@ -793,4 +793,9 @@ sudo ln -s /data/cvmfs /var/lib/cvmfs
 
 # I relaunch the playbook
 
+# Similarly to 20210309 I need to remove all pretending existing tools but I need to do it from inside as the server is not visible from outside for the moment.
+# As it is not accessible from outside, I need to do it from the server itself:
+apptainer exec /cvmfs/singularity.galaxyproject.org/all/bioblend\:1.4.0--pyhdfd78af_0 python
 
+# Then I run line by line what is in:
+# tools/clean_all_installed_tools.py
