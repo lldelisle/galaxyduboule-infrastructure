@@ -806,3 +806,9 @@ apptainer exec /cvmfs/singularity.galaxyproject.org/all/bioblend\:1.4.0--pyhdfd7
 apikey=""
 # Install the tool
 apptainer exec /cvmfs/singularity.galaxyproject.org/all/ephemeris\:0.10.10--pyhdfd78af_0 shed-tools install -g http://localhost -a $apikey -t tools/installed_tools.yml 
+
+# A lot of tools are not in categories.
+
+# I modify the file /data/galaxy/galaxy/var/config/shed_tool_conf.xml
+# And restart galaxy
+
