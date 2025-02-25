@@ -799,3 +799,10 @@ apptainer exec /cvmfs/singularity.galaxyproject.org/all/bioblend\:1.4.0--pyhdfd7
 
 # Then I run line by line what is in:
 # tools/clean_all_installed_tools.py
+
+# Reinstall the tools:
+# From the server:
+# I get the API key
+apikey=""
+# Install the tool
+apptainer exec /cvmfs/singularity.galaxyproject.org/all/ephemeris\:0.10.10--pyhdfd78af_0 shed-tools install -g http://localhost -a $apikey -t tools/installed_tools.yml 
