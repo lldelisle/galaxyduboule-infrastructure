@@ -16,4 +16,3 @@
   #     package:
   #       name: slurm-drmaa
   #     when: ansible_os_family == "RedHat"
-        

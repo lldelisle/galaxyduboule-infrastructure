@@ -354,6 +354,7 @@ slurm_config:
   SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
   SelectType: select/cons_tres
   SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
+  DefMemPerCPU: 4000 # By default DefMemPerNode is set to unlimited which prevent 2 jobs running at the same time.
 
 # Telegraf for grafana
 telegraf_plugins_default:
