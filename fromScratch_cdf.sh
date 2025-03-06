@@ -812,3 +812,6 @@ apptainer exec /cvmfs/singularity.galaxyproject.org/all/ephemeris\:0.10.10--pyhd
 # I modify the file /data/galaxy/galaxy/var/config/shed_tool_conf.xml
 # And restart galaxy
 
+# I have an issue with slurm, I cannot get more than a job running at the time.
+# From what I read on the internet, it seems mandatory to have a slurm database
+# I change the playbook

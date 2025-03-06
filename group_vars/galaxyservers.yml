@@ -318,7 +318,7 @@ nginx_conf_http:
 # nginx_conf_ssl_certificate_key: /etc/ssl/user/privkey-www-data.pem
 
 # Slurm
-slurm_roles: ['controller', 'exec'] # Which roles should the machine play? exec are execution hosts.
+slurm_roles: ['controller', 'exec', 'dbd'] # Which roles should the machine play? exec are execution hosts.
 slurm_nodes:
   - name: localhost    # Name of our host
     CPUs: 29           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27
