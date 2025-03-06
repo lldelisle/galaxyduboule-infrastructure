@@ -5,6 +5,4 @@
     - secret_group_vars/all.yml
   roles:
     - usegalaxy_eu.influxdb
-    - cloudalchemy.grafana
-
-
+    - grafana.grafana.grafana

@@ -39,7 +39,7 @@ sudo systemctl restart influxdb.service
 ## Check influxdb
 
 ```bash
-influx
+sudo influx v1 shell
 show databases
 use telegraf
 show measurements
@@ -47,13 +47,13 @@ show measurements
 
 For example, get the last measurements of "user-disk-usage":
 
-```bash
-SELECT * FROM "user-disk-usage" ORDER BY time DESC LIMIT 2;
+```influx
+SELECT * FROM "user-disk-usage" ORDER BY time DESC LIMIT 10;
 ```
 
 To get the time as human readable:
 
-```bash
+```influx
 precision rfc3339
 ```
 

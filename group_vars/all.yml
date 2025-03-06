@@ -14,14 +14,14 @@ cvmfs_quota_limit: 200000
 # Install the latest version
 telegraf_agent_package_state: latest
 
-# Configure the output to point to an InfluxDB
-# running on localhost, and # place data in the
-# database "telegraf" which will be created if need be.
+# Configure the output to point to an InfluxDBv2
 telegraf_agent_output:
-  - type: influxdb
+  - type: influxdb_v2
     config:
     - urls = ["http://127.0.0.1:8086"]
-    - database = "telegraf"
+    - token = "{{ influx_api_token }}"
+    - bucket = "telegraf"
+    - organization = "telegraf"
 
 # The default plugins, applied to any telegraf-configured host
 telegraf_plugins_default:

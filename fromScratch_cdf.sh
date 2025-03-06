@@ -893,3 +893,78 @@ sudo systemctl status slurmdbd
 # Mar 06 13:10:51 workstationduboule systemd[1]: Reloaded slurmdbd.service - Slurm DBD accounting daemon.
 
 # I don't have anymore this Invalid Account error
+
+# Setup the monitoring
+ansible-playbook monitoring.yml -K
+# ERROR! this task 'include' has extra params, which is only allowed in the following modules: include_role, win_shell, include_tasks, import_role, script, shell, command, group_by, add_host, import_tasks, set_fact, meta, win_command, include_vars, raw
+
+# The error appears to be in '/home/delislel/Documents/mygit/galaxyduboule-infrastructure/roles/usegalaxy_eu.influxdb/tasks/main.yml': line 25, column 3, but may
+# be elsewhere in the file depending on the exact syntax problem.
+
+# Change the version of influxdb
+# For grafana the repo is deprecated:
+# ansible-galaxy collection install grafana.grafana --force
+ansible-galaxy collection install -r requirements_collections.yml --force
+# Change the variables to match the new role
+ansible-playbook monitoring.yml -K
+# The repository ''https://repos.influxdata.com/ubuntu noble Release'' does not have a Release file
+# I try to follow a tutorial they use jammy
+sudo tee /etc/apt/sources.list.d/influxdb.list<<EOF
+deb [signed-by=/usr/share/keyrings/influxdb-keyring.gpg] https://repos.influxdata.com/ubuntu jammy stable
+EOF
+curl -fsSL https://repos.influxdata.com/influxdata-archive_compat.key|sudo gpg --dearmor -o /usr/share/keyrings/influxdb-keyring.gpg
+sudo apt install influxdb2
+# Relaunch the monitoring ansible playbook
+# I get always the same error.
+# I commented in the file roles/usegalaxy_eu.influxdb/tasks/install-debian.yml
+# Add InfluxData repository and Install InfluxDB package
+# Rerun the playbook
+# I get an error in the configupdate:
+# stderr: |-
+#     time="2025-03-06T14:16:12+01:00" level=warning msg="DBUS_SESSION_BUS_ADDRESS envvar looks to be not set, this can lead to runaway dbus-daemon processes. To avoid this, set envvar DBUS_SESSION_BUS_ADDRESS=$XDG_RUNTIME_DIR/bus (if it exists) or DBUS_SESSION_BUS_ADDRESS=/dev/null." func="gosnowflake.(*defaultLogger).Warn" file="log.go:228"
+#     Error: unknown shorthand flag: 'c' in -config
+#     See 'influxd -h' for help
+# I tried to start the service:
+sudo systemctl restart influxd.service 
+# And it works...
+# I rerun the playbook
+ansible-playbook monitoring.yml -K
+# grafana is running
+# Again galaxy
+ansible-playbook galaxy.yml -K
+
+# In fact influxdb has not been configured:
+sudo influxd config -config /etc/influxdb/influxdb.generated.conf
+# The DBUS_SESSION_BUS_ADDRESS is only a warning the real error is:
+# unknown shorthand flag: 'c' in -config
+
+influxd -h
+# Available Commands:
+#   downgrade    Downgrade metadata schema used by influxd to match the expectations of an older release
+#   help         Help about any command
+#   inspect      Commands for inspecting on-disk database data
+#   recovery     Commands used to recover / regenerate operator access to the DB
+#   run          Start the influxd server
+#   upgrade      Upgrade a 1.x version of InfluxDB
+#   version      Print the influxd server version
+
+# No config
+
+# Setup a user (variable are stored in the secret...)
+sudo influx setup \
+  --username admin \
+  --password influx_admin_password \
+  --token influx_admin_token \
+  --org telegraf \
+  --bucket telegraf \
+  --force
+# Create a all access token
+sudo influx auth create \
+  --all-access \
+  --host http://localhost:8086 \
+  --org telegraf \
+  --token 0XRkre9dcTIG8V6bvcKmAZu5XjlO5ucQo32ZK7RRpsmJV7K4UC
+# This did not work but
+sudo influx auth create \
+  --all-access
+# Gave me a token that I stored.

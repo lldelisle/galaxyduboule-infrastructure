@@ -15,12 +15,11 @@
   version: 0.0.3
 - src: galaxyproject.slurm
   version: 1.0.2
-- src: usegalaxy_eu.influxdb
-  version: v6.0.7
+- name: usegalaxy_eu.influxdb
+  src: "git+https://github.com/muon-spectroscopy-computational-project/ansible-influxdb.git"
+  version: dd4ddbb2273a78e6c148389ac631735c3b961f1e
 - src: dj-wasabi.telegraf
   version: 0.14.1
-- src: cloudalchemy.grafana
-  version: 0.14.2
 - src: galaxyproject.proftpd
   version: 0.3.2
 - src: usegalaxy_eu.certbot
