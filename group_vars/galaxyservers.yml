@@ -319,6 +319,15 @@ nginx_conf_http:
 
 # Slurm
 slurm_roles: ['controller', 'exec', 'dbd'] # Which roles should the machine play? exec are execution hosts.
+
+# slurmdbd
+__slurmdbd_config_default: # this is not needed if this PR is merged: https://github.com/galaxyproject/ansible-slurm/pull/49
+  AuthType: auth/munge
+  DbdPort: 6819
+  SlurmUser: "{{ __slurm_user_name }}"
+  LogFile: "{{ __slurm_log_dir ~ '/slurmdbd.log' if __slurm_debian else omit }}"
+
+# slurm_upgrade: true
 slurm_nodes:
   - name: localhost    # Name of our host
     CPUs: 29           # htop gives 32 -> maybe should be 30 -> following the disaster of March 18th I put 28 to be on the safe side -> 20230515 I put 29 -> 20231207 I put 27

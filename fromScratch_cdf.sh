@@ -815,3 +815,27 @@ apptainer exec /cvmfs/singularity.galaxyproject.org/all/ephemeris\:0.10.10--pyhd
 # I have an issue with slurm, I cannot get more than a job running at the time.
 # From what I read on the internet, it seems mandatory to have a slurm database
 # I change the playbook
+
+# I run the playbook
+
+$ sudo systemctl status slurmdbd.service 
+# × slurmdbd.service - Slurm DBD accounting daemon
+#      Loaded: loaded (/usr/lib/systemd/system/slurmdbd.service; enabled; preset: enabled)
+#      Active: failed (Result: exit-code) since Thu 2025-03-06 11:44:00 CET; 7min ago
+#    Duration: 8ms
+#        Docs: man:slurmdbd(8)
+#     Process: 56036 ExecStart=/usr/sbin/slurmdbd -D -s $SLURMDBD_OPTIONS (code=exited, status=1/FAILURE)
+#    Main PID: 56036 (code=exited, status=1/FAILURE)
+#         CPU: 5ms
+
+# Mar 06 11:44:00 workstationduboule systemd[1]: Started slurmdbd.service - Slurm DBD accounting daemon.
+# Mar 06 11:44:00 workstationduboule (slurmdbd)[56036]: slurmdbd.service: Referenced but unset environment variable evaluates to an empty string: SLURMDBD_OPT>
+# Mar 06 11:44:00 workstationduboule slurmdbd[56036]: slurmdbd: error: _parse_next_key: Parsing error at unrecognized key: SlurmctldPidFile
+# Mar 06 11:44:00 workstationduboule slurmdbd[56036]: error: _parse_next_key: Parsing error at unrecognized key: SlurmctldPidFile
+# Mar 06 11:44:00 workstationduboule slurmdbd[56036]: fatal: Could not open/read/parse slurmdbd.conf file /etc/slurm/slurmdbd.conf
+# Mar 06 11:44:00 workstationduboule slurmdbd[56036]: slurmdbd: fatal: Could not open/read/parse slurmdbd.conf file /etc/slurm/slurmdbd.conf
+# Mar 06 11:44:00 workstationduboule systemd[1]: slurmdbd.service: Main process exited, code=exited, status=1/FAILURE
+# Mar 06 11:44:00 workstationduboule systemd[1]: slurmdbd.service: Failed with result 'exit-code'.
+
+# The error is about the unrecognized key.
+# The solution comes from usegalaxy.org.au overwritting __slurmdbd_config_default
