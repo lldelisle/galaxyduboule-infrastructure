@@ -1,5 +1,7 @@
 - hosts: galaxyservers
   become: true
+  vars_files:
+    - secret_group_vars/all.yml
   roles:
     # For the moment this is not available:
     # https://github.com/natefoo/slurm-drmaa/issues/89

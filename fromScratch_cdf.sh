@@ -839,3 +839,57 @@ $ sudo systemctl status slurmdbd.service
 
 # The error is about the unrecognized key.
 # The solution comes from usegalaxy.org.au overwritting __slurmdbd_config_default
+
+# I rerun slurm playbook
+# I get a new error
+# Mar 06 12:10:01 workstationduboule slurmdbd[71335]: error: slurmdbd.conf lacks DbdHost parameter, using 'localhost'
+# Mar 06 12:10:01 workstationduboule slurmdbd[71335]: fatal: StorageType must be specified
+
+# Create the folder for mysql
+sudo mkdir -p /data/mysql
+sudo ln -s /data/mysql /var/lib/mysql
+
+# Use MariaDB
+sudo apt-get update
+sudo apt-get install mariadb-server
+sudo mysql_secure_installation
+# Enter current password for root (enter for none): 
+# Enter
+# Switch to unix_socket authentication [Y/n] 
+# n
+# Change the root password? [Y/n] 
+# n
+# All other questions: default = Y
+
+# Create a slurm user and replace xxx by the password in the secret_group_vars mariadb_password_slurm:
+sudo mariadb
+GRANT ALL ON *.* TO 'slurm'@'localhost' IDENTIFIED BY 'xxx' WITH GRANT OPTION;
+
+# Rerun the slurm playbook
+
+# Still a small error but I think it is ok:
+sudo systemctl status slurmdbd
+# ● slurmdbd.service - Slurm DBD accounting daemon
+#      Loaded: loaded (/usr/lib/systemd/system/slurmdbd.service; enabled; preset: enabled)
+#      Active: active (running) since Thu 2025-03-06 13:09:06 CET; 6min ago
+#        Docs: man:slurmdbd(8)
+#     Process: 108654 ExecReload=/bin/kill -HUP $MAINPID (code=exited, status=0/SUCCESS)
+#    Main PID: 107297 (slurmdbd)
+#       Tasks: 6
+#      Memory: 3.8M (peak: 4.8M)
+#         CPU: 49ms
+#      CGroup: /system.slice/slurmdbd.service
+#              └─107297 /usr/sbin/slurmdbd -D -s
+
+# Mar 06 13:09:06 workstationduboule slurmdbd[107297]: slurmdbd: Not running as root. Can't drop supplementary groups
+# Mar 06 13:09:06 workstationduboule slurmdbd[107297]: slurmdbd: accounting_storage/as_mysql: _check_mysql_concat_is_sane: MySQL server version is: 5.5.5-10.11.8-MariaDB-0ubuntu0.24.04.1
+# Mar 06 13:09:06 workstationduboule slurmdbd[107297]: slurmdbd: error: Database settings not recommended values: innodb_buffer_pool_size innodb_lock_wait_timeout
+# Mar 06 13:09:06 workstationduboule slurmdbd[107297]: slurmdbd: slurmdbd version 23.11.4 started
+# Mar 06 13:09:09 workstationduboule systemd[1]: Reloading slurmdbd.service - Slurm DBD accounting daemon...
+# Mar 06 13:09:09 workstationduboule slurmdbd[107297]: slurmdbd: Reconfigure signal (SIGHUP) received
+# Mar 06 13:09:09 workstationduboule systemd[1]: Reloaded slurmdbd.service - Slurm DBD accounting daemon.
+# Mar 06 13:10:51 workstationduboule systemd[1]: Reloading slurmdbd.service - Slurm DBD accounting daemon...
+# Mar 06 13:10:51 workstationduboule slurmdbd[107297]: slurmdbd: Reconfigure signal (SIGHUP) received
+# Mar 06 13:10:51 workstationduboule systemd[1]: Reloaded slurmdbd.service - Slurm DBD accounting daemon.
+
+# I don't have anymore this Invalid Account error

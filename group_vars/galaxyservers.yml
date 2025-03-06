@@ -321,11 +321,23 @@ nginx_conf_http:
 slurm_roles: ['controller', 'exec', 'dbd'] # Which roles should the machine play? exec are execution hosts.
 
 # slurmdbd
+
+slurm_database_user: slurm
+slurm_database_user_password: "{{ mariadb_password_slurm }}"
+slurm_database: 'slurm_acct_db'
+
 __slurmdbd_config_default: # this is not needed if this PR is merged: https://github.com/galaxyproject/ansible-slurm/pull/49
   AuthType: auth/munge
   DbdPort: 6819
-  SlurmUser: "{{ __slurm_user_name }}"
+  # SlurmUser: "{{ __slurm_user_name }}"
   LogFile: "{{ __slurm_log_dir ~ '/slurmdbd.log' if __slurm_debian else omit }}"
+  DbdHost: localhost
+  StorageHost: localhost
+  StorageLoc: "{{ slurm_database }}"
+  StoragePass: "{{ slurm_database_user_password }}"
+  StorageType: accounting_storage/mysql
+  StorageUser: "{{ slurm_database_user }}"
+  SlurmUser: slurm
 
 # slurm_upgrade: true
 slurm_nodes:
@@ -338,6 +350,7 @@ slurm_partitions:
     Nodes: localhost
     Default: YES
 slurm_config:
+  AccountingStorageType: accounting_storage/slurmdbd
   SlurmdParameters: config_overrides   # Ignore errors if the host actually has cores != 2
   SelectType: select/cons_tres
   SelectTypeParameters: CR_CPU_Memory  # Allocate individual cores/memory instead of entire node
