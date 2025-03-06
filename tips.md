@@ -32,8 +32,8 @@ It was because there was no space left on `/`.
 ```bash
 sudo systemctl status grafana-server.service
 sudo systemctl status telegraf.service
-sudo systemctl status influxdb.service 
-sudo systemctl restart influxdb.service 
+sudo systemctl status influxdb.service
+sudo systemctl restart influxdb.service
 ```
 
 ## Check influxdb
@@ -205,7 +205,6 @@ If the state is draining then the command is:
 sudo scontrol update nodename=localhost state=resume
 ```
 
-
 ## Delete all shared workflow of a user who has been deleted
 
 Thanks to @hrhotz
@@ -251,4 +250,27 @@ sudo chown influxdb:influxdb /data/influxdb/
 sudo mv /var/lib/influxdb/data/ /data/influxdb/
 ```
 Change the playbook by setting `influxdb_data_dir: "/data/influxdb_data/"`
-Run playbook 
+Run playbook
+
+## CVMFS Transport endpoint is not connected
+
+I don't know what I am doing wrong but I often have:
+
+```bash
+$ ls /cvmfs/
+ls: cannot access '/cvmfs/data.galaxyproject.org': Transport endpoint is not connected
+data.galaxyproject.org
+$ sudo cvmfs_config status
+/usr/bin/cvmfs_config: line 1046: cd: /mnt/cvmfs: Transport endpoint is not connected
+mountpoint /mnt/cvmfs inaccessible
+/usr/bin/cvmfs_config: line 1046: cd: /cvmfs/data.galaxyproject.org: Transport endpoint is not connected
+mountpoint /cvmfs/data.galaxyproject.org inaccessible
+```
+
+The solution I found is from https://cernvm-forum.cern.ch/t/cannot-mount-cvmfs-on-ubuntu-20-anymore/80/2:
+
+```bash
+sudo cvmfs_config umount
+sudo systemctl restart autofs
+sudo cvmfs_config setup
+```
