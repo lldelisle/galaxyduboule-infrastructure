@@ -130,12 +130,12 @@ galaxy_job_config:
     # specified tag. (formerly: concurrent_jobs)
     type: environment_user_concurrent_jobs
     id: slurm8c
-    value: 3
+    value: 6
 
   -
     type: environment_user_concurrent_jobs
     tag: 4cores
-    value: 6
+    value: 12
 
   tools:
   - id: bowtie2
@@ -170,7 +170,8 @@ galaxy_job_config:
 galaxy_config:
   galaxy:
     brand: "Galaxyduboule"
-    welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
+    # welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
+    welcome_url: "http://127.0.0.1:3000"
     admin_users:
     - lucille.delisle@epfl.ch
     database_connection: "postgresql:///{{ galaxy_db_name }}?host=/var/run/postgresql"
@@ -188,7 +189,7 @@ galaxy_config:
     smtp_ssl: false
     error_email_to: lucille.delisle@epfl.ch
     email_from: 'Lucille Delisle (galaxy) <lucille.delisle@epfl.ch>'
-    # library_import_dir: /data/mount_s3
+    library_import_dir: /data/nas/lab.data/archive/
     # user_library_import_dir: /data/mount_s3/perso_storage
     allow_library_path_paste: true
     require_login: true # Only users can use galaxy
