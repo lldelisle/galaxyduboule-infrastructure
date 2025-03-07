@@ -11,6 +11,8 @@ grafana_ini:
   server:
     http_addr: 127.0.0.1
     domain: "{{ inventory_hostname }}"
+    root_url: "https://127.0.0.1:3000/{{ grafana_hash }}/grafana/"
+    serve_from_sub_path: true
     # Only when https will be enabled
     # root_url: "https://{{ inventory_hostname }}/{{ grafana_hash }}/grafana/"
 

@@ -176,8 +176,7 @@ galaxy_job_config:
 galaxy_config:
   galaxy:
     brand: "Galaxyduboule"
-    # welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
-    welcome_url: "http://127.0.0.1:3000"
+    welcome_url: "/{{ grafana_hash }}/grafana/d/c61Pj2yGz/main?orgId=1" # This corresponds to the main dashboard
     admin_users:
     - lucille.delisle@epfl.ch
     database_connection: "postgresql:///{{ galaxy_db_name }}?host=/var/run/postgresql"
