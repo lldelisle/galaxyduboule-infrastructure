@@ -20,7 +20,7 @@ mkdir nas
 exit
 
 # Update the /etc/fstab file so it has access to the nas
-sudo /etc/fstab
+sudo vim /etc/fstab
 sudo mount -a
 sudo systemctl daemon-reload
 ```
