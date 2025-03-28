@@ -53,7 +53,6 @@ tools:
   owner: erasmus-medical-center
   revisions:
   - 1613afce4e28
-  - c46360dcbf3f
   tool_panel_section_label: Collection Operations
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: column_maker
@@ -106,7 +105,6 @@ tools:
 - name: fromgtftobed12
   owner: lldelisle
   revisions:
-  - 6fd4b3b90220
   - eca13ff8e956
   - f9b919636568
   tool_panel_section_label: Convert Formats
@@ -276,7 +274,6 @@ tools:
   - 5eb7e84243f2
   - 64172f1c1202
   - 8c0175e03cee
-  - '93678460093'
   - 9845c649f41b
   - b1c926deaa2d
   - c053d4cad713
@@ -542,7 +539,6 @@ tools:
   revisions:
   - 081139509124
   - 3126da33847c
-  - '81139509124'
   - a8f207b43f64
   - ec974e69e0b5
   tool_panel_section_label: Homer
@@ -570,7 +566,6 @@ tools:
   - 4cfafd293f69
   - a5ed2209ac47
   - d6aaae48c9f7
-  - .inf
   - 750c9bfd343b
   tool_panel_section_label: Imaging
   tool_shed_url: testtoolshed.g2.bx.psu.edu
@@ -661,7 +656,6 @@ tools:
   owner: imgteam
   revisions:
   - 984358e43242
-  - inf
   tool_panel_section_label: Imaging
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: bfconvert
@@ -717,7 +711,6 @@ tools:
 - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
   owner: lldelisle
   revisions:
-  - 2ac2a7d68b72
   - 78b57a02b820
   - 801ea641f0ba
   - 8704ccf28b6a
@@ -736,7 +729,6 @@ tools:
   - 2b35282ddb88
   - 4fea20e7014b
   - 515b21483ad4
-  - d507ce86f0d0
   tool_panel_section_label: Imaging
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: measure_gastruloids
@@ -785,7 +777,6 @@ tools:
   - 62eb6d63f582
   - 7c1beb6d6eca
   - c06951d10364
-  - .inf
   tool_panel_section_label: deepTools
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: deeptools_bigwig_compare

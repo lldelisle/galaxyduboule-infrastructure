@@ -7,6 +7,11 @@ conda create -n lastVersion bioblend ephemeris
 # Or
 conda activate lastVersion
 conda install bioblend ephemeris
+# Or
+python -m venv ~/galaxy_venv
+. ~/galaxy_venv/bin/activate
+pip install bioblend ephemeris
+pip install setuptools
 ```
 
 ## Update galaxy tag
@@ -37,10 +42,12 @@ Then use `shed-tools` from ephemeris:
 
 ```bash
 conda activate lastVersion
+# Or
+python -m venv ~/galaxy_venv
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
-shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/my_tools.yml 
+shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/my_tools.yml.lock
 ```
 
 If you modified the job_conf file, you need to launch the ansible playbook:
