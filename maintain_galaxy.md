@@ -148,7 +148,7 @@ python3 tools/fix-lockfile.py tools/data_managers_tools.yml
 python3 tools/update-tool.py tools/data_managers_tools.yml
 ```
 
-Then use `shed-tools` from ephemeris:
+Then use `shed-tools` from ephemeris to install it:
 
 ```bash
 conda activate lastVersion
@@ -158,6 +158,26 @@ conda activate lastVersion
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
 shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/data_managers_tools.yml.lock
+```
+
+Find the table entry:
+```bash
+manager=data_manager_bwa_mem_index_builder
+cat /data/galaxy/galaxy/var/shed_tools/toolshed.g2.bx.psu.edu/repos/*/$manager/*/$manager/tool_data_table_conf.xml.sample
+```
+
+Copy the table entry [here](./files/galaxy/config/tool_data_table_conf.xml) but remove the `tool-data/` in the path of the loc file.
+
+Run the ansible playbook:
+
+```bash
+ansible-playbook galaxy.yml -K
+```
+
+If not done automatically restart galaxy (from the server):
+
+```bash
+sudo galaxyctl restart
 ```
 
 Download the shed_data_manager_conf.xml from the server:
