@@ -8,7 +8,7 @@ conda create -n lastVersion bioblend ephemeris
 conda activate lastVersion
 conda install bioblend ephemeris
 # Or
-python -m venv ~/galaxy_venv
+python3 -m venv ~/galaxy_venv
 . ~/galaxy_venv/bin/activate
 pip install bioblend ephemeris
 pip install setuptools
@@ -42,7 +42,10 @@ Then do the same steps as if you wanted to update.
 
 #### Update currently installed tools
 
-```
+```bash
+conda activate lastVersion
+# Or
+python -m venv ~/galaxy_venv
 python3 tools/update-tool.py tools/my_tools.yml
 ```
 
@@ -93,6 +96,9 @@ scp -P $port ${username}@${guest}:/tmp/shed_data_manager_conf.xml tools/
 Then create the fetch.yml:
 
 ```bash
+conda activate lastVersion
+# Or
+python -m venv ~/galaxy_venv
 python tools/make_fetch.py -g tools/genomes.yml -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -o tools/fetch.yml
 ```
 
@@ -100,6 +106,8 @@ Fetch the missing genomes (if you uses a lot of ucsc genome you must rerun it mu
 
 ```bash
 conda activate lastVersion
+# Or
+python -m venv ~/galaxy_venv
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
