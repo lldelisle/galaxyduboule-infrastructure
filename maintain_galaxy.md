@@ -30,7 +30,15 @@ Whatever its origin is, you may want to modify the `galaxy_job_config` in [galax
 
 #### New tool
 
-Update the file [my_tools.xml](./tools/my_tools.yml). To check the `tool_panel_section_label` you can use what is [here](https://training.galaxyproject.org/training-material/api/toolcats.json).
+Update the file [my_tools.xml](./tools/my_tools.yml). To decide the `tool_panel_section_label`, you can use what is [here](https://training.galaxyproject.org/training-material/api/toolcats.json).
+
+Then update the .lock:
+
+```
+python3 tools/fix-lockfile.py tools/my_tools.yml
+```
+
+Then do the same steps as if you wanted to update.
 
 #### Update currently installed tools
 
@@ -50,7 +58,7 @@ apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/my_tools.yml.lock
 ```
 
-If you modified the job_conf file, you need to launch the ansible playbook:
+If you modified the `galaxy_job_config` file, you need to launch the ansible playbook:
 
 ```bash
 ansible-playbook galaxy.yml -K
@@ -67,7 +75,7 @@ ansible-playbook galaxy.yml -K
 
 ## Add a new genome
 
-Modify [genomes.yml](./tools/genomes.yml) to add your new genome. Be aware that if the source is ucsc, you need to put the same value in id and dbkey. If it is a custom genome, put the fasta on s3://11705-388fd8245175782087c769d3c1f8dabd/custom_genomes/.
+Modify [genomes.yml](./tools/genomes.yml) to add your new genome. It the genome is a specific version of a specific species which is not available in galaxy. Please write an issue to [IDC](https://github/galaxyproject/idc). If it is a custom genome, put the fasta on the NAS in `lab.data/archive/perso_storage/custom_genomes`.
 
 Download the shed_data_manager_conf.xml from the server:
 
@@ -77,8 +85,8 @@ sudo cp /data/galaxy/galaxy/var/config/shed_data_manager_conf.xml /tmp/
 sudo chmod 777 /tmp/shed_data_manager_conf.xml 
 # Locally:
 port=22
-guest=galaxyduboule.epfl.ch
-username=ldelisle
+guest=192.168.202.69
+username=lldelisle
 scp -P $port ${username}@${guest}:/tmp/shed_data_manager_conf.xml tools/
 ```
 
@@ -94,7 +102,7 @@ Fetch the missing genomes (if you uses a lot of ucsc genome you must rerun it mu
 conda activate lastVersion
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
-run-data-managers --config tools/fetch.yml -g https://galaxyduboule.epfl.ch -a $apikey
+run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
 ```
 
 Then prepare the dm_genomes.yml:
@@ -110,9 +118,9 @@ Remove duplicated DM.
 Build the new entries:
 
 ```bash
-python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g https://galaxyduboule.epfl.ch -a $apikey
+python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $apikey
 # Before homer I was doing:
-# run-data-managers --config tools/dm_genomes.yml -g https://galaxyduboule.epfl.ch -a $apikey
+# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
 ```
 
 Then update the history:
@@ -124,14 +132,24 @@ python tools/create_History_with_Fasta_Length.py $apikey
 ## Add a new data_manager
 
 Update the file [data_managers_tools.yml](./tools/data_managers_tools.yml).
+
+Then update the .lock:
+
+```
+python3 tools/fix-lockfile.py tools/data_managers_tools.yml
+python3 tools/update-tool.py tools/data_managers_tools.yml
+```
+
 Then use `shed-tools` from ephemeris:
 
 ```bash
 conda activate lastVersion
+# Or
+. ~/galaxy_venv/bin/activate
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 # Install the tool
-shed-tools install -g https://galaxyduboule.epfl.ch -a $apikey -t tools/data_managers_tools.yml 
+shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/data_managers_tools.yml.lock
 ```
 
 Download the shed_data_manager_conf.xml from the server:
@@ -142,8 +160,8 @@ sudo cp /data/galaxy/galaxy/var/config/shed_data_manager_conf.xml /tmp/
 sudo chmod 777 /tmp/shed_data_manager_conf.xml 
 # Locally:
 port=22
-guest=galaxyduboule.epfl.ch
-username=ldelisle
+guest=192.168.202.69
+username=lldelisle
 scp -P $port ${username}@${guest}:/tmp/shed_data_manager_conf.xml tools/
 ```
 
@@ -158,9 +176,9 @@ Remove duplicated DM.
 Build the new entries:
 
 ```bash
-python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g https://galaxyduboule.epfl.ch -a $apikey
+python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $apikey
 # Before homer I was doing:
-# run-data-managers --config tools/dm_genomes.yml -g https://galaxyduboule.epfl.ch -a $apikey
+# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
 ```
 
 ## Add a new useful dataset

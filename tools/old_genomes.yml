@@ -1,0 +1,351 @@
+genomes:
+    - dbkey: mm9
+      description: mm9
+      id: mm9
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: hg19
+      description: hg19
+      id: hg19
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: hg38
+      description: hg38
+      id: hg38
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: galGal6
+      description: galGal6
+      id: galGal6
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: danRer11
+      description: danRer11
+      id: danRer11
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: tetNig2
+      description: tetNig2
+      id: tetNig2
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: mm39
+      description: mm39
+      id: mm39
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: mm10_UCSC
+      description: mm10_UCSC
+      id: mm10_UCSC
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_UCSC.fa
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: Tetraodon8
+      description: Tetraodon8
+      id: Tetraodon8
+      source: /data/mount_s3/perso_storage/custom_genomes/Tetraodon8_UCSC.fa
+      doi:
+      version:
+      checksum:
+      blob: "From http://ftp.ensembl.org/pub/release-103/fasta/tetraodon_nigroviridis/dna/Tetraodon_nigroviridis.TETRAODON8.dna.toplevel.fa.gz but UCSC format"
+      indexers:
+        - genome
+    - dbkey: mm10_InvCS65-SB7lacZ
+      description: mm10_InvCS65-SB7lacZ
+      id: mm10_InvCS65-SB7lacZ
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_InvCS65-SB7lacZ.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF
+      description: mm10_deli9-13insCTCF
+      id: mm10_deli9-13insCTCF
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB
+      description: mm10_deli9-13insCTCF_delB
+      id: mm10_deli9-13insCTCF_delB
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_II1TDOMlacZr4-CB542
+      description: mm10_II1TDOMlacZr4-CB542
+      id: mm10_II1TDOMlacZr4-CB542
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_II1TDOMlacZr4-CB542.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_delTT
+      description: mm10_delTT
+      id: mm10_delTT
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_delTT.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      description: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      id: BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_15LoxP1_TETRAODON8_chr2_13313310-13458212.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      description: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      id: BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_43LoxP3_TETRAODON8_chr2_13417090-13578440.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      description: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      id: BAC_43m7-1_TETRAODON8_chr8_6699347-6844622
+      source: /data/mount_s3/perso_storage/custom_genomes/BAC_43m7-1_TETRAODON8_chr8_6699347-6844622.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    # - dbkey: SPRET_EiJ_v1_full
+    #   description: SPRET_EiJ_v1_full
+    #   id: SPRET_EiJ_v1_full
+    #   source: /data/mount_s3/perso_storage/custom_genomes/GCA_001624865.1_SPRET_EiJ_v1_genomic.fna.gz
+    #   doi:
+    #   version:
+    #   checksum:
+    #   blob: "Downloaded from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/624/865/GCA_001624865.1_SPRET_EiJ_v1/GCA_001624865.1_SPRET_EiJ_v1_genomic.fna.gz"
+    #   indexers:
+    #     - genome
+    - dbkey: mm10_dbSNP142_SPRET
+      description: mm10_dbSNP142_SPRET
+      id: mm10_dbSNP142_SPRET
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_dbSNP142_SPRET.fa
+      doi:
+      version:
+      checksum:
+      blob: "using vcf of SPRET cf 20211019_F1_Chase"
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T16-2F
+      description: mm10_deli9-13insCTCF_delB_T16-2F
+      id: mm10_deli9-13insCTCF_delB_T16-2F
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-2F.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T16-5C
+      description: mm10_deli9-13insCTCF_delB_T16-5C
+      id: mm10_deli9-13insCTCF_delB_T16-5C
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T16-5C.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13insCTCF_delB_T19-3E
+      description: mm10_deli9-13insCTCF_delB_T19-3E
+      id: mm10_deli9-13insCTCF_delB_T19-3E
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13insCTCF_delB_T19-3E.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_deli9-13_delB_T5-7C
+      description: mm10_deli9-13_delB_T5-7C
+      id: mm10_deli9-13_delB_T5-7C
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_deli9-13_delB_T5-7C.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: oryCun2
+      description: Rabbit (oryCun2.0)
+      id: oryCun2
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: dm6
+      description: dm6
+      id: dm6
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: calJac4
+      description: calJac4
+      id: calJac4
+      source: ucsc
+      doi:
+      version:
+      checksum:
+      blob:
+      indexers:
+        - genome
+    - dbkey: mm39_hsp68_venus_h19_enh2
+      description: mm39_hsp68_venus_h19_enh2
+      id: mm39_hsp68_venus_h19_enh2
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_hsp68_venus_h19_enh2.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_Del_CTCFA_f1
+      description: mm39_Mesp_Del_CTCFA_f1
+      id: mm39_Mesp_Del_CTCFA_f1
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFA_f1.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_Del_CTCFB_f2
+      description: mm39_Mesp_Del_CTCFB_f2
+      id: mm39_Mesp_Del_CTCFB_f2
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFB_f2.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_Del_CTCFC_d6
+      description: mm39_Mesp_Del_CTCFC_d6
+      id: mm39_Mesp_Del_CTCFC_d6
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_Del_CTCFC_d6.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Mesp_inversion3
+      description: mm39_Mesp_inversion3
+      id: mm39_Mesp_inversion3
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Mesp_inversion3.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_invHoxd3-Hoxd4_cloneE10
+      description: mm39_invHoxd3-Hoxd4_cloneE10
+      id: mm39_invHoxd3-Hoxd4_cloneE10
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_invHoxd3-Hoxd4_cloneE10.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_Cyp26a1_mCherry_PEST
+      description: mm39_Cyp26a1_mCherry_PEST
+      id: mm39_Cyp26a1_mCherry_PEST
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_Cyp26a1_mCherry_PEST.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_invd3d4_A110all1
+      description: mm39_invd3d4_A110all1
+      id: mm39_invd3d4_A110all1
+      source: /data/mount_s3/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm10_mCherry.SV40pA
+      description: mm10_mCherry.SV40pA
+      id: mm10_mCherry.SV40pA
+      source: /data/mount_s3/perso_storage/custom_genomes/mm10_mCherry.SV40pA.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
