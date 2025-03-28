@@ -6,7 +6,7 @@ import time
 
 gi = GalaxyInstance("https://galaxyduboule.epfl.ch", key=sys.argv[1])
 my_library_id = '03501d7626bd192f'
-s3_dir = '/data/mount_s3/perso_storage/useful_datasets/'
+nas_dir = '/data/nas/lab.data/archive/perso_storage/useful_datasets/'
 local_dir = 'useful_datasets'
 my_folder = 'useful_datasets'
 urls = {'https://zenodo.org/record/7510406/files/mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm38.102_ExonsCDSOnly_UCSC.gtf.gz?download=1':'mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm38.102_ExonsCDSOnly_UCSC.gtf',
@@ -22,10 +22,10 @@ if f"/{my_folder}" in [mf['name'] for mf in gi.libraries.get_folders(my_library_
 # I create a new one:
 my_folder_id = gi.libraries.create_folder(my_library_id, my_folder)[0]['id']
 
-# Put what is on s3 in the library:
-print("Transfer from s3 to new folder")
+# Put what is on nas in the library:
+print("Transfer from nas to new folder")
 gi.libraries.upload_from_galaxy_filesystem(my_library_id,
-                                           filesystem_paths=s3_dir,
+                                           filesystem_paths=nas_dir,
                                            folder_id=my_folder_id,
                                            link_data_only=True)
 # Put what is in the local dir:
