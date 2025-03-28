@@ -1,4 +1,3 @@
----
 tools:
 - name: sra_tools
   owner: iuc
@@ -54,6 +53,7 @@ tools:
   owner: erasmus-medical-center
   revisions:
   - 1613afce4e28
+  - c46360dcbf3f
   tool_panel_section_label: Collection Operations
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: column_maker
@@ -66,6 +66,7 @@ tools:
 - name: text_processing
   owner: bgruening
   revisions:
+  - 6073bb457ec0
   - 86755160afbf
   - d698c222f354
   - ddf54b12c295
@@ -93,6 +94,7 @@ tools:
   owner: iuc
   revisions:
   - 3bf5661c0280
+  - 56a8da1f2243
   tool_panel_section_label: Text Manipulation
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: map_chromosomes
@@ -104,6 +106,7 @@ tools:
 - name: fromgtftobed12
   owner: lldelisle
   revisions:
+  - 6fd4b3b90220
   - eca13ff8e956
   - f9b919636568
   tool_panel_section_label: Convert Formats
@@ -241,6 +244,7 @@ tools:
 - name: fastp
   owner: iuc
   revisions:
+  - 10678d49d39e
   - a626e8c0e1ba
   tool_panel_section_label: 'NGS: QC and manipulation'
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -255,6 +259,7 @@ tools:
 - name: multiqc
   owner: iuc
   revisions:
+  - 31c42a2c02d3
   - 75c93c70d094
   - 9a913cdee30e
   - abfd8a6544d7
@@ -271,12 +276,13 @@ tools:
   - 5eb7e84243f2
   - 64172f1c1202
   - 8c0175e03cee
+  - '93678460093'
   - 9845c649f41b
   - b1c926deaa2d
+  - c053d4cad713
+  - c0b2c2e39c9c
   - c5e2e5902201
   - de6cebe3c043
-  - 93678460093
-  - c053d4cad713
   - f5fdf41c08b8
   - fe74900d6dc7
   tool_panel_section_label: 'NGS: QC and manipulation'
@@ -305,6 +311,7 @@ tools:
 - name: bwa
   owner: devteam
   revisions:
+  - 1dfc975b48d5
   - 2477830927ec
   tool_panel_section_label: 'NGS: Mapping'
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -374,6 +381,7 @@ tools:
   owner: lldelisle
   revisions:
   - 0ea2b305c6a0
+  - 21ddefab2e4f
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: revertr2orientationinbam
@@ -403,6 +411,7 @@ tools:
   revisions:
   - 07e8b80f278c
   - 0a5c785ac6db
+  - 2892111d91f8
   - 589e7e57fd6d
   - 64e2edfe7a2c
   - a1a923cd89e8
@@ -434,6 +443,7 @@ tools:
 - name: bedtools
   owner: iuc
   revisions:
+  - 2892111d91f8
   - a33db97b220c
   - b8348686a0b9
   tool_panel_section_label: Old tools for compatibility
@@ -441,12 +451,14 @@ tools:
 - name: picard
   owner: devteam
   revisions:
+  - 3f254c5ced1d
   - ab1f60c26526
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: text_processing
   owner: bgruening
   revisions:
+  - 6073bb457ec0
   - ddf54b12c295
   - e39fceb6ab85
   tool_panel_section_label: Old tools for compatibility
@@ -454,18 +466,21 @@ tools:
 - name: rgrnastar
   owner: iuc
   revisions:
+  - 53255f6eecfc
   - d5659efd66aa
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: samtool_filter2
   owner: devteam
   revisions:
+  - 649a225999a5
   - dc6ff68ea5e8
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: bundle_collections
   owner: nml
   revisions:
+  - 705ebd286b57
   - cd6da887a5f4
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -473,11 +488,13 @@ tools:
   owner: devteam
   revisions:
   - 3ba8d4563129
+  - d5ceb9f3c25b
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: cutadapt
   owner: lparsons
   revisions:
+  - c0b2c2e39c9c
   - f5fdf41c08b8
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -486,12 +503,14 @@ tools:
   revisions:
   - 01cded2297b7
   - 424aefbd7777
+  - 86e2413cf3f8
   tool_panel_section_label: Old tools for compatibility
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: omero_hyperstack_to_gastruloid_measurements
   owner: lldelisle
   revisions:
   - 16f1de324d3e
+  - 45375dc5dd8d
   - c1ae5478f63c
   - d72ed00a36ed
   - f030d9072007
@@ -521,8 +540,9 @@ tools:
 - name: homer_findmotifsgenome
   owner: iuc
   revisions:
+  - 081139509124
   - 3126da33847c
-  - 81139509124
+  - '81139509124'
   - a8f207b43f64
   - ec974e69e0b5
   tool_panel_section_label: Homer
@@ -640,7 +660,8 @@ tools:
 - name: binary2labelimage
   owner: imgteam
   revisions:
-  - .inf
+  - 984358e43242
+  - inf
   tool_panel_section_label: Imaging
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: bfconvert
@@ -696,6 +717,7 @@ tools:
 - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
   owner: lldelisle
   revisions:
+  - 2ac2a7d68b72
   - 78b57a02b820
   - 801ea641f0ba
   - 8704ccf28b6a
@@ -714,6 +736,7 @@ tools:
   - 2b35282ddb88
   - 4fea20e7014b
   - 515b21483ad4
+  - d507ce86f0d0
   tool_panel_section_label: Imaging
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: measure_gastruloids
@@ -1270,6 +1293,7 @@ tools:
   - 0185bd174ea0
   - 1072ce66b426
   - 40812a65a78b
+  - 5a5468c0d26f
   - 62acdd96d4a0
   - f7446fd8d5e7
   tool_panel_section_label: Single-cell
@@ -1292,6 +1316,7 @@ tools:
   owner: iuc
   revisions:
   - 14c576ea6148
+  - 33c0081e16c6
   - 6f0d0c784f09
   tool_panel_section_label: Single-cell
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -1365,6 +1390,7 @@ tools:
 - name: freebayes
   owner: devteam
   revisions:
+  - 1e1291983bc7
   - 3e954e7125bf
   - a5937157062f
   tool_panel_section_label: Variant Calling
@@ -1596,18 +1622,21 @@ tools:
   owner: devteam
   revisions:
   - 1586b111d2a3
+  - 39865c64a4e1
   - 9dd107db92c2
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: data_manager_bwa_mem_index_builder
   owner: devteam
   revisions:
+  - 0a87b85d9911
   - 9e993022c762
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: data_manager_fetch_genome_dbkeys_all_fasta
   owner: devteam
   revisions:
+  - 4a82d1157b14
   - 4d3eff1bc421
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -1624,12 +1653,14 @@ tools:
   - 3e4d45aca422
   - 3ec5c51384e6
   - a256278e5bff
+  - defd3e9ddd2d
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: data_manager_star_index_builder
   owner: iuc
   revisions:
   - 6ef6520f14fc
+  - 71c994a11f71
   - c520a52b5174
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
@@ -1637,6 +1668,7 @@ tools:
   owner: devteam
   revisions:
   - 625fd9476402
+  - 94a50db37d1a
   tool_panel_section_label: None
   tool_shed_url: toolshed.g2.bx.psu.edu
 - name: map_param_value

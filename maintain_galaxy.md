@@ -19,11 +19,20 @@ ansible-playbook galaxy.yml -K
 
 ## Add a new tool
 
-Whatever its origin is, you may want to modify [job_conf.xml.j2](./templates/galaxy/config/job_conf.xml.j2) to destinate it to more cpu or more memory.
+Whatever its origin is, you may want to modify the `galaxy_job_config` in [galaxyservers.yml](./group_vars/galaxyservers.yml) to destinate it to more cpu or more memory.
 
 ### From the toolshed
 
-Update the file [my_tools.xml](./tools/my_tools.yml). If it is a tool which was in the previous instance, you may be interested in copying the lines (except the revision) from [former_list.yml](./tools/former_list.yml).
+#### New tool
+
+Update the file [my_tools.xml](./tools/my_tools.yml). To check the `tool_panel_section_label` you can use what is [here](https://training.galaxyproject.org/training-material/api/toolcats.json).
+
+#### Update currently installed tools
+
+```
+python3 tools/update-tool.py tools/my_tools.yml
+```
+
 Then use `shed-tools` from ephemeris:
 
 ```bash
