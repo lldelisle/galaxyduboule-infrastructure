@@ -4,7 +4,7 @@ import sys
 import os
 import time
 
-gi = GalaxyInstance("https://galaxyduboule.epfl.ch", key=sys.argv[1])
+gi = GalaxyInstance("http://galaxyduboule.college-de-france.fr", key=sys.argv[1])
 my_library_id = '03501d7626bd192f'
 nas_dir = '/data/nas/lab.data/archive/perso_storage/useful_datasets/'
 local_dir = 'useful_datasets'
@@ -12,8 +12,8 @@ my_folder = 'useful_datasets'
 urls = {'https://zenodo.org/record/7510406/files/mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm38.102_ExonsCDSOnly_UCSC.gtf.gz?download=1':'mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm38.102_ExonsCDSOnly_UCSC.gtf',
         'https://zenodo.org/record/3457880/files/3M-february-2018.txt.gz': 'cellranger_barcodes_3M-february-2018.txt',
         'https://zenodo.org/record/7510797/files/mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm39.108_ExonsCDSOnly_UCSC.gtf.gz?download=1': 'mergeOverlapGenesOfFilteredTranscriptsOfMus_musculus.GRCm39.108_ExonsCDSOnly_UCSC.gtf',
-        'https://zenodo.org/records/10079673/files/mm10_custom102_allGastruloids_min10_extended.gtf.gz?download=1', 'mm10_custom102_allGastruloids_min10_extended.gtf',
-        'https://zenodo.org/records/14016639/files/mm39_custom108_allGastruloids_min10_extended.gtf.gz?download=1', 'mm39_custom108_allGastruloids_min10_extended.gtf.gz'}
+        'https://zenodo.org/records/10079673/files/mm10_custom102_allGastruloids_min10_extended.gtf.gz?download=1': 'mm10_custom102_allGastruloids_min10_extended.gtf',
+        'https://zenodo.org/records/14016639/files/mm39_custom108_allGastruloids_min10_extended.gtf.gz?download=1': 'mm39_custom108_allGastruloids_min10_extended.gtf'}
 
 if f"/{my_folder}" in [mf['name'] for mf in gi.libraries.get_folders(my_library_id)]:
   # I delete them:

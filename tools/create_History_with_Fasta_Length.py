@@ -2,10 +2,12 @@
 from bioblend.galaxy import GalaxyInstance
 import sys
 
-gi = GalaxyInstance("https://galaxyduboule.epfl.ch", key=sys.argv[1])
+gi = GalaxyInstance("http://galaxyduboule.college-de-france.fr", key=sys.argv[1])
 my_library_id = '03501d7626bd192f'
-tool_data_dir = '/data/galaxy/galaxy/var/tool-data/'
+tool_data_dir = '/data/galaxy/galaxy/var/tool-data/genomes/'
 my_folder = 'genomes_fa_len'
+
+cvmfs_genomes = ['mm10', 'mm39']
 
 if f"/{my_folder}" in [mf['name'] for mf in gi.libraries.get_folders(my_library_id)]:
   # I delete them:
@@ -17,23 +19,33 @@ my_folder_id = gi.libraries.create_folder(my_library_id, my_folder)[0]['id']
 
 # Put all fasta and length in the library:
 my_genomes = gi.genomes.get_genomes()
-for my_genome, _ in my_genomes:
-  if my_genome != 'unspecified (?)':
+# Now there are so many genomes that we need to restrict them
+# to the one installed manually
+# and the one manually sets:
+my_fasta_table = bioblend.galaxy.tool_data.ToolDataClient(gi).show_data_table("all_fasta")
+my_fasta_files_dic = {v[0]:v[-1] for v in my_fasta_table['fields']}
+my_len_table = bioblend.galaxy.tool_data.ToolDataClient(gi).show_data_table("__dbkeys__")
+my_len_files_dic = {v[0]:v[-1] for v in my_len_table['fields']}
+
+for my_genome, my_dbkey in my_genomes:
+  if my_genome != 'unspecified (?)' and (my_dbkey in cvmfs_genomes or my_fasta_files_dic.get(my_dbkey, '').startswith(tool_data_dir)):
     print(my_genome)
     # Upload the fasta
-    gi.libraries.upload_from_galaxy_filesystem(my_library_id,
-                                               filesystem_paths=f"{tool_data_dir}/{my_genome}/seq/",
-                                               folder_id=my_folder_id,
-                                               file_type='fasta',
-                                               dbkey=my_genome,
-                                               link_data_only=True)
+    if my_dbkey in my_fasta_files_dic:
+      gi.libraries.upload_from_galaxy_filesystem(my_library_id,
+                                                 filesystem_paths=my_fasta_files_dic.get(my_dbkey),
+                                                 folder_id=my_folder_id,
+                                                 file_type='fasta',
+                                                 dbkey=my_dbkey,
+                                                 link_data_only=True)
     # Upload the length
-    gi.libraries.upload_from_galaxy_filesystem(my_library_id,
-                                               filesystem_paths=f"{tool_data_dir}/{my_genome}/len/",
-                                               folder_id=my_folder_id,
-                                               file_type='tabular',
-                                               dbkey=my_genome,
-                                               link_data_only=True)
+    if my_dbkey in my_len_files_dic:
+      gi.libraries.upload_from_galaxy_filesystem(my_library_id,
+                                                 filesystem_paths=my_len_files_dic.get(my_dbkey),
+                                                 folder_id=my_folder_id,
+                                                 file_type='tabular',
+                                                 dbkey=my_genome,
+                                                 link_data_only=True)
 
 # I delete the existing histories:
 for history in gi.histories.get_histories(name=my_folder):
