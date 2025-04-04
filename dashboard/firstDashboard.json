@@ -24,14 +24,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "65k5u08Gz"
+        "uid": "P9B81C0353945995B"
       },
       "description": "",
       "fieldConfig": {
@@ -71,6 +70,8 @@
       "id": 2,
       "maxDataPoints": 1,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -81,487 +82,316 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "9.2.4",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
-          "alias": "[[tag_username]]",
           "datasource": {
             "type": "influxdb",
-            "uid": "65k5u08Gz"
+            "uid": "P9B81C0353945995B"
           },
-          "groupBy": [
-            {
-              "params": [
-                "1m"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "username"
-              ],
-              "type": "tag"
-            }
-          ],
-          "hide": false,
-          "measurement": "user-disk-usage",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "size"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "username",
-              "operator": "!=",
-              "value": "andrea"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "darbellf"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "fabre"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "gabriel"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "incendio"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "isabel"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "laboduboule"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "lucille_test"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "necsulea"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "nicolas"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "schep"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "slipstream"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "rodriguez"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "yakushij"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "gecf"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "jozsef"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "rita"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "leonardo"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "josephine"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "boltc"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "guillaume.jeanneret"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "antoine"
-            },
-            {
-              "condition": "AND",
-              "key": "username",
-              "operator": "!=",
-              "value": "leoxanne"
-            }
-          ]
+          "query": "from(bucket: \"telegraf\")\n   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n   |> filter(fn: (r) => r._measurement == \"user-disk-usage\")\n   |> filter(fn: (r) => r._field == \"size\")\n   |> group(columns: [\"username\"])\n   |> last()\n   |> filter(fn: (r) => r._value > 20)\n   |> keep(columns: [\"_time\", \"_value\", \"username\"])",
+          "refId": "A"
         }
       ],
       "title": "disk usage",
-      "transformations": [],
       "type": "gauge"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "65k5u08Gz"
+        "uid": "P9B81C0353945995B"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsZero",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsNull",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 10,
-      "fillGradient": 0,
       "gridPos": {
         "h": 11,
         "w": 12,
         "x": 0,
         "y": 9
       },
-      "hiddenSeries": false,
       "id": 4,
       "interval": "5m",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 0,
-      "links": [],
-      "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "9.2.4",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": true,
+      "pluginVersion": "11.5.2",
       "targets": [
         {
-          "alias": "[[tag_tool_id]]",
           "datasource": {
             "type": "influxdb",
-            "uid": "65k5u08Gz"
+            "uid": "P9B81C0353945995B"
           },
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "tool_id"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "queue-overview",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  " / 20"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=",
-              "value": "queued"
-            }
-          ]
+          "query": "import \"strings\"\nfrom(bucket: \"telegraf\")\n   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n   |> filter(fn: (r) => r._measurement == \"queue-overview\")\n   |> filter(fn: (r) => r.state == \"queued\")\n   |> aggregateWindow(fn: max, every: v.windowPeriod)\n   |> keep(columns: [\"_time\", \"_value\", \"count\", \"tool_id\"])",
+          "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Galaxy Queued Jobs",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "65k5u08Gz"
+        "uid": "P9B81C0353945995B"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsZero",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsNull",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 10,
-      "fillGradient": 0,
       "gridPos": {
         "h": 11,
         "w": 12,
         "x": 12,
         "y": 9
       },
-      "hiddenSeries": false,
       "id": 6,
       "interval": "5m",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "sum"
+          ],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "9.2.4",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": true,
+      "pluginVersion": "11.5.2",
       "targets": [
         {
-          "alias": "[[tag_tool_id]]",
           "datasource": {
             "type": "influxdb",
-            "uid": "65k5u08Gz"
+            "uid": "P9B81C0353945995B"
           },
-          "groupBy": [
-            {
-              "params": [
-                "5m"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "tool_id"
-              ],
-              "type": "tag"
-            }
-          ],
-          "hide": false,
-          "measurement": "queue-overview",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  " / 20"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "state",
-              "operator": "=",
-              "value": "running"
-            }
-          ]
+          "query": "from(bucket: \"telegraf\")\n   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n   |> aggregateWindow(fn: max, every: v.windowPeriod)\n   |> filter(fn: (r) => r._measurement == \"queue-overview\")\n   |> filter(fn: (r) => r.state == \"running\")\n   |> keep(columns: [\"_time\", \"_value\", \"count\", \"tool_id\"])",
+          "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Galaxy Running Tools",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 37,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
@@ -574,6 +404,6 @@
   "timezone": "",
   "title": "main",
   "uid": "c61Pj2yGz",
-  "version": 14,
+  "version": 5,
   "weekStart": ""
 }
