@@ -371,7 +371,7 @@ telegraf_plugins_default:
     tags:
       - diskmetrics = "true"
     tagpass:
-      - path = [ "/data" ] # Which are the path to explore
+      - path = [ "/data", "/data/nas" ] # Which are the path to explore
   - plugin: cpu
     config:
       - percpu = true
