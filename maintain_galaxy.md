@@ -113,6 +113,8 @@ apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
 ```
 
+Currently it seems that it does not manage to populate the dbkey table, so I will do it after manually:
+
 Then prepare the dm_genomes.yml:
 
 ```bash
@@ -129,6 +131,24 @@ Build the new entries:
 python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $apikey
 # Before homer I was doing:
 # run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
+```
+
+Then I fill the dbkey table from the server:
+
+First, I need to copy the first 2 columns of the fai to a new file called '.len':
+
+```bash
+sudo su - galaxy
+cd /data/galaxy/galaxy/var/tool-data
+my_genomes="mm39_Cyp26a1_mCherry_PEST  mm39_hsp68_venus_h19_enh2  mm39_invd3d4_A110all1  mm39_invHoxd3-Hoxd4_cloneE10"
+for my_genome in $my_genomes; do
+    echo $my_genome
+    mkdir -p genomes/$my_genome/len
+    cut -f 1-2 genomes/$my_genome/sam_fasta_index/v1/${my_genome}/*fai > genomes/$my_genome/len/${my_genome}.len
+    echo -e "${my_genome}\t${my_genome}\t$PWD/genomes/$my_genome/len/${my_genome}.len" >> dbkeys.loc
+done
+exit
+sudo galaxyctl restart
 ```
 
 Then update the history:
