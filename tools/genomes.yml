@@ -39,3 +39,23 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm39_delCBS1-invHoxd3Hoxd4
+      description: mm39_delCBS1-invHoxd3Hoxd4
+      id: mm39_delCBS1-invHoxd3Hoxd4
+      source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_delCBS1-invHoxd3Hoxd4.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
+    - dbkey: mm39_delHoxd3exon1
+      description: mm39_delHoxd3exon1
+      id: mm39_delHoxd3exon1
+      source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_delHoxd3exon1.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome
