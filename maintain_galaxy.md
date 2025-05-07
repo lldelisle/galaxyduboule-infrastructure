@@ -98,7 +98,7 @@ Then create the fetch.yml:
 ```bash
 conda activate lastVersion
 # Or
-python -m venv ~/galaxy_venv
+. ~/galaxy_venv/bin/activate
 python tools/make_fetch.py -g tools/genomes.yml -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -o tools/fetch.yml
 ```
 
@@ -107,13 +107,15 @@ Fetch the missing genomes (if you uses a lot of ucsc genome you must rerun it mu
 ```bash
 conda activate lastVersion
 # Or
-python -m venv ~/galaxy_venv
+. ~/galaxy_venv/bin/activate
 # I get the API key
 apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
 run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
 ```
 
-Currently it seems that it does not manage to populate the dbkey table, so I will do it after manually:
+Currently it seems that it does not manage to populate the dbkey table, so I will do it after manually.
+
+At this point you need to restart galaxy on the server (`sudo galaxyctl restart`).
 
 Then prepare the dm_genomes.yml:
 
@@ -140,7 +142,7 @@ First, I need to copy the first 2 columns of the fai to a new file called '.len'
 ```bash
 sudo su - galaxy
 cd /data/galaxy/galaxy/var/tool-data
-my_genomes="mm39_Cyp26a1_mCherry_PEST  mm39_hsp68_venus_h19_enh2  mm39_invd3d4_A110all1  mm39_invHoxd3-Hoxd4_cloneE10"
+my_genomes=$(comm -2 -3 <(grep -v "^#" all_fasta.loc | cut -f 1 | sort) <(grep -v "^#" dbkeys.loc | cut -f 1 | sort))
 for my_genome in $my_genomes; do
     echo $my_genome
     mkdir -p genomes/$my_genome/len
