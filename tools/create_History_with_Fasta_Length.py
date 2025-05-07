@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from bioblend.galaxy import GalaxyInstance
+from bioblend.galaxy import GalaxyInstance, tool_data
 import sys
 
 gi = GalaxyInstance("http://galaxyduboule.college-de-france.fr", key=sys.argv[1])
@@ -22,9 +22,9 @@ my_genomes = gi.genomes.get_genomes()
 # Now there are so many genomes that we need to restrict them
 # to the one installed manually
 # and the one manually sets:
-my_fasta_table = bioblend.galaxy.tool_data.ToolDataClient(gi).show_data_table("all_fasta")
+my_fasta_table = tool_data.ToolDataClient(gi).show_data_table("all_fasta")
 my_fasta_files_dic = {v[0]:v[-1] for v in my_fasta_table['fields']}
-my_len_table = bioblend.galaxy.tool_data.ToolDataClient(gi).show_data_table("__dbkeys__")
+my_len_table = tool_data.ToolDataClient(gi).show_data_table("__dbkeys__")
 my_len_files_dic = {v[0]:v[-1] for v in my_len_table['fields']}
 
 for my_genome, my_dbkey in my_genomes:
