@@ -145,3 +145,23 @@ genomes:
   - genome
   source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_invd3d4_A110all1.fa
   version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_delCBS1-invHoxd3Hoxd4
+  description: mm39_delCBS1-invHoxd3Hoxd4
+  doi: null
+  id: mm39_delCBS1-invHoxd3Hoxd4
+  indexers:
+  - genome
+  source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_delCBS1-invHoxd3Hoxd4.fa
+  version: null
+- blob: ''
+  checksum: null
+  dbkey: mm39_delHoxd3exon1
+  description: mm39_delHoxd3exon1
+  doi: null
+  id: mm39_delHoxd3exon1
+  indexers:
+  - genome
+  source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_delHoxd3exon1.fa
+  version: null
