@@ -159,7 +159,7 @@ Then update the history:
 python tools/create_History_with_Fasta_Length.py $apikey
 ```
 
-I don't know why but in the file `/data/galaxy/galaxy/var/tool-data/bowtie2_indices.loc` the last column ends with `.fa` which is not correct. So I manually edited this table and removed the `.fa` at the end of each line.
+I don't know why but in the file `/data/galaxy/galaxy/var/tool-data/bowtie2_indices.loc` the last column ends with `.fa` which is not correct. So I manually edited this table and removed the `.fa` at the end of each line (same with tophat2). See [here](https://github.com/galaxyproject/tools-iuc/issues/6972).
 
 ## Add a new data_manager
 
