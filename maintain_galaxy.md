@@ -159,6 +159,8 @@ Then update the history:
 python tools/create_History_with_Fasta_Length.py $apikey
 ```
 
+I don't know why but in the file `/data/galaxy/galaxy/var/tool-data/bowtie2_indices.loc` the last column ends with `.fa` which is not correct. So I manually edited this table and removed the `.fa` at the end of each line.
+
 ## Add a new data_manager
 
 Update the file [data_managers_tools.yml](./tools/data_managers_tools.yml).
