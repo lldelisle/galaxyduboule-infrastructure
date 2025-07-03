@@ -9,6 +9,9 @@
 
 ```bash
 usermod -aG galaxyduboule <username>
+# If this user have multiple groups:
+usermod -aG galaxyduboule <username>@<groupname>
+
 # Then to create a home directory
 # Ask the user to login by ssh
 # Other solution but not recommanded:
