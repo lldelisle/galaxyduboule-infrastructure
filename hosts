@@ -1,6 +1,5 @@
 [galaxyservers]
-# Through ssh tunnel:
-workstationduboule ansible_port=2222 ansible_ssh_host=localhost ansible_ssh_user=lldelisle
+workstationduboule ansible_port=22 ansible_ssh_host=192.168.202.69 ansible_ssh_user=oadebayo
 
 [dbservers:children]
 galaxyservers
