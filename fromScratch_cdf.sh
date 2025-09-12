@@ -968,3 +968,10 @@ sudo influx auth create \
 sudo influx auth create \
   --all-access
 # Gave me a token that I stored.
+
+# 20250912
+# I run the playbook of monitoring and I get an issue with install dependencies.
+# I find this: https://rpm.grafana.com/
+# So I update the key:
+sudo mv /usr/share/keyrings/grafana.key /usr/share/keyrings/grafana.key.old
+sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
