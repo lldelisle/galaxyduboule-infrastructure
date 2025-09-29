@@ -276,10 +276,16 @@ sudo cvmfs_config setup
 ```
 
 ### if web interface refuses to open when Galaxy itself is running with no issues
-Cehck the status oif nginx is running 
+Check if nginx is running 
 
 ```bash 
- sudo systemctl status nginx
+$: sudo systemctl status nginx
+ls: × nginx.service - A high performance web server and a reverse proxy server
+      Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
+      Active: failed (Result: exit-code) since Tue 2025-09-23 06:23:13 CEST; 6 days ago
+      Duration: 1w 4d 23h 25min 5.760s
+      Docs: man:nginx(8)
+      CPU: 15ms
 ```
 
 if it shows "Active: failed (Result: exit-code)"
