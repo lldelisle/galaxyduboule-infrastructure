@@ -280,7 +280,6 @@ Cehck the status oif nginx is running
 
 ```bash 
  sudo systemctl status nginx
- 
 ```
 
 if it shows "Active: failed (Result: exit-code)"
