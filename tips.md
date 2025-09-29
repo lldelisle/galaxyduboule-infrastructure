@@ -274,3 +274,21 @@ sudo cvmfs_config umount
 sudo systemctl restart autofs
 sudo cvmfs_config setup
 ```
+
+### if web interface refuses to open when Galaxy itself is running with no issues
+Cehck the status oif nginx is running 
+
+```bash 
+ sudo systemctl status nginx
+ 
+```
+
+if it shows "Active: failed (Result: exit-code)"
+
+Try restarting `nginx`
+
+```bash
+sudo systemctl restart nginx
+sudo systemctl status nginx
+ ```
+
