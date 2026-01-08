@@ -218,6 +218,8 @@ galaxy_config:
     dependency_resolvers_config_file: "{{ galaxy_config_dir }}/dependency_resolvers_conf.xml"
     container_resolvers_config_file: "{{ galaxy_config_dir }}/container_resolvers_conf.yml"
     cleanup_job: onsuccess
+    # Enable enforcement of quotas. Quotas can be set from the Admin interface (under Data).
+    enable_quotas: true
 
   gravity:
     process_manager: systemd
