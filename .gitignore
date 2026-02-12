@@ -7,3 +7,6 @@ hosts_decrypted
 
 # Hidden useful_datasets
 useful_datasets/bf5a*
+
+# Local python version
+.python-version
