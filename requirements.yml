@@ -20,6 +20,9 @@
   version: dd4ddbb2273a78e6c148389ac631735c3b961f1e
 - src: dj-wasabi.telegraf
   version: 0.14.1
+#- name: dj-wasabi.telegraf
+#   src: https://github.com/dj-wasabi/ansible-telegraf
+#   version: 6f6fdf7f5ead491560783d52528b79e9e088bd5b
 - src: galaxyproject.proftpd
   version: 0.3.2
 - src: usegalaxy_eu.certbot

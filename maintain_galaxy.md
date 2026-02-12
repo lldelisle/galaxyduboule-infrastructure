@@ -56,9 +56,9 @@ conda activate lastVersion
 # Or
 python -m venv  ~/CDF/galaxyduboule-infrastructure/galaxy_venv
 # I get the API key
-apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
 # Install the tool
-shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/my_tools.yml.lock
+shed-tools install -g http://galaxyduboule.college-de-france.fr -a $api_key -t tools/my_tools.yml.lock
 ```
 
 If you modified the `galaxy_job_config` file, you need to launch the ansible playbook:
@@ -109,8 +109,8 @@ conda activate lastVersion
 # Or
 .  ~/CDF/galaxyduboule-infrastructure/galaxy_venv/bin/activate
 # I get the API key
-apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
-run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
+api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
+run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $api_key
 ```
 
 Currently it seems that it does not manage to populate the dbkey table, so I will do it after manually.
@@ -130,9 +130,9 @@ Remove duplicated DM.
 Build the new entries:
 
 ```bash
-python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $apikey
+python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $api_key
 # Before homer I was doing:
-# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
+# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $api_key
 ```
 
 Then I fill the dbkey table from the server:
@@ -156,7 +156,7 @@ sudo galaxyctl restart
 Then update the history:
 
 ```bash
-python tools/create_History_with_Fasta_Length.py $apikey
+python tools/create_History_with_Fasta_Length.py $api_key
 ```
 
 I don't know why but in the file `/data/galaxy/galaxy/var/tool-data/bowtie2_indices.loc` the last column ends with `.fa` which is not correct. So I manually edited this table and removed the `.fa` at the end of each line (same with tophat2). See [here](https://github.com/galaxyproject/tools-iuc/issues/6972).
@@ -179,9 +179,10 @@ conda activate lastVersion
 # Or
 .  ~/CDF/galaxyduboule-infrastructure/galaxy_venv/bin/activate
 # I get the API key
-apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+api_key=$(head -n 1  ~/passkeys/galaxycdf_api.txt)
+api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
 # Install the tool
-shed-tools install -g http://galaxyduboule.college-de-france.fr -a $apikey -t tools/data_managers_tools.yml.lock
+shed-tools install -g http://galaxyduboule.college-de-france.fr -a $api_key -t tools/data_managers_tools.yml.lock
 ```
 
 Find the table entry:
@@ -228,9 +229,9 @@ Remove duplicated DM.
 Build the new entries:
 
 ```bash
-python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $apikey
+python tools/run_dm_with_params.py  --config tools/dm_genomes.yml  -g http://galaxyduboule.college-de-france.fr -a $api_key
 # Before homer I was doing:
-# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $apikey
+# run-data-managers --config tools/dm_genomes.yml -g http://galaxyduboule.college-de-france.fr -a $api_key
 ```
 
 ## Add a new useful dataset
@@ -241,9 +242,9 @@ Then run the python script:
 ```bash
 conda activate lastVersion
 # I get the API key
-apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
 # Create the history
-python tools/create_History_with_UsefulFiles.py $apikey
+python tools/create_History_with_UsefulFiles.py $api_key
 ```
 
 ## Backup the list of installed tools
@@ -251,7 +252,7 @@ python tools/create_History_with_UsefulFiles.py $apikey
 ```bash
 conda activate lastVersion
 # I get the API key
-apikey=$(head -n 1 ~/switchdrive/galaxy.txt)
+api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
 # Create the list of installed tools
-get-tool-list -g galaxyduboule.epfl.ch -a $apikey -o tools/installed_tools.yml --get-all-tools
+get-tool-list -g galaxyduboule.epfl.ch -a $api_key -o tools/installed_tools.yml --get-all-tools
 ```

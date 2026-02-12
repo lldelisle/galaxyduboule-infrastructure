@@ -297,3 +297,21 @@ sudo systemctl restart nginx
 sudo systemctl status nginx
  ```
 
+## To connect other ports (8080) to the lab server say 192.168.202.69:8080
+
+Try checking if this works 
+
+```bash
+nc -vz 192.168.202.69 8080
+```
+
+If it does, then just connect using SSH port forwarding
+
+```bash
+ssh -L 8080:localhost:8080 oadebayo@192.168.202.69
+```
+Then 
+
+```bash
+http://localhost:8080
+```

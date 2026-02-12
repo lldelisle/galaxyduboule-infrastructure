@@ -1,0 +1,73 @@
+<tool id="pairtools_merge" name="Pairtools merge" version="0.25.0" license="MIT">
+    <description>Merge sorted .pairs or .pairsam files.</description>
+
+    <requirements>
+        <requirement type="package">pairtools</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        # Symlink inputs to short names for CLI convenience
+        #for $i, $f in enumerate($pairs_path):
+            ln -s '$f' input_$i &&
+        #end for
+
+        # Build input list for CLI
+        set inputs=""
+        #for $i, $f in enumerate($pairs_path):
+            inputs="$inputs input_$i"
+        #end for
+
+        # Run pairtools merge
+        pairtools merge $inputs
+            -o '$output'
+            #if $keep_first_header:
+                --keep-first-header
+            #end if
+            #if $concatenate:
+                --concatenate
+            #end if
+            #if $max_nmerge:
+                --max-nmerge $max_nmerge
+            #end if
+            --nproc ${GALAXY_SLOTS:-4}
+    ]]></command>
+
+    <inputs>
+        <param name="pairs_path" type="data" format="4dn_pairs,4dn_pairsam,4dn_pairs.gz,4dn_pairsam.gz"
+               label="Input pairs files" multiple="true" help="One or more sorted .pairs or .pairsam files to merge"/>
+
+        <param name="output" type="text" label="Output filename" value="merged.pairs" help="Specify the name of the output merged file"/>
+
+        <param name="keep_first_header" type="boolean" truevalue="true" falsevalue="false"
+               label="Keep first header instead of merging" checked="false" help="Keep only the first header of the inputs"/>
+
+        <param name="concatenate" type="boolean" truevalue="true" falsevalue="false"
+               label="Concatenate instead of merge" checked="false" help="Simply concatenate files instead of merging sorted inputs" advanced="true"/>
+
+        <param name="max_nmerge" type="integer" value="8" min="1" label="Maximum number of inputs to merge at once"
+               help="Advanced: Maximal number of inputs merged at once. For more, intermediate files are created." advanced="true"/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="4dn_pairs" label="Merged pairs file"/>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="pairs_path" ftype="4dn_pairsam" value="example_1.pairsam"/>
+            <param name="pairs_path" ftype="4dn_pairsam" value="example_2.pairsam"/>
+            <param name="output" value="merged_example.pairsam"/>
+            <output name="output" file="merged_example.pairsam" ftype="4dn_pairsam" lines_diff="20"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+        **Pairtools merge**
+
+        Merge sorted .pairs or .pairsam files. By default, files are assumed to be triu-flipped and sorted. 
+        Headers are merged unless the 'Keep first header' option is selected. Multiple input files can be merged 
+        in batches using the 'Maximum number of inputs' advanced option.
+
+        Original authors: Open2C, Pairtools contributors
+    ]]></help>
+</tool>
