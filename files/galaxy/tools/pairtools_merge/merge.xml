@@ -1,25 +1,39 @@
-<tool id="pairtools_merge" name="Pairtools merge" version="0.25.0" license="MIT">
-    <description>Merge sorted .pairs or .pairsam files.</description>
-
-    <requirements>
-        <requirement type="package">pairtools</requirement>
-    </requirements>
-
+<tool id="pairtools_merge" name="Pairtools merge" version="@TOOL_VERSION@+galaxy@SUFFIX_VERSION@" profile="@PROFILE_VERSION@" license="MIT">
+    <description>Merge sorted .pairs or .pairsam files</description>
+    
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    
+    <expand macro="requirements"/>
+    
     <command detect_errors="exit_code"><![CDATA[
-        # Symlink inputs to short names for CLI convenience
+        ## Determine output extension based on first input
+        #if $pairs_path[0].is_of_type('4dn_pairs.gz', '4dn_pairsam.gz'):
+            #set $output_file = "output.pairs.gz"
+        #else:
+            #set $output_file = "output.pairs"
+        #end if
+        
+        ## Symlink inputs with proper extensions
         #for $i, $f in enumerate($pairs_path):
-            ln -s '$f' input_$i &&
+            #if $f.is_of_type('4dn_pairs.gz', '4dn_pairsam.gz'):
+                ln -s '$f' input_${i}.pairs.gz &&
+            #else:
+                ln -s '$f' input_${i}.pairs &&
+            #end if
         #end for
 
-        # Build input list for CLI
-        set inputs=""
-        #for $i, $f in enumerate($pairs_path):
-            inputs="$inputs input_$i"
-        #end for
-
-        # Run pairtools merge
-        pairtools merge $inputs
-            -o '$output'
+        ## Run pairtools merge
+        pairtools merge
+            #for $i, $f in enumerate($pairs_path):
+                #if $f.is_of_type('4dn_pairs.gz', '4dn_pairsam.gz'):
+                    input_${i}.pairs.gz
+                #else:
+                    input_${i}.pairs
+                #end if
+            #end for
+            -o '$output_file'
             #if $keep_first_header:
                 --keep-first-header
             #end if
@@ -29,45 +43,52 @@
             #if $max_nmerge:
                 --max-nmerge $max_nmerge
             #end if
-            --nproc ${GALAXY_SLOTS:-4}
-    ]]></command>
+            --nproc \${GALAXY_SLOTS:-4}
+            2> >(grep -v "SyntaxWarning" >&2)
+    ]]>
+    </command>
 
     <inputs>
         <param name="pairs_path" type="data" format="4dn_pairs,4dn_pairsam,4dn_pairs.gz,4dn_pairsam.gz"
-               label="Input pairs files" multiple="true" help="One or more sorted .pairs or .pairsam files to merge"/>
+               label="Input pairs files" multiple="true" 
+               help="Two or more sorted .pairs or .pairsam files to merge"/>
 
-        <param name="output" type="text" label="Output filename" value="merged.pairs" help="Specify the name of the output merged file"/>
+        <param name="keep_first_header" type="boolean" truevalue="--keep-first-header" falsevalue=""
+               label="Keep first header instead of merging" checked="false" 
+               help="Keep only the first header of the inputs"/>
 
-        <param name="keep_first_header" type="boolean" truevalue="true" falsevalue="false"
-               label="Keep first header instead of merging" checked="false" help="Keep only the first header of the inputs"/>
+        <param name="concatenate" type="boolean" truevalue="--concatenate" falsevalue=""
+               label="Concatenate instead of merge" checked="false" 
+               help="Simply concatenate files instead of merging sorted inputs"/>
 
-        <param name="concatenate" type="boolean" truevalue="true" falsevalue="false"
-               label="Concatenate instead of merge" checked="false" help="Simply concatenate files instead of merging sorted inputs" advanced="true"/>
-
-        <param name="max_nmerge" type="integer" value="8" min="1" label="Maximum number of inputs to merge at once"
-               help="Advanced: Maximal number of inputs merged at once. For more, intermediate files are created." advanced="true"/>
+        <param name="max_nmerge" type="integer" value="8" min="1" optional="true"
+               label="Maximum number of inputs to merge at once"
+               help="Maximal number of inputs merged at once. For more, intermediate files are created."/>
     </inputs>
 
     <outputs>
-        <data name="output" format="4dn_pairs" label="Merged pairs file"/>
+        <data name="output" format_source="pairs_path" from_work_dir="output.pairs*" 
+            label="${tool.name} on ${on_string}"/>
     </outputs>
 
     <tests>
         <test expect_num_outputs="1">
-            <param name="pairs_path" ftype="4dn_pairsam" value="example_1.pairsam"/>
-            <param name="pairs_path" ftype="4dn_pairsam" value="example_2.pairsam"/>
-            <param name="output" value="merged_example.pairsam"/>
+            <param name="pairs_path" ftype="4dn_pairsam" value="example_1.pairsam,example_2.pairsam"/>
             <output name="output" file="merged_example.pairsam" ftype="4dn_pairsam" lines_diff="20"/>
         </test>
     </tests>
 
     <help><![CDATA[
-        **Pairtools merge**
+**Pairtools merge**
 
-        Merge sorted .pairs or .pairsam files. By default, files are assumed to be triu-flipped and sorted. 
-        Headers are merged unless the 'Keep first header' option is selected. Multiple input files can be merged 
-        in batches using the 'Maximum number of inputs' advanced option.
+Merge sorted .pairs or .pairsam files. By default, files are assumed to be triu-flipped and sorted. 
+Headers are merged unless the 'Keep first header' option is selected. Multiple input files can be merged 
+in batches using the 'Maximum number of inputs' option.
 
-        Original authors: Open2C, Pairtools contributors
+Supports both compressed (.gz) and uncompressed input files.
+
     ]]></help>
+    
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

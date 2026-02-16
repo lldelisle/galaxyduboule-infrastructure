@@ -1,2 +1,6 @@
 <dependency_resolvers>
+  <tool_shed_packages />
+  <galaxy_packages />
+  <conda prefix="{{ galaxy_tool_dependency_dir }}/_conda" />
+  <conda versionless="true" prefix="{{ galaxy_tool_dependency_dir }}/_conda" />
 </dependency_resolvers>

@@ -9,6 +9,7 @@ galaxy_root: /data/galaxy/galaxy
 galaxy_user: {name: "{{ galaxy_user_name }}", shell: /bin/bash}
 galaxy_commit_id: release_25.0
 galaxy_force_checkout: true
+galaxy_restart_handler_enabled: true
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: 25.1
 miniconda_channels: ['conda-forge', 'defaults']
@@ -219,6 +220,9 @@ galaxy_config:
     dependency_resolvers_config_file: "{{ galaxy_config_dir }}/dependency_resolvers_conf.xml"
     container_resolvers_config_file: "{{ galaxy_config_dir }}/container_resolvers_conf.yml"
     cleanup_job: onsuccess
+    # install conda dependencies just edited remove if there are issues
+    conda_auto_install: true
+    conda_auto_init: true
   gravity:
     process_manager: systemd
     galaxy_root: "{{ galaxy_root }}/server"
