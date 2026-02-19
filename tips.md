@@ -351,11 +351,13 @@ or
 ```bash
 http://127.0.0.1:10001
 ```
-## To upload chromosomes, genes or .mcool/cool files into higlass, visit the following official higlass.
+## To upload chromosomes, genes or .mcool/cool files into higlass, visit the following official higlass (https://docs.higlass.io/data_preparation.html#gene-annotation-tracks).
 
-To add a new genome
+### To add a new genome
 
-make sure the file `exonU.py` is in the same director before running it
+I had some trouble following the official scripts so I made sdjustments. The exonU.py file did not change so,...
+
+Make sure the file `exonU.py` is in the same director as the `assemble.sh` scripts before running it
 
 exonU.py
 
