@@ -297,7 +297,7 @@ sudo systemctl restart nginx
 sudo systemctl status nginx
  ```
 
-## To connect other ports (8080) to the lab server say 192.168.202.69:8080
+## To connect other ports on the server (8080 which is currently used by Jupyter lab).
 
 Try checking if this works 
 
@@ -305,7 +305,7 @@ Try checking if this works
 nc -vz 192.168.202.69 8080
 ```
 
-If it does, then just connect using SSH port forwarding
+If it does, then just connect using SSH port forwarding to a local port of your choice (the first 8080) below
 
 ```bash
 ssh -L 8080:localhost:8080 oadebayo@192.168.202.69
@@ -315,3 +315,358 @@ Then
 ```bash
 http://localhost:8080
 ```
+
+## To connect a user to higlass on the duboule server
+
+Add the user to the `docker` group where the current higlass docker container is running and `higlass` group (those who have the right permisions to the directory `/home/higlass/` on the server)
+
+First confirm that the user is not already in the groups (sudo access required)
+
+```bash
+sudo getent group docker
+sudo getent group higlass
+```
+if the user is not in any of the groups or in both, add them using the following commands
+
+```bash
+sudo usermod -aG docker username
+sudo usermod -aG higlass username
+```
+
+Then the user (no sudo access required) can now open a port (10001) on their local PC and connect it to to port 8060 where the higlass docker container is currently running by running the following from the local PC (not on the duboule seerver)
+
+```bash
+ssh -f -N -L 10001:127.0.0.1:8060 username@192.168.202.69
+```
+
+Don't be alarmed, you won't see any output returned, its been silenced by the flag `-f`, remove it to keep the shell active and be aware when the port closes.
+
+The run
+
+```bash
+http://localhost:10001
+```
+or 
+
+```bash
+http://127.0.0.1:10001
+```
+## To upload chromosomes, genes or .mcool/cool files into higlass, visit the following official higlass.
+
+To add a new genome
+
+make sure the file `exonU.py` is in the same director before running it
+
+exonU.py
+
+```py
+from __future__ import print_function
+
+__author__ = "Alaleh Azhir,Peter Kerpedjiev"
+
+import collections as col
+import sys
+import argparse
+
+
+class GeneInfo:
+    def __init__(self):
+        pass
+
+
+def merge_gene_info(gene_infos, gene_info):
+    """
+    Add a new gene_info. If it's txStart and txEnd overlap with a previous entry for this
+    gene, combine them.
+    """
+    merged = False
+
+    for existing_gene_info in gene_infos[gene_info.geneId]:
+        if (
+            existing_gene_info.chrName == gene_info.chrName
+            and existing_gene_info.txEnd > gene_info.txStart
+            and gene_info.txEnd > existing_gene_info.txStart
+        ):
+
+            # overlapping genes, merge the exons of the second into the first
+            existing_gene_info.txStart = min(
+                existing_gene_info.txStart, gene_info.txStart
+            )
+            existing_gene_info.txEnd = max(existing_gene_info.txEnd, gene_info.txEnd)
+
+            for (exon_start, exon_end) in gene_info.exonUnions:
+                existing_gene_info.exonUnions.add((exon_start, exon_end))
+
+            merged = True
+
+    if not merged:
+        gene_infos[gene_info.geneId].append(gene_info)
+
+    return gene_infos
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="""
+
+    python ExonUnion.py Calculate the union of the exons of a list
+    of transcript.
+
+    chr10   27035524        27150016        ABI1    76      -       NM_001178120    10006   protein-coding  abl-interactor 1        27037498        27149792        10      27035524,27040526,27047990,27054146,27057780,27059173,27060003,27065993,27112066,27149675,      27037674,27040712,27048164,27054247,27057921,27059274,27060018,27066170,27112234,27150016,
+"""
+    )
+
+    parser.add_argument("transcript_bed")
+    # parser.add_argument('-o', '--options', default='yo',
+    # help="Some option", type='str')
+    # parser.add_argument('-u', '--useless', action='store_true',
+    # help='Another useless option')
+    args = parser.parse_args()
+
+    inputFile = open(args.transcript_bed, "r")
+
+    gene_infos = col.defaultdict(list)
+
+    for line in inputFile:
+        words = line.strip().split("\t")
+
+        gene_info = GeneInfo()
+
+        try:
+            gene_info.chrName = words[0]
+            gene_info.txStart = words[1]
+            gene_info.txEnd = words[2]
+            gene_info.geneName = words[3]
+            gene_info.score = words[4]
+            gene_info.strand = words[5]
+            gene_info.refseqId = words[6]
+            gene_info.geneId = words[7]
+            gene_info.geneType = words[8]
+            gene_info.geneDesc = words[9]
+            gene_info.cdsStart = words[10]
+            gene_info.cdsEnd = words[11]
+            gene_info.exonStarts = words[12]
+            gene_info.exonEnds = words[13]
+        except:
+            print("ERROR: line:", line, file=sys.stderr)
+            continue
+
+        # for some reason, exon starts and ends have trailing commas
+        gene_info.exonStartParts = gene_info.exonStarts.strip(",").split(",")
+        gene_info.exonEndParts = gene_info.exonEnds.strip(",").split(",")
+        gene_info.exonUnions = set(
+            [
+                (int(s), int(e))
+                for (s, e) in zip(gene_info.exonStartParts, gene_info.exonEndParts)
+            ]
+        )
+
+        # add this gene info by checking whether it overlaps with any existing ones
+        gene_infos = merge_gene_info(gene_infos, gene_info)
+
+    for gene_id in gene_infos:
+        for contig in gene_infos[gene_id]:
+            output = "\t".join(
+                map(
+                    str,
+                    [
+                        contig.chrName,
+                        contig.txStart,
+                        contig.txEnd,
+                        contig.geneName,
+                        contig.score,
+                        contig.strand,
+                        "union_" + gene_id,
+                        gene_id,
+                        contig.geneType,
+                        contig.geneDesc,
+                        contig.cdsStart,
+                        contig.cdsEnd,
+                        ",".join([str(e[0]) for e in sorted(contig.exonUnions)]),
+                        ",".join([str(e[1]) for e in sorted(contig.exonUnions)]),
+                    ],
+                )
+            )
+            print(output)
+
+
+if __name__ == "__main__":
+    main()
+```
+Then create a bash script genome.sh and paste the  command below in it. Edit the genome `ASSEMBLY` and  `TAXID` name in the following script.  Adjust `DATADIR` if needed.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+############################################
+# Configuration
+############################################
+ASSEMBLY=mm39
+TAXID=10090
+DATADIR="$HOME/data"
+TMPDIR="$DATADIR/$ASSEMBLY/tmp"
+
+# Ensure deterministic sort for join
+export LC_ALL=C
+
+############################################
+# Directories
+############################################
+mkdir -p "$DATADIR/genbank"
+mkdir -p "$DATADIR/$ASSEMBLY"
+mkdir -p "$TMPDIR"
+
+############################################
+# Download NCBI data
+############################################
+wget -N -P "$DATADIR/genbank" ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2refseq.gz
+wget -N -P "$DATADIR/genbank" ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz
+wget -N -P "$DATADIR/genbank" ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2pubmed.gz
+
+############################################
+# Download UCSC refGene
+############################################
+wget -N -P "$DATADIR/$ASSEMBLY" \
+  http://hgdownload.cse.ucsc.edu/goldenPath/$ASSEMBLY/database/refGene.txt.gz
+
+############################################
+# Filter NCBI data by species
+############################################
+zcat "$DATADIR/genbank/gene2refseq.gz" \
+  | awk -v tax="$TAXID" '$1==tax' \
+  > "$DATADIR/$ASSEMBLY/gene2refseq"
+
+zcat "$DATADIR/genbank/gene_info.gz" \
+  | awk -v tax="$TAXID" '$1==tax' \
+  | sort -k2,2 \
+  > "$DATADIR/$ASSEMBLY/gene_info"
+
+zcat "$DATADIR/genbank/gene2pubmed.gz" \
+  | awk -v tax="$TAXID" '$1==tax' \
+  > "$DATADIR/$ASSEMBLY/gene2pubmed"
+
+############################################
+# Prepare refGene (sorted on RefSeq ID)
+############################################
+zcat "$DATADIR/$ASSEMBLY/refGene.txt.gz" \
+  | awk -F $'\t' '$3 !~ /_/' \
+  | sort -k2,2 \
+  > "$DATADIR/$ASSEMBLY/refGene_sorted"
+
+############################################
+# GeneID -> RefSeq mapping (lexicographic sort, not numeric)
+############################################
+awk -F $'\t' '{
+  split($4,a,".");
+  if (a[1]!="-") gsub(/\r/,""); print $2 "\t" a[1];
+}' "$DATADIR/$ASSEMBLY/gene2refseq" \
+  | sort -k1,1 \
+  | uniq \
+  > "$TMPDIR/geneid_refseqid.sorted"
+
+############################################
+# Count PubMed citations (lexicographic sort, not numeric)
+############################################
+awk '{gsub(/\r/,""); print $2}' "$DATADIR/$ASSEMBLY/gene2pubmed" \
+  | sort \
+  | uniq -c \
+  | awk '{gsub(/\r/,""); print $2 "\t" $1}' \
+  | sort -k1,1 \
+  > "$TMPDIR/gene2pubmed-count.sorted"
+
+############################################
+# Join GeneID -> RefSeq -> citation count
+############################################
+join -1 1 -2 1 \
+  "$TMPDIR/geneid_refseqid.sorted" \
+  "$TMPDIR/gene2pubmed-count.sorted" \
+  | sort -k2,2 \
+  > "$DATADIR/$ASSEMBLY/geneid_refseqid_count"
+
+############################################
+# Join RefSeq gene model (join on RefSeq ID)
+############################################
+sort -k2,2 "$DATADIR/$ASSEMBLY/geneid_refseqid_count" > "$TMPDIR/a"
+sort -k2,2 "$DATADIR/$ASSEMBLY/refGene_sorted"        > "$TMPDIR/b"
+
+join -1 2 -2 2 "$TMPDIR/a" "$TMPDIR/b" \
+ | awk '{
+     print $2 "\t" $1 "\t" $5 "\t" $6 "\t" \
+           $7 "\t" $8 "\t" $9 "\t" $10 "\t" \
+           $11 "\t" $12 "\t" $13 "\t" $3
+   }' \
+ | sort -k1,1 \
+ > "$DATADIR/$ASSEMBLY/geneid_refGene_count"
+
+############################################
+# Join citation counts with gene info
+############################################
+awk '{gsub(/\r/,""); print}' "$DATADIR/$ASSEMBLY/gene_info" | sort -k2,2 > "$TMPDIR/c"
+awk '{gsub(/\r/,""); print}' "$TMPDIR/gene2pubmed-count.sorted" | sort -k1,1 > "$TMPDIR/d"
+
+join -1 2 -2 1 -t $'\t' "$TMPDIR/c" "$TMPDIR/d" \
+ | awk -F $'\t' '{print $1 "\t" $3 "\t" $10 "\t" $12 "\t" $16}' \
+ | sort -k1,1 \
+ > "$DATADIR/$ASSEMBLY/gene_subinfo_citation_count"
+
+############################################
+# Final annotation BED
+############################################
+join -t $'\t' \
+  "$DATADIR/$ASSEMBLY/gene_subinfo_citation_count" \
+  "$DATADIR/$ASSEMBLY/geneid_refGene_count" \
+| awk -F $'\t' '{
+    print $7 "\t" $9 "\t" $10 "\t" $2 "\t" $16 "\t" \
+          $8 "\t" $6 "\t" $1 "\t" $3 "\t" $4 "\t" \
+          $11 "\t" $12 "\t" $14 "\t" $15
+  }' \
+> "$DATADIR/$ASSEMBLY/geneAnnotations.bed"
+
+############################################
+# Exon union
+############################################
+wget -N https://raw.githubusercontent.com/higlass/clodius/develop/scripts/exonU.py
+
+python exonU.py \
+  "$DATADIR/$ASSEMBLY/geneAnnotations.bed" \
+  > "$DATADIR/$ASSEMBLY/geneAnnotationsExonUnions.bed"
+
+############################################
+# Cleanup
+############################################
+rm -rf "$TMPDIR"
+
+echo "✅ Pipeline completed successfully"
+```
+
+make sure the file as appropriate permisions (`sudo +x assembly.sh`)
+```bash
+bash assembly.sh
+```
+The needed output is the file `geneAnnotationsExonUnions.bed`, the output of `exonU.py`.
+
+Move this file and the chromosome_sizes file into `home/higlass/microC_Shared/hg-tmp/`, then run the following command to generate higlass's special Gene annotation file type:
+
+```sh
+docker exec higlass_microC_shared clodius aggregate bedfile     --max-per-tile 20     --importance-column 5     --chromsizes-filename /tmp/mm39.chrom.sizes    --output-file /tmp/gene-annotations-mm39.db     --delimiter $'\t'     /tmp/geneAnnotationsExonUnions.bed
+```
+then run the following to Injest the Gene Annotations into higlass (UI)
+
+```sh
+docker exec higlass_microC_shared   python higlass-server/manage.py ingest_tileset   --filename /tmp/gene-annotations-mm39.db   --filetype beddb   --datatype gene-annotation  --name "Gene Annotations (mm39)"   --project-name "Gene Annotations"   --coordSystem mm39
+```
+Injest the chromosome files into higlass (UI) using:
+
+```bash
+docker exec higlass_microC_shared   python higlass-server/manage.py ingest_tileset   --filename /tmp/mm39.chrom.sizes   --filetype chromsizes-tsv   --datatype chromsizes   --name "Chromosomes (mm39)"   --project-name "Chromosomes"   --coordSystem mm39
+```
+To add .cool or .mcool files e.g., `trial.cool` first add them to the tmp folder in `/home/higlass/microC_Shared/hg-tmp/` then
+
+```bash
+docker exec higlass_microC_shared python higlass-server/manage.py ingest_tileset --filename /tmp/trial.cool --filetype cooler --datatype matrix --project-name micro_c
+```
+
+Adjust the value of `--project-name` (micro_c) as you wish
+
+Note: the example above added `mm39` chromosome sizes and gene annotations to higlass, adjust to the name of your genome assembly.
