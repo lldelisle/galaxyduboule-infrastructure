@@ -648,7 +648,7 @@ bash assembly.sh
 ```
 The needed output is the file `geneAnnotationsExonUnions.bed`, the output of `exonU.py`.
 
-Move this file and the chromosome_sizes file into `home/higlass/microC_Shared/hg-tmp/`, then run the following command to generate higlass's special Gene annotation file type:
+Move this file and the chromosome_sizes file into `home/higlass/microC_shared/hg-tmp/`, then run the following command to generate higlass's special Gene annotation file type:
 
 ```sh
 docker exec higlass_microC_shared clodius aggregate bedfile     --max-per-tile 20     --importance-column 5     --chromsizes-filename /tmp/mm39.chrom.sizes    --output-file /tmp/gene-annotations-mm39.db     --delimiter $'\t'     /tmp/geneAnnotationsExonUnions.bed
@@ -663,7 +663,7 @@ Injest the chromosome files into higlass (UI) using:
 ```bash
 docker exec higlass_microC_shared   python higlass-server/manage.py ingest_tileset   --filename /tmp/mm39.chrom.sizes   --filetype chromsizes-tsv   --datatype chromsizes   --name "Chromosomes (mm39)"   --project-name "Chromosomes"   --coordSystem mm39
 ```
-To add .cool or .mcool files e.g., `trial.cool` first add them to the tmp folder in `/home/higlass/microC_Shared/hg-tmp/` then
+To add .cool or .mcool files e.g., `trial.cool` first add them to the tmp folder in `/home/higlass/microC_shared/hg-tmp/` then
 
 ```bash
 docker exec higlass_microC_shared python higlass-server/manage.py ingest_tileset --filename /tmp/trial.cool --filetype cooler --datatype matrix --project-name micro_c
