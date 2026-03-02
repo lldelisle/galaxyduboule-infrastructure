@@ -3,7 +3,7 @@
 
 DATASET_ID=$1
 DEST_DIR=${2:-.}  # defaults to current directory
-API_KEY="YOUR_API_KEY"
+API_KEY=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
 GALAXY_URL="http://localhost"
 
 if [ -z "$DATASET_ID" ]; then

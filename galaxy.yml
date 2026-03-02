@@ -15,6 +15,10 @@
   become: true
   vars_files:
     - secret_group_vars/all.yml
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
   pre_tasks:
     - name: Install Dependencies
       package:
@@ -48,6 +52,45 @@
         minute: "0"
         hour: "0"
         job: "SHELL=/bin/bash source {{ galaxy_venv_dir }}/bin/activate &&  GALAXY_LOG_DIR=/tmp/gxadmin/ GALAXY_ROOT={{ galaxy_root }}/server GALAXY_CONFIG_FILE={{ galaxy_config_file }} /usr/local/bin/gxadmin galaxy cleanup 60"
+    
+    - name: Ensure mailutils is installed for email notifications
+      package:
+        name: mailutils
+        state: present
+
+    - name: Create systemd drop-in directory for Galaxy
+      file:
+        path: /etc/systemd/system/galaxy-gunicorn.service.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create systemd drop-in for Galaxy failure notification
+      copy:
+        dest: /etc/systemd/system/galaxy-gunicorn.service.d/notify-failure.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Unit]
+          OnFailure=galaxy-notify-failure@%n.service
+      notify: reload systemd
+
+    - name: Deploy Galaxy failure notification systemd service
+      copy:
+        dest: /etc/systemd/system/galaxy-notify-failure@.service
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Notify admin of Galaxy Service Failure
+
+          [Service]
+          Type=oneshot
+          ExecStart=/bin/bash -c 'echo "Galaxy service %i failed on $(hostname) at $(date)" | usr/bin/mail -r galaxy@$(hostname) -s "Galaxy Service Failure" olusegun.adebayo@college-de-france.fr'
+      notify: reload systemd
     # - name: Install slurm-drmaa
     #   package:
     #     name: slurm-drmaa1
