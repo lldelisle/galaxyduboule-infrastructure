@@ -74,12 +74,12 @@
         mode: '0644'
         content: |
           [Unit]
-          OnFailure=galaxy-notify-failure@%n.service
+          OnFailure=notify-failure@%n.service
       notify: reload systemd
 
     - name: Deploy Galaxy failure notification systemd service
       copy:
-        dest: /etc/systemd/system/galaxy-notify-failure@.service
+        dest: /etc/systemd/system/notify-failure@.service
         owner: root
         group: root
         mode: '0644'

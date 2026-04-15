@@ -1,0 +1,33 @@
+<tool id="diff_cool" name="Diff cool" version="0.0.1">
+<description>Compute difference and log2 ratio between two cool files.</description>
+<requirements>
+    <requirement type="package">cooler</requirement>
+    <requirement type="package">numpy</requirement>
+    <requirement type="package">pandas</requirement>
+</requirements>
+<command interpreter="python">
+  cooler_diff.py $inputcool1 $inputcool2
+</command>
+<inputs>
+  <param name="inputcool1" multiple="false" type="data" format="cool" label="Select the first cool file"/>
+  <param name="inputcool2" multiple="false" type="data" format="cool" label="Select the second cool file"/>
+  <param name="output_name" type="text" optional="true" value="" label="Output name (optional)" help="Custom label for the output datasets. Defaults to the first input filename if left blank."/>
+</inputs>
+
+<outputs>
+   <data format="cool" name="report" label="cool diff of ${inputcool1.name}">
+      <discover_datasets pattern="__designation_and_ext__" directory="output" visible="true"/>
+   </data>
+</outputs>
+<help>
+**Overview**
+
+This tool computes the difference and log2 ratio between two cool files (genomic contact matrices).
+It outputs two cool files: one for the signed difference and one for the log2 ratio.
+
+**Outputs**
+
+- diff.cool: Signed difference (second cool minus first cool)
+- log2ratio.cool: Log2 ratio of (second cool + pseudocount) / (first cool + pseudocount)
+</help>
+</tool>

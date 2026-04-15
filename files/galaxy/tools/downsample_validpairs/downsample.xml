@@ -1,0 +1,43 @@
+<tool id="downsample_validpairs" name="Downsample validpairs" version="1.1.0">
+    <description>Randomly downsample a validpairs file using shuf (single-pass, fast)</description>
+
+    <requirements>
+        <requirement type="package">coreutils</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        grep '^#' '$input' > '$output' ;
+        grep -v '^#' '$input' | shuf -n $n_lines --random-source=/dev/urandom >> '$output'
+    ]]></command>
+
+    <inputs>
+        <param name="input" type="data" format="tabular,txt" label="Input validpairs file"
+               help="Tab-separated validpairs file, optionally with ## header lines"/>
+        <param name="n_lines" type="integer" value="" min="1"
+               label="Number of lines to keep"
+               help="e.g. 1000000 to keep 1 million read pairs"/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format_source="input" label="Downsampled ${on_string}"/>
+    </outputs>
+
+    <help><![CDATA[
+**What it does**
+
+Randomly downsamples a ``.validpairs`` file using the Linux ``shuf`` utility.
+Single-pass and fast — suitable for files with tens of millions of lines.
+
+Header lines starting with ``#`` are always preserved.
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{gnucoreutils,
+              title = {GNU Coreutils: shuf},
+              url   = {https://www.gnu.org/software/coreutils/}
+            }
+        </citation>
+    </citations>
+
+</tool>
