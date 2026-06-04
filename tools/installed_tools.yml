@@ -226,18 +226,6 @@ tools:
   - d56db0e1555d
   tool_panel_section_label: Hi-C
   tool_shed_url: toolshed.g2.bx.psu.edu
-- name: from_hicup_to_juicebox
-  owner: lldelisle
-  revisions:
-  - 44365a4feb3b
-  tool_panel_section_label: Hi-C
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: cooler
-  owner: lldelisle
-  revisions:
-  - 1b9d5647b58e
-  tool_panel_section_label: Hi-C
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: fastp
   owner: iuc
   revisions:
@@ -542,18 +530,6 @@ tools:
   - df55927535ed
   tool_panel_section_label: Homer
   tool_shed_url: toolshed.g2.bx.psu.edu
-- name: hyperstack_to_bleach_corrected_movie
-  owner: lldelisle
-  revisions:
-  - 06ac82f5b1dd
-  - 465e2410771d
-  - 4cfafd293f69
-  - a5ed2209ac47
-  - d6aaae48c9f7
-  - .inf
-  - 750c9bfd343b
-  tool_panel_section_label: Imaging
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: max_projections_stack_and_upload_omero
   owner: lldelisle
   revisions:
@@ -702,32 +678,12 @@ tools:
   - c988259ea100
   tool_panel_section_label: Imaging
   tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: omero_clean_rois_tables
-  owner: lldelisle
-  revisions:
-  - 0bce228dabfe
-  tool_panel_section_label: Imaging
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: upload_roi_and_measures_to_omero
   owner: lldelisle
   revisions:
   - 2b35282ddb88
   - 4fea20e7014b
   - 515b21483ad4
-  tool_panel_section_label: Imaging
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: measure_gastruloids
-  owner: lldelisle
-  revisions:
-  - 44d5fe1ef2bb
-  - 5dd91d6c570f
-  - 76d664dea10c
-  - 9f1b05f346eb
-  - c02bddeb8650
-  - d5c59900dcdd
-  - e2ab05f49de1
-  - e98bdc46476f
-  - f8c1c68e597c
   tool_panel_section_label: Imaging
   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: deeptools_bigwig_average

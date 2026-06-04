@@ -134,6 +134,8 @@ tools:
   owner: iuc
   tool_panel_section_label: Graph/Display Data
   tool_shed_url: toolshed.g2.bx.psu.edu
+  revisions:
+  - 86d0ebe09628
 - name: multiqc
   owner: iuc
   tool_panel_section_label: 'NGS: QC and manipulation'
@@ -559,14 +561,14 @@ tools:
 - name: max_projections_stack_and_upload_omero
   owner: lldelisle
   tool_panel_section_label: Imaging
-- name: from_hicup_to_juicebox
-  owner: lldelisle
-  tool_panel_section_label: Hi-C
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: cooler
-  owner: lldelisle
-  tool_panel_section_label: Hi-C
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: from_hicup_to_juicebox
+#   owner: lldelisle
+#   tool_panel_section_label: Hi-C
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: cooler
+#   owner: lldelisle
+#   tool_panel_section_label: Hi-C
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
 - name: fromgtftobed12
   owner: lldelisle
   tool_panel_section_label: Convert Formats
@@ -575,20 +577,20 @@ tools:
   owner: lldelisle
   tool_panel_section_label: 'NGS: SAM Tools'
   tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: measure_gastruloids
-  owner: lldelisle
-  tool_panel_section_label: 'Imaging'
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
-  revisions:
-  - e98bdc46476f
-  - c02bddeb8650
-  - e2ab05f49de1
-  - 44d5fe1ef2bb
-  - f8c1c68e597c
-  - d5c59900dcdd
-  - 9f1b05f346eb
-  - 76d664dea10c
-  - 5dd91d6c570f
+# - name: measure_gastruloids
+#   owner: lldelisle
+#   tool_panel_section_label: 'Imaging'
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
+#   revisions:
+#   - e98bdc46476f
+#   - c02bddeb8650
+#   - e2ab05f49de1
+#   - 44d5fe1ef2bb
+#   - f8c1c68e597c
+#   - d5c59900dcdd
+#   - 9f1b05f346eb
+#   - 76d664dea10c
+#   - 5dd91d6c570f
 - name: upload_roi_and_measures_to_omero
   owner: lldelisle
   tool_panel_section_label: 'Imaging'
@@ -597,19 +599,19 @@ tools:
 #   owner: lldelisle
 #   tool_panel_section_label: 'Imaging'
 #   tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: hyperstack_to_bleach_corrected_movie
-  owner: lldelisle
-  tool_panel_section_label: 'Imaging'
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: hyperstack_to_bleach_corrected_movie
+#   owner: lldelisle
+#   tool_panel_section_label: 'Imaging'
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
 # - name: omero_hyperstack_to_gastruloid_measurements
 #   owner: lldelisle
 #   tool_shed_url: testtoolshed.g2.bx.psu.edu
 #   tool_panel_section_label: Old tools for compatibility
-- name: omero_hyperstack_to_fluo_measurements_on_gastruloid
-  owner: lldelisle
-  tool_panel_section_label: 'Imaging'
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
-- name: omero_clean_rois_tables
-  owner: lldelisle
-  tool_panel_section_label: 'Imaging'
-  tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: omero_hyperstack_to_fluo_measurements_on_gastruloid
+#   owner: lldelisle
+#   tool_panel_section_label: 'Imaging'
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu
+# - name: omero_clean_rois_tables
+#   owner: lldelisle
+#   tool_panel_section_label: 'Imaging'
+#   tool_shed_url: testtoolshed.g2.bx.psu.edu

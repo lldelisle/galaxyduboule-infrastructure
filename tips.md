@@ -355,7 +355,7 @@ http://127.0.0.1:10001
 
 ### To add a new genome
 
-I had some trouble following the official scripts so I made sdjustments. The exonU.py file did not change so,...
+I had some trouble following the official scripts so I made adjustments. The exonU.py file did not change so,...
 
 Make sure the file `exonU.py` is in the same director as the `assemble.sh` scripts before running it
 

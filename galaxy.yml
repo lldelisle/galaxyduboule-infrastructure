@@ -89,7 +89,16 @@
 
           [Service]
           Type=oneshot
-          ExecStart=/bin/bash -c 'echo "Galaxy service %i failed on $(hostname) at $(date)" | usr/bin/mail -r galaxy@$(hostname) -s "Galaxy Service Failure" olusegun.adebayo@college-de-france.fr'
+          ExecStart=/bin/bash -c '\
+            LOCKFILE="/run/galaxy-failure-notify-%i.lock"; \
+            now=$(date +%%s); \
+            if [ -f "$LOCKFILE" ]; then \
+              last=$(cat "$LOCKFILE"); \
+              diff=$((now - last)); \
+              [ $diff -lt 7200 ] && exit 0; \
+            fi; \
+            echo "$now" > "$LOCKFILE"; \
+            echo "Galaxy service %i failed on $(hostname) at $(date)" | /usr/bin/mail -r galaxy@$(hostname) -s "Galaxy Service Failure" olusegun.adebayo@college-de-france.fr'
       notify: reload systemd
     # - name: Install slurm-drmaa
     #   package:
