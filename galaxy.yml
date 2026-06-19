@@ -100,6 +100,51 @@
             echo "$now" > "$LOCKFILE"; \
             echo "Galaxy service %i failed on $(hostname) at $(date)" | /usr/bin/mail -r galaxy@$(hostname) -s "Galaxy Service Failure" olusegun.adebayo@college-de-france.fr'
       notify: reload systemd
+    - name: Deploy CVMFS watchdog service
+      copy:
+        dest: /etc/systemd/system/cvmfs-watchdog.service
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Check and recover CVMFS mounts
+          After=autofs.service
+
+          [Service]
+          Type=oneshot
+          ExecStart=/bin/bash -c '\
+            stat /cvmfs/data.galaxyproject.org > /dev/null 2>&1 || \
+            (/usr/bin/cvmfs_config umount && \
+             /bin/systemctl restart autofs && \
+             /usr/bin/cvmfs_config setup)'
+      notify: reload systemd
+
+    - name: Deploy CVMFS watchdog timer
+      copy:
+        dest: /etc/systemd/system/cvmfs-watchdog.timer
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Periodically check CVMFS mount health
+
+          [Timer]
+          OnBootSec=2min
+          OnUnitActiveSec=5min
+
+          [Install]
+          WantedBy=timers.target
+      notify: reload systemd
+
+    - name: Enable and start CVMFS watchdog timer
+      systemd:
+        name: cvmfs-watchdog.timer
+        enabled: true
+        state: started
+        daemon_reload: true
+
     # - name: Install slurm-drmaa
     #   package:
     #     name: slurm-drmaa1

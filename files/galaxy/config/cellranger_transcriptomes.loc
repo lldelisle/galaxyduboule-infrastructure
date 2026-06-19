@@ -1,0 +1,17 @@
+# Cell Ranger reference transcriptomes
+# Columns (tab-separated): value  name  path
+#
+# value : unique identifier used internally (no spaces)
+# name  : display label shown to Galaxy users in the dropdown
+# path  : absolute path to the Cell Ranger reference directory
+#
+# The directory at <path> must contain the files produced by `cellranger mkref`
+# or a pre-built reference downloaded from https://www.10xgenomics.com/support/software/cell-ranger/downloads
+#
+# Add one line per reference. Re-run the Ansible playbook after editing.
+#
+# Examples (adjust paths to your ref path):
+#GRCh38-2024-A	Human GRCh38 2024-A	/cvmfs/cellranger.duboule.fr/references/refdata-gex-GRCh38-2024-A
+GRCm39-2024-A	Mouse GRCm39 2024-A	/data/cellranger/references/refdata-gex-GRCm39-2024-A
+Custom_h11_mcherry	Mouse GRCm39_h11_mcherry 2026-A	/data/nas/users/anais.lenabec/raw_data/BCLtoFASTQ_scRNAseq_Pasteur/cellranger/refdata-mkref-mm39-h11-mcherry-15-06-2026_001
+

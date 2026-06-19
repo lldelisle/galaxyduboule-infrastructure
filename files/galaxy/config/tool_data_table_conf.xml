@@ -45,4 +45,9 @@
         <columns>value, dbkey, mask, size, name, path, path_fasta, version</columns>
         <file path="homer_preparse.loc"/>
     </table>
+    <!-- Locations of Cell Ranger reference transcriptomes -->
+    <table name="cellranger_transcriptomes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, name, path</columns>
+        <file path="cellranger_transcriptomes.loc" />
+    </table>
 </tables>

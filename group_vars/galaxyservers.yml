@@ -121,13 +121,23 @@ galaxy_job_config:
         native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=16 --mem=20000'
         tmp_dir: true
         env:
-        # Ensuring a consistent collation environment is good for reproducibility.
         - name: LC_ALL
           value: C
-        # The cache directory holds the docker containers that get converted
         - name: APPTAINER_CACHEDIR
           value: /tmp/singularity
-        # Apptainer uses a temporary directory to build the squashfs filesystem
+        - name: APPTAINER_TMPDIR
+          value: /tmp
+      slurm16cLM:
+        runner: slurm
+        singularity_enabled: true
+        singularity_volumes: $defaults,/cvmfs/data.galaxyproject.org:ro
+        native_specification: '--nodes=1 --ntasks=1 --cpus-per-task=16 --mem=128000'
+        tmp_dir: true
+        env:
+        - name: LC_ALL
+          value: C
+        - name: APPTAINER_CACHEDIR
+          value: /tmp/singularity
         - name: APPTAINER_TMPDIR
           value: /tmp
   limits:
@@ -175,6 +185,10 @@ galaxy_job_config:
     environment: slurm4c
   # - id: downsample_validpairs
   #   environment: slurm8c
+  - id: cellranger_count
+    environment: slurm16cLM
+  - id: cellranger_multi
+    environment: slurm16cLM
 
 galaxy_config:
   galaxy:
@@ -262,6 +276,8 @@ galaxy_config_files:
     dest: "{{ galaxy_config.galaxy.user_preferences_extra_conf_path }}"
   - src: files/galaxy/config/tool_data_table_conf.xml
     dest: "{{ galaxy_config_dir }}/tool_data_table_conf.xml"
+  - src: files/galaxy/config/cellranger_transcriptomes.loc
+    dest: "{{ galaxy_config.galaxy.tool_data_path }}/cellranger_transcriptomes.loc"
 
 galaxy_singularity_images_cvmfs_path: /cvmfs/singularity.galaxyproject.org/all/
 
@@ -279,6 +295,7 @@ galaxy_local_tools:
   - pairtools_merge
   - downsample_validpairs
   - diff_cool
+  - cellranger
 
 # Certbot
 certbot_auto_renew_hour: "{{ 23 |random(seed=inventory_hostname)  }}"

@@ -1,0 +1,241 @@
+<tool id="cellranger_multi" name="Cell Ranger Multi" version="@TOOL_VERSION@+galaxy@SUFFIX_VERSION@" profile="@PROFILE_VERSION@" license="custom">
+    <description>3' GEX with on-chip multiplexing (OCM) via 10x Genomics Cell Ranger</description>
+
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements"/>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p fastqs_gex &&
+
+        ## Symlink GEX R1/R2 pairs with CellRanger-expected naming convention
+        #if $input_mode.mode == 'manual':
+            #set $lane = 1
+            #for $r1, $r2 in zip($input_mode.fastq_r1, $input_mode.fastq_r2):
+                ln -sf '${r1}' fastqs_gex/${run_id}_GEX_S1_L00${lane}_R1_001.fastq.gz &&
+                ln -sf '${r2}' fastqs_gex/${run_id}_GEX_S1_L00${lane}_R2_001.fastq.gz &&
+                #set $lane = $lane + 1
+            #end for
+        #else:
+            #set $lane = 1
+            #for $pair in $input_mode.fastq_collection:
+                ln -sf '${pair.forward}' fastqs_gex/${run_id}_GEX_S1_L00${lane}_R1_001.fastq.gz &&
+                ln -sf '${pair.reverse}' fastqs_gex/${run_id}_GEX_S1_L00${lane}_R2_001.fastq.gz &&
+                #set $lane = $lane + 1
+            #end for
+        #end if
+
+        ## Build multi config CSV
+        printf '[gene-expression]\n' > multi_config.csv &&
+        printf 'reference,%s\n' '${transcriptome.fields.path}' >> multi_config.csv &&
+        #if str($no_bam) == 'true':
+        printf 'create-bam,false\n' >> multi_config.csv &&
+        #else:
+        printf 'create-bam,true\n' >> multi_config.csv &&
+        #end if
+        printf 'include-introns,%s\n' '${include_introns}' >> multi_config.csv &&
+        #if $expect_cells:
+        printf 'expect-cells,%s\n' '${expect_cells}' >> multi_config.csv &&
+        #end if
+        #if $chemistry != 'auto':
+        printf 'chemistry,%s\n' '${chemistry}' >> multi_config.csv &&
+        #end if
+        printf '\n' >> multi_config.csv &&
+        printf '[libraries]\n' >> multi_config.csv &&
+        printf 'fastq_id,fastqs,lanes,feature_types\n' >> multi_config.csv &&
+        printf '%s_GEX,%s,,Gene Expression\n' '${run_id}' "\$(pwd)/fastqs_gex" >> multi_config.csv &&
+        printf '\n' >> multi_config.csv &&
+        printf '[samples]\n' >> multi_config.csv &&
+        printf 'sample_id,ocm_barcode_ids\n' >> multi_config.csv &&
+        #for $s in $samples:
+        printf '%s,%s\n' '${s.sample_id}' '${s.ocm_barcode_id}' >> multi_config.csv &&
+        #end for
+
+        cellranger multi
+            --id='${run_id}'
+            --csv=multi_config.csv
+            --localcores=\${GALAXY_SLOTS:-8}
+            --localmem=\$(( \${GALAXY_MEMORY_MB:-65536} / 1024 ))
+        &&
+
+        ## Copy individual outputs
+        cp '${run_id}/outs/qc_report.html'                                  '$qc_report'           &&
+        cp '${run_id}/outs/filtered_feature_bc_matrix.h5'                   '$filtered_matrix'     &&
+        cp '${run_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz'      '$filtered_barcodes'   &&
+        cp '${run_id}/outs/filtered_feature_bc_matrix/features.tsv.gz'      '$filtered_features'   &&
+        cp '${run_id}/outs/filtered_feature_bc_matrix/matrix.mtx.gz'        '$filtered_matrix_mtx' &&
+        cp '${run_id}/outs/raw_feature_bc_matrix.h5'                        '$raw_matrix'          &&
+        cp '${run_id}/outs/raw_feature_bc_matrix/barcodes.tsv.gz'           '$raw_barcodes'        &&
+        cp '${run_id}/outs/raw_feature_bc_matrix/features.tsv.gz'           '$raw_features'        &&
+        cp '${run_id}/outs/raw_feature_bc_matrix/matrix.mtx.gz'             '$raw_matrix_mtx'      &&
+        cp '${run_id}/outs/qc_library_metrics.csv'                          '$qc_library_metrics'  &&
+        cp '${run_id}/outs/qc_sample_metrics.csv'                           '$qc_sample_metrics'   &&
+        cp '${run_id}/outs/raw_molecule_info.h5'                            '$molecule_info'        &&
+        tar -czf '$full_outs' -C '${run_id}' outs
+    ]]>
+    </command>
+
+    <inputs>
+        <conditional name="input_mode">
+            <param name="mode" type="select" label="FASTQ input mode"
+                   help="Choose between manual R1/R2 selection or auto-detect from a paired collection.">
+                <option value="collection" selected="true">Paired collection (recommended)</option>
+                <option value="manual">Manual (select R1 and R2 separately)</option>
+            </param>
+            <when value="collection">
+                <param name="fastq_collection" type="data_collection" collection_type="list:paired"
+                       label="Paired-end FASTQ collection"
+                       help="Collection of paired R1/R2 FASTQ files for the Gene Expression library."/>
+            </when>
+            <when value="manual">
+                <param name="fastq_r1" type="data" format="fastq.gz,fastqsanger.gz" multiple="true"
+                       label="FASTQ R1 files"
+                       help="Read 1 files (cell barcode + UMI). Must be paired with R2 files in the same order."/>
+                <param name="fastq_r2" type="data" format="fastq.gz,fastqsanger.gz" multiple="true"
+                       label="FASTQ R2 files"
+                       help="Read 2 files (cDNA). Must match R1 files in number and order."/>
+            </when>
+        </conditional>
+
+        <param name="run_id" type="text" value="multi_run"
+               label="Run ID"
+               help="Unique alphanumeric identifier used as the output directory name.">
+            <sanitizer invalid_char="_">
+                <valid initial="string.ascii_letters,string.digits">
+                    <add value="-"/>
+                    <add value="_"/>
+                </valid>
+            </sanitizer>
+        </param>
+
+        <param name="transcriptome" type="select" label="Reference transcriptome"
+               help="Cell Ranger-compatible reference. Ask your administrator to add entries to cellranger_transcriptomes.loc.">
+            <options from_data_table="cellranger_transcriptomes">
+                <validator message="No Cell Ranger references are configured on this server." type="no_options"/>
+            </options>
+        </param>
+
+        <repeat name="samples" title="Sample" min="2" max="4"
+                help="Assign each OCM barcode to a sample. Each of the four on-chip barcodes (OB1–OB4) may only be used once.">
+            <param name="sample_id" type="text" label="Sample ID"
+                   help="Unique name for this sample in the output (e.g. treated_A).">
+                <sanitizer invalid_char="_">
+                    <valid initial="string.ascii_letters,string.digits">
+                        <add value="-"/>
+                        <add value="_"/>
+                    </valid>
+                </sanitizer>
+            </param>
+            <param name="ocm_barcode_id" type="select" label="OCM barcode"
+                   help="On-chip barcode assigned to this sample. OB1=blue, OB2=red, OB3=yellow, OB4=green.">
+                <option value="OB1">OB1</option>
+                <option value="OB2">OB2</option>
+                <option value="OB3">OB3</option>
+                <option value="OB4">OB4</option>
+            </param>
+        </repeat>
+
+        <param name="expect_cells" type="integer" optional="true" min="100" max="100000"
+               label="Expected number of cells (per sample)"
+               help="Override Cell Ranger's automatic cell detection. Leave blank to use auto-detection."/>
+
+        <param name="chemistry" type="select" label="Chemistry">
+            <option value="auto" selected="true">Auto-detect</option>
+            <option value="SC3Pv3">3' v3</option>
+            <option value="SC3Pv3HT">3' v3 HT</option>
+            <option value="SC3Pv4">3' v4</option>
+        </param>
+
+        <param name="no_bam" type="boolean" checked="true"
+               label="Skip BAM output"
+               help="Skip BAM file creation to save storage and processing time."/>
+
+        <param name="include_introns" type="boolean" checked="false" truevalue="true" falsevalue="false"
+               label="Include intronic reads"
+               help="Count reads mapping to pre-mRNA (introns). Recommended for single-nucleus RNA-seq."/>
+    </inputs>
+
+    <outputs>
+        <data name="qc_report"           format="html"
+              label="${tool.name} on ${on_string}: QC Report"/>
+        <data name="filtered_matrix"     format="h5"
+              label="${tool.name} on ${on_string}: Filtered Feature-Barcode Matrix (h5)"/>
+        <data name="filtered_barcodes"   format="gz"
+              label="${tool.name} on ${on_string}: Filtered Barcodes (tsv.gz)"/>
+        <data name="filtered_features"   format="gz"
+              label="${tool.name} on ${on_string}: Filtered Features (tsv.gz)"/>
+        <data name="filtered_matrix_mtx" format="gz"
+              label="${tool.name} on ${on_string}: Filtered Matrix MEX (mtx.gz)"/>
+        <data name="raw_matrix"          format="h5"
+              label="${tool.name} on ${on_string}: Raw Feature-Barcode Matrix (h5)"/>
+        <data name="raw_barcodes"        format="gz"
+              label="${tool.name} on ${on_string}: Raw Barcodes (tsv.gz)"/>
+        <data name="raw_features"        format="gz"
+              label="${tool.name} on ${on_string}: Raw Features (tsv.gz)"/>
+        <data name="raw_matrix_mtx"      format="gz"
+              label="${tool.name} on ${on_string}: Raw Matrix MEX (mtx.gz)"/>
+        <data name="qc_library_metrics"  format="csv"
+              label="${tool.name} on ${on_string}: QC Library Metrics"/>
+        <data name="qc_sample_metrics"   format="csv"
+              label="${tool.name} on ${on_string}: QC Sample Metrics"/>
+        <data name="molecule_info"       format="h5"
+              label="${tool.name} on ${on_string}: Raw Molecule Info (h5)"/>
+        <data name="full_outs"           format="tar.gz"
+              label="${tool.name} on ${on_string}: Full outs (tar.gz)"/>
+    </outputs>
+
+    <help><![CDATA[
+**Cell Ranger Multi — 3' GEX with On-Chip Multiplexing (OCM)**
+
+Runs ``cellranger multi`` to demultiplex up to 4 samples pooled using the 10x Genomics
+on-chip multiplexing (OCM) technology. OCM barcodes are physically embedded in the chip,
+so no separate capture library is needed — only the standard Gene Expression FASTQ files
+are required.
+
+**On-chip barcodes**
+
+Each sample is assigned one of four on-chip barcodes:
+
+- OB1 — blue well
+- OB2 — red well
+- OB3 — yellow well
+- OB4 — green well
+
+**Inputs**
+
+- **FASTQ files**: Paired-end Gene Expression reads. Provide as a paired collection or
+  by selecting R1/R2 files manually. Multiple lanes are supported.
+- **Reference transcriptome**: Pre-built Cell Ranger reference directory on the server.
+- **Samples**: Assign each loaded sample a unique ID and its OCM barcode (OB1–OB4).
+  A minimum of 2 and maximum of 4 samples are supported.
+
+**Outputs**
+
+Individual output files:
+
+- **QC Report**: Interactive HTML report with per-library and per-sample QC metrics.
+- **Filtered Feature-Barcode Matrix (h5 / MTX)**: Count matrix containing only
+  cell-containing barcodes, in both HDF5 and Market Exchange formats.
+- **Raw Feature-Barcode Matrix (h5 / MTX)**: Count matrix for all detected barcodes.
+- **QC Library / Sample Metrics**: CSV tables of key sequencing and cell statistics.
+- **Raw Molecule Info**: HDF5 file used for downstream aggregation with ``cellranger aggr``.
+
+The **Full outs (tar.gz)** archive contains everything above plus::
+
+    per_sample_outs/<sample_id>/outs/filtered_feature_bc_matrix.h5
+    per_sample_outs/<sample_id>/outs/metrics_summary.csv
+    per_sample_outs/<sample_id>/outs/web_summary.html
+    multiplexing_analysis/cells_per_tag.json
+    raw_cloupe.cloupe
+    config.csv
+
+**Reference**
+
+`10x Genomics Cell Ranger Multi — 3' with OCM <https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi#ocm>`_
+    ]]></help>
+
+    <expand macro="citations"/>
+    <expand macro="creator"/>
+</tool>

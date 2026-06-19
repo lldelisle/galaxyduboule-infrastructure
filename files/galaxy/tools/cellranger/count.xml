@@ -1,0 +1,168 @@
+<tool id="cellranger_count" name="Cell Ranger Count" version="@TOOL_VERSION@+galaxy@SUFFIX_VERSION@" profile="@PROFILE_VERSION@" license="custom">
+    <description>Gene expression from 10x Genomics single-cell RNA-seq data</description>
+
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements"/>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p fastqs &&
+
+        ## Symlink R1/R2 pairs with CellRanger-expected naming convention
+        #if $input_mode.mode == 'manual':
+            #set $lane = 1
+            #for $r1, $r2 in zip($input_mode.fastq_r1, $input_mode.fastq_r2):
+                ln -sf '${r1}' fastqs/${sample_id}_S1_L00${lane}_R1_001.fastq.gz &&
+                ln -sf '${r2}' fastqs/${sample_id}_S1_L00${lane}_R2_001.fastq.gz &&
+                #set $lane = $lane + 1
+            #end for
+        #else:
+            ## Auto-detect from paired collection
+            #set $lane = 1
+            #for $pair in $input_mode.fastq_collection:
+                ln -sf '${pair.forward}' fastqs/${sample_id}_S1_L00${lane}_R1_001.fastq.gz &&
+                ln -sf '${pair.reverse}' fastqs/${sample_id}_S1_L00${lane}_R2_001.fastq.gz &&
+                #set $lane = $lane + 1
+            #end for
+        #end if
+
+        cellranger count
+            --id='${sample_id}'
+            #if str($no_bam) == 'true':
+                --create-bam='false'
+            #else:
+                --create-bam='true'
+            #end if
+            --transcriptome='${transcriptome.fields.path}'
+            --fastqs=fastqs
+            --sample='${sample_id}'
+            --localcores=\${GALAXY_SLOTS:-8}
+            --localmem=\$(( \${GALAXY_MEMORY_MB:-65536} / 1024 ))
+            #if $expect_cells:
+                --expect-cells='${expect_cells}'
+            #end if
+            #if $chemistry != 'auto':
+                --chemistry='${chemistry}'
+            #end if
+            --include-introns='${include_introns}'
+        &&
+
+        cp '${sample_id}/outs/web_summary.html' '$web_summary' &&
+        cp '${sample_id}/outs/filtered_feature_bc_matrix.h5' '$filtered_matrix' &&
+        cp '${sample_id}/outs/raw_feature_bc_matrix.h5' '$raw_matrix' &&
+        cp '${sample_id}/outs/metrics_summary.csv' '$metrics' &&
+        cp '${sample_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz' '$barcodes' &&
+        cp '${sample_id}/outs/filtered_feature_bc_matrix/features.tsv.gz' '$features' &&
+        cp '${sample_id}/outs/filtered_feature_bc_matrix/matrix.mtx.gz' '$matrix_mtx' &&
+        tar -czf '$full_outs' -C '${sample_id}' outs
+    ]]>
+    </command>
+
+    <inputs>
+        <conditional name="input_mode">
+            <param name="mode" type="select" label="FASTQ input mode"
+                   help="Choose between manual R1/R2 selection or auto-detect from paired collection.">
+                <option value="manual" selected="true">Manual (select R1 and R2 separately)</option>
+                <option value="auto">Auto-detect (paired collection)</option>
+            </param>
+            <when value="manual">
+                <param name="fastq_r1" type="data" format="fastq.gz,fastqsanger.gz" multiple="true"
+                       label="FASTQ R1 files"
+                       help="Read 1 FASTQ files containing cell barcode and UMI. Must be paired with R2 files in the same order."/>
+                <param name="fastq_r2" type="data" format="fastq.gz,fastqsanger.gz" multiple="true"
+                       label="FASTQ R2 files"
+                       help="Read 2 FASTQ files containing cDNA sequence. Must match R1 files in number and order."/>
+            </when>
+            <when value="auto">
+                <param name="fastq_collection" type="data_collection" collection_type="list:paired"
+                       label="Paired-end FASTQ collection"
+                       help="Collection containing paired R1/R2 FASTQ files. Galaxy will automatically pair files based on naming."/>
+            </when>
+        </conditional>
+        <param name="sample_id" type="text" value="sample"
+               label="Sample ID"
+               help="Unique alphanumeric identifier used as the output directory name.">
+            <sanitizer invalid_char="_">
+                <valid initial="string.ascii_letters,string.digits">
+                    <add value="-"/>
+                    <add value="_"/>
+                </valid>
+            </sanitizer>
+        </param>
+        <param name="transcriptome" type="select" label="Reference transcriptome"
+               help="Cell Ranger-compatible reference. Ask your administrator to add entries to cellranger_transcriptomes.loc.">
+            <options from_data_table="cellranger_transcriptomes">
+                <validator message="No Cell Ranger references are configured on this server." type="no_options"/>
+            </options>
+        </param>
+        <param name="expect_cells" type="integer" optional="true" min="100" max="100000"
+               label="Expected number of cells"
+               help="Override Cell Ranger's automatic cell detection. Leave blank to use auto-detection."/>
+        <param name="chemistry" type="select" label="Chemistry">
+            <option value="auto" selected="true">Auto-detect</option>
+            <option value="SC3Pv2">3' v2</option>
+            <option value="SC3Pv3">3' v3</option>
+            <option value="SC3Pv3HT">3' v3 HT</option>
+            <option value="SC3Pv4">3' v4</option>
+            <option value="SC5P-PE">5' PE</option>
+            <option value="SC5P-R2">5' R2-only</option>
+        </param>
+        <param name="no_bam" type="boolean" checked="false"
+               label="Skip BAM output"
+               help="Skip BAM file creation to save storage space and processing time."/>
+        <param name="include_introns" type="boolean" checked="false" truevalue="true" falsevalue="false"
+               label="Include intronic reads"
+               help="Count reads mapping to pre-mRNA (introns). Recommended for single-nucleus RNA-seq."/>
+    </inputs>
+
+    <outputs>
+        <data name="web_summary" format="html"
+              label="${tool.name} on ${on_string}: Web Summary"/>
+        <data name="filtered_matrix" format="h5"
+              label="${tool.name} on ${on_string}: Filtered Feature-Barcode Matrix (h5)"/>
+        <data name="raw_matrix" format="h5"
+              label="${tool.name} on ${on_string}: Raw Feature-Barcode Matrix (h5)"/>
+        <data name="metrics" format="csv"
+              label="${tool.name} on ${on_string}: Metrics Summary"/>
+        <data name="barcodes" format="gz"
+              label="${tool.name} on ${on_string}: Filtered Barcodes (tsv.gz)"/>
+        <data name="features" format="gz"
+              label="${tool.name} on ${on_string}: Filtered Features (tsv.gz)"/>
+        <data name="matrix_mtx" format="gz"
+              label="${tool.name} on ${on_string}: Filtered Matrix MEX (mtx.gz)"/>
+        <data name="full_outs" format="tar.gz"
+              label="${tool.name} on ${on_string}: Full outs (tar.gz)"/>
+    </outputs>
+
+    <help><![CDATA[
+**Cell Ranger Count**
+
+Processes Chromium single-cell gene expression FASTQ files by aligning reads to a reference
+transcriptome and generating feature-barcode count matrices.
+
+**Inputs**
+
+- **R1 / R2 FASTQ files**: Paired gzipped FASTQ files. Multiple lane files can be provided;
+  they must be supplied in matching order (lane 1 R1 paired with lane 1 R2, etc.).
+- **Reference transcriptome**: Path to a pre-built Cell Ranger reference directory on the server.
+  Build one with ``cellranger mkref`` or download a pre-built reference from 10x Genomics.
+
+**Outputs**
+
+- **Web Summary**: Interactive HTML report with QC metrics and UMAP projection.
+- **Filtered Feature-Barcode Matrix (h5)**: Count matrix containing only cell-containing barcodes.
+- **Raw Feature-Barcode Matrix (h5)**: Count matrix for all detected barcodes.
+- **Metrics Summary**: CSV table of key QC statistics (median genes, sequencing saturation, etc.).
+
+**Chemistry auto-detection**
+
+Leave chemistry set to *Auto-detect* unless Cell Ranger fails to identify the library type.
+For single-nucleus experiments, enable *Include intronic reads*.
+
+    ]]></help>
+
+    <expand macro="citations"/>
+    <expand macro="creator"/>
+</tool>
