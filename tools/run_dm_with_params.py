@@ -65,7 +65,7 @@ def main():
     gi = get_galaxy_connection(args, file=args.config, log=log, login_required=True)
     config = load_yaml_file(args.config)
     data_managers = DataManagersWithParams(gi, config)
-    data_managers.run(log, args.ignore_errors, args.overwrite)
+    data_managers.run(log, args.ignore_errors, args.overwrite, history_name=args.history_name)
 
 
 if __name__ == '__main__':

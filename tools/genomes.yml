@@ -59,3 +59,13 @@ genomes:
       blob: ""
       indexers:
         - genome
+    - dbkey: mm39_H11_mcherry_dko_g89_dlocusd10
+      description: mm39_H11_mcherry_dko_g89_dlocusd10
+      id: mm39_H11_mcherry_dko_g89_dlocusd10
+      source: /data/nas/lab.data/archive/perso_storage/custom_genomes/mm39_H11_mcherry_dko_g89_dlocusd10.fa
+      doi:
+      version:
+      checksum:
+      blob: ""
+      indexers:
+        - genome

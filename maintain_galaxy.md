@@ -110,7 +110,7 @@ conda activate lastVersion
 .  ~/CDF/galaxyduboule-infrastructure/galaxy_venv/bin/activate
 # I get the API key
 api_key=$(head -n 1 ~/passkeys/galaxycdf_api.txt)
-run-data-managers --config tools/fetch.yml -g http://galaxyduboule.college-de-france.fr -a $api_key
+run-data-managers --config tools/fetch.yml --history-name adding_new_refgenome -g http://galaxyduboule.college-de-france.fr -a $api_key
 ```
 
 Currently it seems that it does not manage to populate the dbkey table, so I will do it after manually.
@@ -124,7 +124,7 @@ python tools/make_dm_genomes_more_params.py -d tools/data_managers_tools.yml -x 
 # Before homer I was doing:
 # python tools/fromIDC_Simon/make_dm_genomes.py -d tools/data_managers_tools.yml -x tools/shed_data_manager_conf.xml -g tools/genomes.yml -o tools/dm_genomes.yml
 ```
-
+squeue
 Remove duplicated DM.
 
 Build the new entries:

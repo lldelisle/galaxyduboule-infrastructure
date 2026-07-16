@@ -672,3 +672,19 @@ docker exec higlass_microC_shared python higlass-server/manage.py ingest_tileset
 Adjust the value of `--project-name` (micro_c) as you wish
 
 Note: the example above added `mm39` chromosome sizes and gene annotations to higlass, adjust to the name of your genome assembly.
+
+
+# The mcool movie: generating movies for mcool/cool files
+## Important coomands
+```bash
+sudo systemctl status cool-movie    # check if it's running
+sudo systemctl restart cool-movie   # restart it
+sudo systemctl stop cool-movie      # stop it
+sudo journalctl -u cool-movie -f    # follow live logs
+```
+password: `cat /home/jupyter-oadebayo/joint_projects/ceci/cool_movie/.streamlit/secrets.toml`
+needs sudo right
+
+url for external users <https://fleshy-crown-division.ngrok-free.dev/>. 
+
+**Open in a browser not vs code**

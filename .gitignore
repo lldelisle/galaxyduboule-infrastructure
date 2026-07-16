@@ -10,3 +10,8 @@ useful_datasets/bf5a*
 
 # Local python version
 .python-version
+.claude/
+tools/fetch.yml
+tools/shed_data_manager_conf.xml
+*/__pycache__/*
+files/galaxy/tools/split_by_barcode/__pycache__/split_barcodes.cpython-313.pyc

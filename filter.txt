@@ -38,3 +38,13 @@ wt_72h_H3K27ac_rep3
 wt_84h_H3K27ac_rep3
 wt_96h_H3K27ac_rep3
 wt_120h_H3K27ac_rep3
+
+
+### sqldb error while trying to upgrade galaxy from 25.0 to 26.0
+
+TASK [galaxyproject.galaxy : Report current and max Galaxy database] *****************************************************************************
+changed: [workstationduboule] => 
+  msg: Current database version is c716ee82337b and the maximum version is 9930b68c85af.
+
+TASK [galaxyproject.galaxy : Upgrade Galaxy DB] **************************************************************************************************
+^C [ERROR]: User interrupted execution

@@ -1,0 +1,98 @@
+<!-- split_by_barcode_marker.xml -->
+<tool id="split_by_barcode_marker" name="Split by Barcode Marker" version="2.0">
+    <requirements>
+        <requirement type="package">scipy</requirement>
+        <requirement type="package">pandas</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__'/split_barcodes.py
+            --manifest '$manifest'
+            --output_dir './output'
+            --sample_map '$sample_map'
+    ]]></command>
+
+    <inputs>
+        <param name="input_collection" type="data_collection" collection_type="list:list"
+               label="10X Data Output Collection"
+               help="A list collection of pools/samples; each pool is a list containing the barcodes, genes, and matrix files for that pool."/>
+
+        <section name="sample_names" title="Sample Names Configuration">
+            <param name="sample1_name" type="text" value="OB1"
+                   label="Sample 1 name (barcode marker: GT)"
+                   help="Custom name for sample with GT at positions 8-9"/>
+            <param name="sample2_name" type="text" value="OB2"
+                   label="Sample 2 name (barcode marker: CA)"
+                   help="Custom name for sample with CA at positions 8-9"/>
+            <param name="sample3_name" type="text" value="OB3"
+                   label="Sample 3 name (barcode marker: TC)"
+                   help="Custom name for sample with TC at positions 8-9"/>
+            <param name="sample4_name" type="text" value="OB4"
+                   label="Sample 4 name (barcode marker: AG)"
+                   help="Custom name for sample with AG at positions 8-9"/>
+        </section>
+    </inputs>
+
+    <configfiles>
+        <configfile name="manifest"><![CDATA[#for $pool in $input_collection
+#for $file_elem in $pool
+${pool.name}	${file_elem.name}	${file_elem}
+#end for
+#end for]]></configfile>
+        <configfile name="sample_map">$sample1_name:GT
+$sample2_name:CA
+$sample3_name:TC
+$sample4_name:AG</configfile>
+    </configfiles>
+
+    <outputs>
+        <!-- Nested output: pool -> split sample (OB1-4) -> barcodes/genes/matrix -->
+        <collection name="split_output" type="list:list:list" label="10X Data Output - Split by Barcode">
+            <discover_datasets pattern="(?P&lt;identifier_0&gt;[^/]+)/(?P&lt;identifier_1&gt;[^/]+)/(?P&lt;identifier_2&gt;[^/.]+)\.[^/]+"
+                                directory="output" recurse="true" match_relative_path="true" format="gz"/>
+        </collection>
+
+        <!-- Summary log -->
+        <data name="summary" format="txt"
+              from_work_dir="output/split_summary.log" label="Split Summary"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="sample1_name" value="Sample_A"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+    **Splits STARsolo/10X output by barcode marker (positions 8-9)**
+
+    This tool demultiplexes multiplexed single-cell RNA-seq data based on
+    barcode overhang sequences embedded at positions 8-9 of the cell barcode.
+
+    **Input:**
+    A nested (list:list) collection of pools, each containing the
+    barcodes, genes, and matrix files for that pool (e.g. barcodes.tsv,
+    genes.tsv, matrix.tsv).
+
+    **Mapping:**
+    - GT → Sample 1 (default: OB1)
+    - CA → Sample 2 (default: OB2)
+    - TC → Sample 3 (default: OB3)
+    - AG → Sample 4 (default: OB4)
+
+    **Output:**
+    A single nested collection mirroring the input structure, with an
+    additional level per split sample:
+
+    ::
+
+        10X_data_output (collection)
+          pool1
+            OB1: barcodes.tsv.gz, genes.tsv.gz, matrix.mtx.gz
+            OB2: ...
+          pool2
+            ...
+
+    Plus a combined summary log listing cell counts per pool/sample/marker.
+    ]]></help>
+</tool>
